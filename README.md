@@ -9,6 +9,11 @@ supabase/migrations/001_init.sql        Tạo schema, phân quyền, trigger aud
 supabase/migrations/001_init_rollback.sql
 supabase/migrations/002_password_login.sql    Đăng nhập email + mật khẩu, mã kích hoạt
 supabase/migrations/002_password_login_rollback.sql
+supabase/migrations/003_teams_notify.sql      Tự nhắn Teams riêng cho từng nhân sự
+supabase/migrations/003_teams_notify_rollback.sql
+supabase/migrations/003b_teams_card_format.sql  Chỉ chạy nếu đã chạy bản 003 cũ
+supabase/migrations/004_teams_card_v2.sql     Card Teams mới (màu theo loại tin, nút mở thẳng hồ sơ)
+supabase/migrations/004_teams_card_v2_rollback.sql
 .github/workflows/backup.yml            Backup hằng tuần (mã hóa, giữ 90 ngày)
 ```
 
@@ -45,6 +50,20 @@ supabase/migrations/002_password_login_rollback.sql
 - **Quên mật khẩu:** Owner bấm **Cấp mã mới** cho người đó; nhân sự kích hoạt lại bằng mã mới để đặt mật khẩu mới.
 - Nếu app báo "Email này đã có tài khoản đăng nhập cũ": Owner xóa tài khoản đó ở Supabase → Authentication → Users, rồi nhân sự kích hoạt lại bằng cùng mã.
 - Owner quên mật khẩu: chạy lại câu `select public.fn_issue_activation(...)` ở bước 4 trong SQL Editor để lấy mã mới.
+
+## Thông báo Teams
+
+- Migration `003_teams_notify.sql` tự nhắn Teams riêng (qua Flow bot) khi: dự án sang bước mới, Kế hoạch chốt ngày có mẫu, dự án bị hủy hoặc hoàn thành.
+- Người nhận: PIC của phòng trong dự án (tên PIC trùng tên hiển thị hoặc họ tên người dùng); không khớp thì gửi tất cả người dùng đang hoạt động của phòng.
+- Cấu hình trong SQL Editor:
+  ```sql
+  update public.app_settings set value = '<URL workflow>' where key = 'teams_webhook_url';
+  update public.app_settings set value = 'https://<user>.github.io/<repo>/' where key = 'app_url';
+  -- tạm ngưng: update public.app_settings set value = 'false' where key = 'teams_enabled';
+  ```
+- Migration `004_teams_card_v2.sql` đổi tin nhắn sang card cùng khung: dòng "Bạn có 0X công việc / thông báo mới", dải màu (lam: đến lượt, vàng: thông báo, đỏ: hủy, xanh lá: hoàn thành), 4 dòng thông tin và nút "Mở hồ sơ" mở thẳng `<app_url>#p-<id>`. Quay lại card cũ: chạy `004_teams_card_v2_rollback.sql`.
+- Kiểm tra đã gửi: `select * from public.notify_log order by id desc limit 20;`
+  và kết quả HTTP: `select id, status_code, content from net._http_response order by id desc limit 20;`
 
 ## Backup hằng tuần
 

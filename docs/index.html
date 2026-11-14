@@ -371,19 +371,21 @@ body{background:transparent}
 .stitle{font-size:16px;border-bottom-width:3px;padding-bottom:8px;flex:none}
 .side .nav{flex:0 1 auto;min-height:0;overflow-y:auto}
 .nav button{padding:7px 10px;font-size:14px}
-.side>.btn.primary{flex:none;padding:8px 10px}
 .side .sgroup{flex:none}.side .slabel{margin-bottom:4px}
-.roleseg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
-.roleseg button{border:0;border-left:1px solid var(--line);background:transparent;padding:6px 2px;font-size:12px;color:var(--text);position:relative}
-.roleseg button:first-child{border-left:0}
-.roleseg button[aria-pressed="true"]{background:var(--green-tint);color:var(--accent);font-weight:700}
-.roleseg .mine-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-left:4px;vertical-align:2px}
-.sfoot{flex:none;display:flex;align-items:center;gap:6px;border-top:1px solid var(--glass-line,var(--line));padding-top:10px}
+.side .rolecol{gap:3px}.side .rolecol button{padding:5px 10px}
+.newbtn{display:flex;align-items:center;justify-content:center;gap:8px;flex:none;padding:8px 10px;border:1.5px solid var(--green);background:var(--green-tint);color:var(--accent);font-weight:700;border-radius:10px}
+.newbtn:hover{background:var(--glass-strong,var(--surface));border-color:var(--green-dark)}
+.newbtn .plus{width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1;font-weight:700}
+.sfoot{flex:none;display:flex;align-items:flex-end;gap:8px;border-top:1px solid var(--glass-line,var(--line));padding-top:10px}
 .sfoot .who{flex:1;min-width:0;align-items:center;gap:8px}
-.sfoot .who img,.sfoot .av{width:30px;height:30px;flex:none}
+.sfoot .who img,.sfoot .av{width:32px;height:32px;flex:none}
 .av{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--green-tint);color:var(--accent);font-size:11px;font-weight:700}
-.whotxt{min-width:0}.whotxt b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.whosub{display:flex;flex-wrap:wrap;gap:3px;align-items:center;margin-top:2px}.whosub .small{font-size:11px}
+.whotxt{min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.whotxt b{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.whodept{font-size:12px;color:var(--accent);font-weight:600;margin-top:1px}
+.sright{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.ownerpill{font-size:11px;font-weight:700;padding:1px 9px;border-radius:999px;background:var(--surface-alt);color:var(--muted)}
+.sbtns{display:flex;gap:6px}
 .themebtn.ic,.iconbtn{flex:none;width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:9px;font-size:15px}
 .iconbtn{border:1px solid var(--glass-line,var(--line));background:var(--glass-soft,var(--surface));color:var(--text)}
 .iconbtn:hover{background:var(--glass-strong,var(--surface-alt));color:var(--danger)}
@@ -570,11 +572,11 @@ function renderMain(){
   const d=actDept();const due=rows().filter(r=>r.status==="active"&&curBlock(r)<NB&&B[curBlock(r)].d===d).length;
   const tabs=[["work","Công việc"],["list","Danh sách tổng hợp"],["flow","Quy trình & thống kê"],["log","Nhật ký"]];if(S.isAdmin)tabs.push(["members","Quản trị người dùng"+(S.requests.length?` (${S.requests.length})`:"")]);
   const env=S.isAdmin?`<div class="envbar"><span>Thao tác với vai trò:</span><div class="seg" role="group" aria-label="Vai trò">${Object.entries(DEPT).map(([k,v])=>`<button aria-pressed="${actDept()===k}" data-trole="${k}">${v}${k===S.me.dept?" (của bạn)":""}</button>`).join("")}</div><span class="small">Quản trị dùng để test từng phòng ban trên dữ liệu hiện tại; log ghi rõ vai trò đã dùng.</span></div>`:"";
-  const roles=S.isAdmin?`<div class="sgroup"><div class="slabel">Thao tác với vai trò</div><div class="roleseg" role="group" aria-label="Vai trò">${Object.entries(DEPT).map(([k,v])=>`<button aria-pressed="${actDept()===k}" data-trole="${k}" title="${v}${k===S.me.dept?" (của bạn)":""}">${DSHORT[k]}${k===S.me.dept?'<i class="mine-dot" aria-label="của bạn"></i>':""}</button>`).join("")}</div></div>`:"";
+  const roles=S.isAdmin?`<div class="sgroup"><div class="slabel">Thao tác với vai trò</div><div class="rolecol" role="group" aria-label="Vai trò">${Object.entries(DEPT).map(([k,v])=>`<button aria-pressed="${actDept()===k}" data-trole="${k}">${v}${k===S.me.dept?" (của bạn)":""}</button>`).join("")}</div></div>`:"";
   $("#root").innerHTML=`<div class="app"><aside class="side"><div class="logo"><img class="lg-light" alt="Duy Tân Recycling" src="${LOGO}"><img class="lg-dark" alt="Duy Tân Recycling" src="${LOGO_W}"></div><div class="stitle">Theo dõi gửi mẫu</div>
   <nav class="nav" role="tablist" aria-label="Menu">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${S.tab===k}" data-tab="${k}">${l}${k==="work"&&due?` <span class="cnt">${due}</span>`:""}</button>`).join("")}</nav>
-  ${canAct("KD")?`<button class="btn primary" data-act="new">Thêm mẫu mới</button>`:""}${roles}<div class="grow"></div>
-  <div class="sfoot"><div class="who">${S.profile?.avatarUrl&&!S.demo?`<img alt="" src="${esc(S.profile.avatarUrl)}">`:`<span class="av">${esc(initials(S.me.name))}</span>`}<div class="whotxt"><b title="${esc(S.me.name)}">${esc(S.me.name)}</b><div class="whosub">${pill(d)}${S.isAdmin?' <span class="pill d-RD">Owner</span>':""}${S.testRole&&S.testRole!==S.me.dept?' <span class="small">đang thử</span>':""}</div></div></div><button class="themebtn ic" data-act="theme" aria-label="Đổi giao diện sáng/tối" title="${themeIcon().slice(2)}">${themeSym()}</button><button class="iconbtn" data-act="logout" aria-label="Đăng xuất" title="Đăng xuất"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"/><path d="M9 12h12l-3-3m0 6 3-3"/></svg></button></div></aside>
+  ${canAct("KD")?`<button class="btn newbtn" data-act="new"><span class="plus" aria-hidden="true">+</span>Thêm mẫu mới</button>`:""}${roles}<div class="grow"></div>
+  <div class="sfoot"><div class="who">${S.profile?.avatarUrl&&!S.demo?`<img alt="" src="${esc(S.profile.avatarUrl)}">`:`<span class="av">${esc(initials(S.me.name))}</span>`}<div class="whotxt"><b title="${esc(S.me.name)}">${esc(S.me.name)}</b><span class="whodept">${esc(DEPT[S.me.dept]||"")}</span></div></div><div class="sright">${S.isAdmin?'<span class="ownerpill">Owner</span>':""}<div class="sbtns"><button class="themebtn ic" data-act="theme" aria-label="Đổi giao diện sáng/tối" title="${themeIcon().slice(2)}">${themeSym()}</button><button class="iconbtn" data-act="logout" aria-label="Đăng xuất" title="Đăng xuất"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"/><path d="M9 12h12l-3-3m0 6 3-3"/></svg></button></div></div></div></aside>
   <main class="main"><div id="status">${S.status||""}${S.canWrite===false?`<div class="banner">Bạn đang có quyền xem; không thể cập nhật dữ liệu.</div>`:""}${S.demo?`<div class="banner">Chế độ xem trước: dữ liệu chỉ giữ trong phiên này.</div>`:""}</div><div id="tabBody"></div></main></div>`;
   renderTab()}
 function renderTab(){const b=$("#tabBody");if(!b)return;b.classList.toggle("workmode",S.tab==="work");document.querySelector(".main")?.classList.toggle("workmode",S.tab==="work");
@@ -759,8 +761,13 @@ async function loadAll(){
   S.requests=S.isAdmin?(await sel("registration_requests","id,email,display_name,full_name,dept_code,status,created_at",q=>q.eq("status","pending").order("created_at"))).map(x=>({id:sid(x.id),name:x.display_name,fullName:x.full_name,email:x.email,dept:x.dept_code,at:x.created_at})):[];
   S.loaded=true;fill("dl-plan",S.rowsReal.map(r=>r.planPic).filter(Boolean));
   if(S.screen==="main"){const fa=document.activeElement;if(fa&&(fa.id==="q"||fa.id==="logQ"))S._f=fa.id;const busy=fa&&fa.closest&&fa.closest(".drawer")&&fa.matches("input,textarea,select");
-    renderMain();if(S.openId&&S.openId!=="new"&&!busy)renderDrawer()}
+    renderMain();if(S.openId&&S.openId!=="new"&&!busy)renderDrawer();openFromHash()}
 }
+/* Link từ Teams: …/#p-<id> mở thẳng hồ sơ */
+function openFromHash(){const m=(location.hash||"").match(/^#p-(\d+)$/);if(!m||S.screen!=="main"||!S.loaded)return;
+  try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
+  if(rows().some(r=>r.id===m[1])){S.tab="work";renderMain();openDrawer(m[1])}else toast("Không tìm thấy hồ sơ này hoặc bạn không có quyền xem")}
+window.addEventListener("hashchange",openFromHash);
 function allLog(){const out=[];const pn={};rows().forEach(r=>{pn[r.id]=r.customer;comments(r).forEach(c=>out.push({...c,text:`Trao đổi${c.to?" gửi "+DEPT[c.to]:""}: ${c.text}`,cust:r.customer,id:r.id}))});
   (S.audit||[]).forEach(a=>{const tx=auditText(a);if(!tx)return;const pid=a.project_id!=null?sid(a.project_id):null;
     const cust=pid?(pn[pid]||"Dự án #"+pid):a.table_name==="app_users"?"Người dùng: "+((a.new_data&&a.new_data.display_name)||S.members[sid(a.record_id)]?.displayName||""):"Đăng ký người dùng";

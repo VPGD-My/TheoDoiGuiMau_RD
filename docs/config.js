@@ -6,6 +6,6 @@
 // Row Level Security và các hàm RPC kiểm tra quyền trong database (xem 001_init.sql).
 // KHÔNG BAO GIỜ đưa service_role key hoặc mật khẩu database vào file này.
 window.APP_CONFIG = {
-  SUPABASE_URL: "https://eydnjnvikrdqhasfdgyq.supabase.co",
-  SUPABASE_ANON_KEY: "sb_publishable_8l_FMfsSq535nIsleBbqkw_-HcBn8jP"
+  SUPABASE_URL: "https://xxxx.supabase.co",
+  SUPABASE_ANON_KEY: "dien-anon-key-vao-day"
 };
