@@ -634,7 +634,7 @@ function blockHTML(r,i){const b=B[i];const s=bState(r,i);const active=r.status==
       inner+=`<div class="task"><div class="task-h"><span class="num ${g&&g.result==="yes"?"ok":""}">◇</span><b style="font-weight:600">Quyết định: ${GATE[b.g].q}</b>${g&&g.result?`<span class="small">${g.result==="yes"?GATE[b.g].yes:"Không"}${g.by!==undefined?" · "+esc(nameOf(g.by))+" · "+fmtDT(g.at):""}</span>`:""}</div>
       ${g&&g.result?"":ready?(can?`<div class="acts" style="margin-top:0"><button class="btn sm primary" data-gate="${b.g}:yes">${GATE[b.g].yes}</button><button class="btn sm danger" data-gate="${b.g}:no">${GATE[b.g].no}</button></div>`:`<span class="small">Chờ ${DEPT[b.d]} quyết định</span>`):`<span class="small">Cần xong ô ${b.gNeed.map(n=>DN[n]).join(" và ")} trước khi quyết định</span>`}</div>`}
     inner+=b.t.map(n=>taskHTML(r,n,i,active)).join("");
-    if(b.t.includes(7)&&tDone(r,7)&&canAct("KH")&&active)inner+=`<div class="acts"><button class="btn sm" data-act="notify">Gửi lại thông báo ngày có mẫu (email / Teams)</button></div>`;
+    if(b.t.includes(7)&&tDone(r,7)&&canAct("KH")&&active)inner+=`<div class="acts"><button class="btn sm" data-act="notify">Gửi thêm thông báo ngày có mẫu (email / Teams)</button></div>`;
     if(b.pend){const can=canAct("KH")&&active;inner+=`<div class="task"><div class="task-h"><b style="font-weight:600">Pending</b>${r.pending?' <span class="flag bad">Đang pending</span>':""}</div><div class="fields">${fieldHTML("pendingReason",r,can,false)}</div>${can?`<div class="acts"><button class="btn sm" data-act="pending">${r.pending?"Bỏ pending":"Báo pending"}</button></div><div class="err" id="err-pend"></div>`:""}</div>`}
   }
   const bd=blockDur(r,i);const ra=readyAt(r,i);
@@ -730,7 +730,7 @@ async function saveTask(r,n){collect();const tk=TK[n];if(!canAct(tk.d))return;co
 async function confirmTask(r,n){collect();const tk=TK[n];if(!canAct(tk.d))return;const miss=tk.r.filter(k=>!(val(r,k)||"").trim());const el=$("#err-"+n);
   if(miss.length){if(el)el.textContent="Cần nhập: "+miss.map(lbl).join(", ");document.getElementById("f-"+miss[0])?.focus();return}
   const res=await act("fn_save_task",{p_project_id:+r.id,p_task_no:n,p_fields:snakeFields(tk.r),p_confirm:true},`Đã xác nhận ô ${DN[n]}`);
-  if(res.ok){tk.r.forEach(k=>delete S.draft[k]);if(+n===7){const rr=rows().find(x=>x.id===r.id);if(rr)openNotify(rr,true)}}else if(el)el.textContent=errMsg(res.error)}
+  if(res.ok){tk.r.forEach(k=>delete S.draft[k])}else if(el)el.textContent=errMsg(res.error)}
 async function undoTask(r,n){await act("fn_undo_task",{p_project_id:+r.id,p_task_no:n},`Đã bỏ xác nhận ô ${DN[n]}`)}
 async function gate(r,key){const [g,res]=key.split(":");await act("fn_decide_gate",{p_project_id:+r.id,p_gate:g,p_result:res,p_reason:null},"Đã ghi nhận quyết định")}
 async function pendingToggle(r){collect();const reason=(val(r,"pendingReason")||"").trim();
