@@ -405,6 +405,30 @@ body{background:transparent}
 #picpop .pmore{border-top:1px solid var(--line-soft);margin-top:4px;padding:8px 12px;color:var(--accent-strong);cursor:pointer;font-size:12px;font-weight:600}
 #picpop .pmore:hover{background:var(--green-tint)}
 .picwarn{font-size:12px;color:var(--warn,#8A5A00);margin-top:3px}.picwarn:empty{display:none}
+/* ===== Nhập iForm & PIC theo email ===== */
+.picmeta{font-size:12px;margin-top:3px;min-height:0}.picmeta:empty{display:none}
+.pmok{color:var(--accent);font-weight:600}.pmwarn{color:var(--warn,#8A5A00)}.pmmut{color:var(--muted)}
+.iffill{background:var(--green-wash,#EEF8EC)!important;border-color:var(--green)!important}
+.iftag{font-size:10px;font-weight:700;padding:0 6px;border-radius:6px;background:var(--green-tint);color:var(--accent);margin-left:6px;vertical-align:1px}
+.ifhint{font-size:12px;color:var(--warn,#8A5A00);margin-top:3px}
+.ifzone{display:flex;align-items:center;gap:12px;border:1.5px dashed var(--line);border-radius:12px;padding:12px 14px;margin:6px 0 14px;background:var(--glass-soft,var(--surface))}
+.ifzone.drag{border-color:var(--green);background:var(--green-tint)}
+.ifz-ic{width:34px;height:34px;flex:none;border-radius:8px;background:#2B579A;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.ifz-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.ifz-t span{font-size:12px;color:var(--muted)}
+.ifmsg{font-size:12px;color:var(--muted)}.ifmsg:empty{display:none}.ifmsg.bad{color:var(--danger)}
+.ifok{display:flex;gap:12px;align-items:flex-start;border-radius:12px;padding:10px 14px;margin:6px 0 14px;background:var(--green-tint);color:var(--text);font-size:13px;line-height:1.5}
+.ifok>div{flex:1;min-width:0}.ifok .btn{flex:none}
+.ifw{color:var(--warn,#8A5A00);font-weight:600}
+.ifblk{border:1px solid var(--line);border-radius:12px;margin:4px 0 12px;background:var(--glass-soft,var(--surface));overflow:hidden}
+.ifblk>summary{cursor:pointer;padding:9px 12px;font-weight:700;font-size:14px;background:var(--surface-alt);list-style-position:inside}
+.ifreq{font-size:12px;color:var(--muted);padding:8px 12px 0}
+.ifgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.ifg{padding:10px 12px;border-top:1px solid var(--line-soft,var(--line))}
+.ifg:nth-child(odd){border-right:1px solid var(--line-soft,var(--line))}
+.ifgt{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ifg dl{margin:0}.ifg dl>div{display:grid;grid-template-columns:132px minmax(0,1fr);gap:8px;padding:3px 0;font-size:13px}
+.ifg dt{color:var(--muted)}.ifg dd{margin:0;overflow-wrap:anywhere}
+@media (max-width:760px){.ifgrid{grid-template-columns:1fr}.ifg:nth-child(odd){border-right:0}.ifzone{flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -431,9 +455,11 @@ const SALEN=["Lưu Minh Nghĩa","Phan Thị Phương Tuyền","Nguyễn Thị Qu
 const CATS=["rPET food contact","rPET non food contact","rPET xơ sợi","rHDPE thổi","rHDPE ép","rPP ép","rPP"];
 const PURPOSES=["Chào bán ứng dụng mới","Thử mẫu cải thiện","Khiếu nại / xử lý chất lượng","Khác"];
 const F={
- reqDate:{l:"Ngày nhận yêu cầu KH",t:"date",d:"KD"},customer:{l:"Đơn vị nhận mẫu",t:"text",d:"KD"},application:{l:"Ứng dụng sản phẩm",t:"text",d:"KD"},
+ reqDate:{l:"Ngày nhận yêu cầu KH",t:"date",d:"KD"},customer:{l:"Đơn vị nhận mẫu",t:"text",d:"KD"},application:{l:"Ứng dụng sản phẩm",t:"text",d:"KD",full:1},
  industry:{l:"Ngành",t:"select",o:CATS,d:"KD"},purpose:{l:"Mục đích",t:"select",o:PURPOSES,d:"KD"},salePic:{l:"PIC Sale",t:"text",dl:"dl-sale",d:"KD"},
  requirement:{l:"Yêu cầu đặc biệt",h:"Ghi “Không có yêu cầu” nếu không có",t:"textarea",d:"KD",full:1},iform:{l:"Iform",t:"text",d:"KD"},
+ salePicEmail:{l:"PIC Sale (tài khoản)",t:"hidden",d:"KD"},rdPicEmail:{l:"PIC R&D (tài khoản)",t:"hidden",d:"RD"},planPicEmail:{l:"PIC Kế hoạch (tài khoản)",t:"hidden",d:"KH"},
+ iformDetail:{l:"Chi tiết phiếu iForm",t:"json",d:"KD"},
  qty:{l:"Số lượng (kg)",t:"number",d:"KD",unit:"kg"},feasCustomerNote:{l:"Ý kiến KH về đánh giá tiền khả thi",t:"textarea",d:"KD",full:1},
  sentDate:{l:"Ngày gửi mẫu",t:"date",d:"KD"},receivedDate:{l:"Ngày KH nhận mẫu",t:"date",d:"KD"},
  trialExpected:{l:"Ngày dự kiến KH thử mẫu",t:"date",d:"KD"},resultExpected:{l:"Ngày dự kiến có kết quả",t:"date",d:"KD"},
@@ -660,11 +686,12 @@ function membersHTML(){if(!S.isAdmin)return `<p class="small" style="margin-top:
 /* ---------- drawer ---------- */
 function val(r,k){return S.draft[k]!==undefined?S.draft[k]:(r?r[k]??"":"")}
 function fieldHTML(k,r,ed,req){const f=F[k];const v=val(r,k);const dis=ed?"":"disabled";const id="f-"+k;let inp;
-  if(f.t==="textarea")inp=`<textarea id="${id}" data-k="${k}" ${dis} ${f.h?`placeholder="${esc(f.h)}"`:""}>${esc(v)}</textarea>`;
-  else if(f.t==="select")inp=`<select id="${id}" data-k="${k}" ${dis}><option value="">– Chọn –</option>${f.o.map(o=>`<option ${o===v?"selected":""}>${esc(o)}</option>`).join("")}</select>`;
-  else if(PIC_DEPT[k])inp=`<input id="${id}" data-k="${k}" data-pic="${PIC_DEPT[k]}" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="picpop" placeholder="Gõ tên hoặc chọn từ gợi ý" value="${esc(v)}" ${dis}><div class="picwarn" id="pw-${k}">${ed?picWarn(v,PIC_DEPT[k]):""}</div>`;
-  else inp=`<input id="${id}" data-k="${k}" type="${f.t}" ${f.t==="number"?'min="0" step="any" inputmode="decimal"':""} value="${esc(f.t==="number"?(parseFloat(String(v).replace(",","."))||""):v)}" ${f.dl?`list="${f.dl}"`:""} ${dis}>`;
-  return `<div class="f ${f.full?"full":""}"><label for="${id}">${esc(f.l)}${req?" <em>*</em>":""}</label>${inp}</div>`}
+  if(f.t==="textarea")inp=`<textarea id="${id}" data-k="${k}" class="${ifCls(k)}" ${dis} ${f.h?`placeholder="${esc(f.h)}"`:""}>${esc(v)}</textarea>${k==="requirement"&&ifCls(k)==="iffill"?'<div class="small" style="margin-top:3px">Dòng đầu lấy từ “Thông tin yêu cầu chi tiết” trên iForm – gõ tiếp bên dưới để bổ sung.</div>':""}`;
+  else if(f.t==="select")inp=`<select id="${id}" data-k="${k}" class="${ifCls(k)}" ${dis}><option value="">– Chọn –</option>${f.o.map(o=>`<option ${o===v?"selected":""}>${esc(o)}</option>`).join("")}</select>${k==="purpose"&&S.openId==="new"&&S.ifInfo?.purpose?`<div class="ifhint">iForm ghi “${esc(S.ifInfo.purpose)}” – chọn lại mục đích phù hợp</div>`:""}`;
+  else if(PIC_DEPT[k]){const ek=k+"Email";const em=val(r,ek);const m=memberByEmail(em);const nm=m?m.displayName:v;
+    inp=`<input id="${id}" data-k="${k}" data-pic="${PIC_DEPT[k]}" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="picpop" aria-describedby="pm-${k}" placeholder="Gõ tên hoặc email, chọn từ gợi ý" value="${esc(nm)}" class="${ifCls(k)}" ${dis}><input type="hidden" id="f-${ek}" data-k="${ek}" value="${esc(em)}" ${dis}><div class="picmeta" id="pm-${k}">${picMeta(nm,em,PIC_DEPT[k],ed)}</div>`}
+  else inp=`<input id="${id}" data-k="${k}" type="${f.t}" ${f.t==="number"?'min="0" step="any" inputmode="decimal"':""} value="${esc(f.t==="number"?(parseFloat(String(v).replace(",","."))||""):v)}" class="${ifCls(k)}" ${f.dl?`list="${f.dl}"`:""} ${dis}>`;
+  return `<div class="f ${f.full?"full":""}"><label for="${id}">${esc(f.l)}${req?" <em>*</em>":""}${ifCls(k)==="iffill"?'<span class="iftag">iForm</span>':""}</label>${inp}</div>`}
 function collect(){document.querySelectorAll(".drawer [data-k]").forEach(el=>{if(!el.disabled)S.draft[el.dataset.k]=el.value.trim()})}
 const stLbl={done:["done","Xong"],cur:["cur","Đến lượt"],early:["early","Đang nhập trước"],wait:["wait","Chưa đến lượt"]};
 function taskHTML(r,n,i,active){const tk=TK[n];const v=r._t[n]||{};const dn=tDone(r,n);const bb=B[i];const gl=!!(bb.g&&!bb.gNeed.includes(+n)&&!(r._g[bb.g]&&r._g[bb.g].result==="yes"));const mine=canAct(tk.d)&&active&&!gl;
@@ -689,7 +716,9 @@ function blockHTML(r,i){const b=B[i];const s=bState(r,i);const active=r.status==
   ${open?`<div class="bb">${inner}</div>`:""}</li>`}
 function renderDrawer(){ppHide();const isNew=S.openId==="new";const r=isNew?null:rows().find(x=>x.id===S.openId);if(!isNew&&!r){closeDrawer();return}
   const sy=document.querySelector(".drawer")?.scrollTop||0;let body="";const d=actDept();
-  if(isNew){body=`<div class="cur-step"><div class="t">Bước 1 · ${esc(B[0].n)}</div>${B[0].t.map((n,j)=>`<div class="task" ${j?"":'style="border-top:0"'}><div class="task-h"><span class="num">${DN[n]}</span>${esc(TK[n].t)} ${pill("KD")}</div><div class="fields">${TK[n].r.map(k=>fieldHTML(k,null,true,true)).join("")}${j===0?fieldHTML("iform",null,true,false):""}</div></div>`).join("")}
+  if(isNew){const det=S.draft.iformDetail;const order1=["reqDate","iform","customer","industry","application","purpose","salePic"];
+    const t1=n=>{const rest=TK[n].r.filter(k=>!order1.includes(k));return order1.filter(k=>k==="iform"||TK[n].r.includes(k)).map(k=>fieldHTML(k,null,true,k!=="iform")).join("")+(det?`<div class="f full">${iformBlock(det,true)}</div>`:"")+rest.map(k=>fieldHTML(k,null,true,true)).join("")};
+    body=`${ifZone()}<div class="cur-step"><div class="t">Bước 1 · ${esc(B[0].n)}</div>${B[0].t.map((n,j)=>`<div class="task" ${j?"":'style="border-top:0"'}><div class="task-h"><span class="num">${DN[n]}</span>${esc(TK[n].t)} ${pill("KD")}</div><div class="fields">${j===0?t1(n):TK[n].r.map(k=>fieldHTML(k,null,true,true)).join("")}</div></div>`).join("")}
     <div class="err" id="dErr"></div><div class="acts"><button class="btn primary" data-act="create">Tạo hồ sơ – xác nhận bước 1</button><button class="btn" data-act="closeD">Hủy</button></div></div>
     <p class="small" style="margin-top:12px">Người đăng ký hồ sơ: <b>${esc(S.me.name)}</b> (${DEPT[d]}).</p>`}
   else{const active=r.status==="active";
@@ -697,6 +726,7 @@ function renderDrawer(){ppHide();const isNew=S.openId==="new";const r=isNew?null
     ${flags(r).map(f=>`<span class="flag ${f[0]}">${esc(f[1])}</span>`).join("")}
     ${r.status==="closed"?`<div class="banner" style="background:var(--danger-bg);color:var(--danger)">Đã hủy dự án ${fmtDT(r.closedAt)}${r.closedBy!==undefined?" bởi "+esc(nameOf(r.closedBy)):""}. Lý do: ${esc(r.closeReason||"không ghi")}</div>`:""}
     ${S.closeMode?`<div class="cur-step" style="border-color:var(--danger);margin-bottom:14px"><div class="t">Hủy dự án${S.closeMode==="feas"?" – không khả thi":""}</div><div class="f" style="margin-top:10px"><label for="close-reason">Lý do hủy dự án <em>*</em></label><textarea id="close-reason" placeholder="Ví dụ: KH dừng dự án, không đáp ứng IV, giá không cạnh tranh…"></textarea></div><div class="err" id="close-err"></div><div class="acts"><button class="btn danger" data-act="doClose">Xác nhận hủy dự án</button><button class="btn" data-act="cancelClose">Hủy</button></div></div>`:""}
+    ${r.iformDetail&&typeof r.iformDetail==="object"?iformBlock(r.iformDetail,false):""}
     ${notifyHTML(r)}<div class="acts" style="margin:6px 0 14px">${S.isAdmin&&!active?`<button class="btn sm" data-act="reopen">Mở lại hồ sơ</button>`:""}${S.isAdmin&&active?`<button class="btn sm danger" data-act="adminClose">Hủy dự án</button>`:""}</div>
     <ol class="tl">${B.map((b,i)=>blockHTML(r,i)).join("")}</ol>`;
     const ex=EXTRA[d]||[];if(ex.length&&canAct(d)&&active)body+=`<h3>Thông tin thêm ${pill(d)}</h3><div class="fields">${ex.map(k=>fieldHTML(k,r,true,false)).join("")}</div><div class="acts"><button class="btn sm" data-act="saveExtra">Lưu</button></div>`;
@@ -707,8 +737,8 @@ function renderDrawer(){ppHide();const isNew=S.openId==="new";const r=isNew?null
   $("#drawerRoot").innerHTML=`<div class="scrim" data-act="closeD"></div><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle"><div class="dtop"><div class="grow"><h2 id="dTitle">${isNew?"Thêm mẫu mới":esc(r.customer)}</h2><div class="small">${isNew?"Kinh doanh mở dòng theo dõi":esc([r.application,r.industry,r.productCode].filter(Boolean).join(" · "))}</div></div><button class="x" data-act="closeD" aria-label="Đóng">×</button></div>${body}</aside>`;
   const dr=document.querySelector(".drawer");if(dr)dr.scrollTop=sy;
   if(S._scrollTo!=null){const el=document.getElementById("blk-"+S._scrollTo);if(el&&dr)dr.scrollTop=el.offsetTop-80;S._scrollTo=null}}
-function openDrawer(id,block){S.closeMode=null;S.notify=null;S.openId=id;S.draft={};S.expanded={};S.openBlock=block!=null?+block:null;if(block!=null)S._scrollTo=+block;renderDrawer();setTimeout(()=>document.querySelector(".drawer .x")?.focus({preventScroll:true}),0)}
-function closeDrawer(){S.closeMode=null;S.openId=null;S.draft={};$("#drawerRoot").innerHTML=""}
+function openDrawer(id,block){S.ifFilled=null;S.ifInfo=null;S.ifDupAck=false;S.closeMode=null;S.notify=null;S.openId=id;S.draft={};S.expanded={};S.openBlock=block!=null?+block:null;if(block!=null)S._scrollTo=+block;renderDrawer();setTimeout(()=>document.querySelector(".drawer .x")?.focus({preventScroll:true}),0)}
+function closeDrawer(){S.ifFilled=null;S.ifInfo=null;S.ifDupAck=false;S.closeMode=null;S.openId=null;S.draft={};$("#drawerRoot").innerHTML=""}
 function toast(t){const e=document.createElement("div");e.className="toast";e.setAttribute("role","status");e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2400)}
 
 /* ---------- Supabase: kết nối ---------- */
@@ -727,7 +757,7 @@ async function sel(table,cols,mod){let q=sb.from(table).select(cols);if(mod)q=mo
 
 /* ---------- tải dữ liệu ---------- */
 function diffText(a){const nd=a.new_data||{},od=a.old_data||{};const ch=[];
-  Object.keys(nd).forEach(k=>{const ck=camel(k);if(!F[ck])return;const o=od[k],n=nd[k];ch.push(`${F[ck].l}: “${o??"trống"}” → “${n??"trống"}”`)});return ch.join("; ")}
+  Object.keys(nd).forEach(k=>{const ck=camel(k);if(!F[ck])return;const o=od[k],n=nd[k];if((o&&typeof o==="object")||(n&&typeof n==="object")){ch.push(`${F[ck].l}: đã cập nhật`);return}ch.push(`${F[ck].l}: “${o??"trống"}” → “${n??"trống"}”`)});return ch.join("; ")}
 const UL={display_name:"tên hiển thị",full_name:"họ tên",email:"email",dept_code:"phòng ban",app_role:"quyền",status:"trạng thái"};
 function auditText(a){
   if(a.table_name==="projects"){const d=a.action==="UPDATE"?diffText(a):"";if(a.note)return a.note+(d&&!/^(Quyết định|Owner|Báo pending|Bỏ pending|Hoàn thành)/.test(a.note)?" – "+d:"");return d?"Sửa: "+d:null}
@@ -749,7 +779,7 @@ async function loadAll(){
   if(meE){S.uid=meE[0];S.me=meE[1];S.isAdmin=S.me.appRole==="owner";S.testRole=S.isAdmin?(S.me.acting||null):null}
   S.audit=au;
   const by={};ps.forEach(p=>{const r={id:sid(p.id),tasks:{},gates:{},comments:{},notices:{},log:{}};
-    FIELD_COLS.forEach(c=>{r[camel(c)]=p[c]==null?"":String(p[c])});
+    FIELD_COLS.forEach(c=>{const v=p[c];r[camel(c)]=v==null?"":(typeof v==="object"?v:String(v))});
     Object.assign(r,{status:p.status==="cancelled"?"closed":p.status,round:p.round,pending:p.is_pending,pendingReason:p.pending_reason||"",closeReason:p.cancel_reason||"",closeType:p.cancel_type,closedAt:p.cancelled_at,closedBy:sid(p.cancelled_by),createdAt:p.created_at,createdBy:sid(p.created_by),updatedAt:p.updated_at});
     by[r.id]=r});
   ts.forEach(t=>{const r=by[sid(t.project_id)];if(!r||t.round!==r.round)return;r.tasks[t.task_no]={startedAt:t.started_at,startedBy:sid(t.started_by),doneAt:t.status==="done"?t.done_at:null,doneBy:t.status==="done"?sid(t.done_by):null}});
@@ -775,13 +805,18 @@ function allLog(){const out=[];const pn={};rows().forEach(r=>{pn[r.id]=r.custome
   return out.sort((a,b)=>b.at.localeCompare(a.at))}
 
 /* ---------- ghi dữ liệu (qua RPC) ---------- */
-function snakeFields(keys){const o={};keys.forEach(k=>{if(S.draft[k]!==undefined)o[SNAKE[k]]=S.draft[k]});return o}
-async function saveTask(r,n){collect();const tk=TK[n];if(!canAct(tk.d))return;const f=snakeFields(tk.r);if(!Object.keys(f).length){toast("Không có thay đổi để lưu");return}
-  const res=await act("fn_save_task",{p_project_id:+r.id,p_task_no:n,p_fields:f,p_confirm:false},"Đã lưu nháp");if(res.ok)tk.r.forEach(k=>delete S.draft[k])}
+const withPic=keys=>keys.flatMap(k=>PIC_DEPT[k]?[k,k+"Email"]:[k]);
+function snakeFields(keys){const o={};withPic(keys).forEach(k=>{if(S.draft[k]!==undefined)o[SNAKE[k]]=S.draft[k]});return o}
+function clearDraft(keys){withPic(keys).forEach(k=>delete S.draft[k])}
+/* PIC đã gõ tên thì phải gắn được tài khoản (email) */
+function picError(r,keys){const k=keys.find(k=>PIC_DEPT[k]&&String(val(r,k)||"").trim()&&!String(val(r,k+"Email")||"").trim());return k?`Chọn ${lbl(k)} từ danh sách gợi ý (theo tài khoản / email)`:""}
+async function saveTask(r,n){collect();const tk=TK[n];if(!canAct(tk.d))return;const pe=picError(r,tk.r);if(pe){const el=$("#err-"+n);if(el)el.textContent=pe;else toast(pe);return}const f=snakeFields(tk.r);if(!Object.keys(f).length){toast("Không có thay đổi để lưu");return}
+  const res=await act("fn_save_task",{p_project_id:+r.id,p_task_no:n,p_fields:f,p_confirm:false},"Đã lưu nháp");if(res.ok)clearDraft(tk.r)}
 async function confirmTask(r,n){collect();const tk=TK[n];if(!canAct(tk.d))return;const miss=tk.r.filter(k=>!(val(r,k)||"").trim());const el=$("#err-"+n);
   if(miss.length){if(el)el.textContent="Cần nhập: "+miss.map(lbl).join(", ");document.getElementById("f-"+miss[0])?.focus();return}
+  const pe=picError(r,tk.r);if(pe){if(el)el.textContent=pe;return}
   const res=await act("fn_save_task",{p_project_id:+r.id,p_task_no:n,p_fields:snakeFields(tk.r),p_confirm:true},`Đã xác nhận ô ${DN[n]}`);
-  if(res.ok){tk.r.forEach(k=>delete S.draft[k])}else if(el)el.textContent=errMsg(res.error)}
+  if(res.ok){clearDraft(tk.r)}else if(el)el.textContent=errMsg(res.error)}
 async function undoTask(r,n){await act("fn_undo_task",{p_project_id:+r.id,p_task_no:n},`Đã bỏ xác nhận ô ${DN[n]}`)}
 async function gate(r,key){const [g,res]=key.split(":");await act("fn_decide_gate",{p_project_id:+r.id,p_gate:g,p_result:res,p_reason:null},"Đã ghi nhận quyết định")}
 async function pendingToggle(r){collect();const reason=(val(r,"pendingReason")||"").trim();
@@ -799,9 +834,12 @@ async function doClose(r){const reason=($("#close-reason")?.value||"").trim();if
   if(res.ok){S.closeMode=null;renderDrawer()}}
 async function createRow(){collect();const keys=B[0].t.flatMap(n=>TK[n].r);const miss=keys.filter(k=>!(S.draft[k]||"").trim());
   if(miss.length){$("#dErr").textContent="Cần nhập: "+miss.map(lbl).join(", ");document.getElementById("f-"+miss[0])?.focus();return}
-  try{await rpc("fn_create_project",{p_fields:snakeFields([...keys,"iform"])})}catch(e){const el=$("#dErr");if(el)el.textContent=errMsg(e);return}closeDrawer();toast("Đã tạo dự án");try{await loadAll()}catch(e){toast(errMsg(e))}}
+  const pe=picError(null,keys);if(pe){$("#dErr").textContent=pe;document.getElementById("f-salePic")?.focus();return}
+  const dup=S.ifInfo&&S.ifInfo.dup;if(dup&&!S.ifDupAck){S.ifDupAck=true;$("#dErr").textContent=`Phiếu iForm ${S.ifInfo.no} đã có hồ sơ “${dup}”. Bấm “Tạo hồ sơ” lần nữa nếu vẫn muốn tạo hồ sơ mới.`;return}
+  try{await rpc("fn_create_project",{p_fields:snakeFields([...keys,"iform","iformDetail"])})}catch(e){const el=$("#dErr");if(el)el.textContent=errMsg(e);return}closeDrawer();toast("Đã tạo dự án");try{await loadAll()}catch(e){toast(errMsg(e))}}
 function findMember(name,dept){const n=(name||"").trim().toLowerCase();if(!n)return null;const e=Object.entries(S.members).find(([,m])=>m.status==="active"&&((m.displayName||"").trim().toLowerCase()===n||(m.fullName||"").trim().toLowerCase()===n)&&(!dept||m.dept===dept));return e?e[0]:null}
-function openNotify(r,auto){const list=[["RD",r.rdPic||""],["KD",r.salePic||""]].map(([d,name])=>{const id=findMember(name,d);return {d,name,id,email:id?(S.members[id].email||""):""}});
+function memberIdByEmail(e){const x=String(e||"").trim().toLowerCase();if(!x)return null;const f=Object.entries(S.members).find(([,m])=>(m.email||"").toLowerCase()===x&&m.status!=="removed");return f?f[0]:null}
+function openNotify(r,auto){const list=[["RD",r.rdPic||"",r.rdPicEmail],["KD",r.salePic||"",r.salePicEmail]].map(([d,name,em])=>{const id=memberIdByEmail(em)||findMember(name,d);return {d,name,id,email:id?(S.members[id].email||""):""}});
   S.notify={id:r.id,list,auto};if(S.openId===r.id)renderDrawer();setTimeout(()=>document.getElementById("notifyBox")?.scrollIntoView({block:"center"}),0)}
 function notifyMsg(r){const subj=`[Gửi mẫu] ${r.customer}${r.application?" – "+r.application:""}: ngày dự kiến có mẫu ${fmtD(r.expectedSample)}`;
   const body=`Chào anh/chị,\n\nPhòng Kế hoạch đã chốt kế hoạch chạy trial:\n- Hồ sơ: ${r.customer}${r.application?" – "+r.application:""}\n- Mã SP: ${r.productCode||"–"}\n- Line: ${r.line||"–"}\n- Ngày chạy trial: ${fmtD(r.trialDate)}\n- Ngày dự kiến có mẫu: ${fmtD(r.expectedSample)}\n- LOT: ${r.lot||"–"}\n\nPIC Kế hoạch: ${r.planPic||"–"}`;return {subj,body}}
@@ -904,23 +942,23 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){hidePop();if(S.open
   if(e.key==="Enter"&&(e.target.id==="lg-email"||e.target.id==="lg-pw"))doLogin();if(e.key==="Enter"&&e.target.id==="ac-pw2")doActivate()});
 
 /* ---------- gợi ý PIC theo phòng ban ---------- */
-const STATIC_PIC={KD:SALEN,RD:RDN,KH:[]};
 const vnorm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[đĐ]/g,"d").toLowerCase().trim();
 function initials(n){const w=String(n||"").trim().split(/\s+/).filter(Boolean);return ((w.length>1?w[w.length-2][0]:"")+(w.length?w[w.length-1][0]:"")).toUpperCase()||"?"}
-function picPeople(dept){const out=[];const seen=new Set();
-  Object.values(S.members).filter(m=>m.dept===dept&&(m.status==="active"||m.status==="invited")).sort((a,b)=>(a.displayName||"").localeCompare(b.displayName||"","vi"))
-    .forEach(m=>{const name=m.displayName||m.fullName||"";if(!name)return;[name,m.fullName].forEach(x=>x&&seen.add(vnorm(x)));out.push({name,sub:m.fullName&&m.fullName!==name?m.fullName:"",dept,acct:m.status==="active"})});
-  (STATIC_PIC[dept]||[]).forEach(name=>{if(!seen.has(vnorm(name))){seen.add(vnorm(name));out.push({name,sub:"",dept,acct:false})}});
-  return out}
-function picWarn(v,dept){if(!v||!String(v).trim())return "";const n=vnorm(v);if(picPeople(dept).some(p=>vnorm(p.name)===n||vnorm(p.sub)===n))return "";
-  const other=Object.keys(DEPT).find(d=>d!==dept&&picPeople(d).some(p=>vnorm(p.name)===n||vnorm(p.sub)===n));
-  return other?`Người này thuộc ${DEPT[other]}, không phải ${DEPT[dept]}`:`Không có trong danh sách ${DEPT[dept]}`}
+function memberByEmail(e){const x=String(e||"").trim().toLowerCase();if(!x)return null;return Object.values(S.members).find(m=>(m.email||"").toLowerCase()===x&&m.status!=="removed")||null}
+function picPeople(dept){return Object.values(S.members).filter(m=>m.dept===dept&&(m.status==="active"||m.status==="invited")&&m.email)
+  .sort((a,b)=>(a.displayName||"").localeCompare(b.displayName||"","vi"))
+  .map(m=>({name:m.displayName||m.fullName||m.email,full:m.fullName&&m.fullName!==m.displayName?m.fullName:"",email:m.email,dept,acct:m.status==="active"}))}
+function picMeta(name,email,dept,ed){const m=memberByEmail(email);
+  if(m)return `<span class="pmok">✓ ${esc(m.email)}</span>${m.dept!==dept?` <span class="pmwarn">· thuộc ${esc(DEPT[m.dept]||m.dept)}</span>`:""}${m.status==="invited"?' <span class="pmmut">· chưa đăng nhập</span>':""}`;
+  if(email)return `<span class="pmwarn">Email ${esc(email)} không còn trong danh sách tài khoản${ed?" – chọn lại":""}</span>`;
+  if(name&&String(name).trim())return ed?`<span class="pmwarn">Chưa gắn tài khoản – chọn người từ danh sách gợi ý</span>`:`<span class="pmmut">Chưa gắn tài khoản</span>`;
+  return ""}
 const PP={el:null,inp:null,items:[],hl:-1,all:false};
 function ppEl(){if(!PP.el){const d=document.createElement("div");d.id="picpop";d.setAttribute("role","listbox");d.hidden=true;document.body.appendChild(d);
   d.addEventListener("mousedown",e=>{e.preventDefault();const o=e.target.closest("[data-pi],[data-pmore]");if(!o)return;if(o.dataset.pmore!==undefined){PP.all=true;ppRender();return}ppPick(+o.dataset.pi)});PP.el=d}return PP.el}
-function ppMatch(p,q){return !q||vnorm(p.name).includes(q)||vnorm(p.sub).includes(q)}
+function ppMatch(p,q){return !q||vnorm(p.name).includes(q)||vnorm(p.full).includes(q)||vnorm(p.email).includes(q)}
 function ppRender(){const inp=PP.inp;if(!inp)return;const dept=inp.dataset.pic;const q=vnorm(inp.value);const el=ppEl();PP.items=[];
-  const row=(p,other)=>{const i=PP.items.push(p)-1;return `<div class="pi ${i===PP.hl?"hl":""}" role="option" id="pi-${i}" data-pi="${i}" aria-selected="${i===PP.hl}"><span class="av ${other?"o":""}">${esc(initials(p.name))}</span><span class="pn"><b>${esc(p.name)}</b>${p.sub?`<span>${esc(p.sub)}</span>`:""}</span>${other?`<span class="pill d-${p.dept}">${DEPT[p.dept]}</span>`:p.acct?"":`<span class="pt">chưa có tài khoản</span>`}</div>`};
+  const row=(p,other)=>{const i=PP.items.push(p)-1;return `<div class="pi ${i===PP.hl?"hl":""}" role="option" id="pi-${i}" data-pi="${i}" aria-selected="${i===PP.hl}"><span class="av ${other?"o":""}">${esc(initials(p.name))}</span><span class="pn"><b>${esc(p.name)}</b><span>${esc([p.full,p.email].filter(Boolean).join(" · "))}</span></span>${other?`<span class="pill d-${p.dept}">${DEPT[p.dept]}</span>`:p.acct?"":`<span class="pt">chưa đăng nhập</span>`}</div>`};
   const mine=picPeople(dept).filter(p=>ppMatch(p,q));
   let h=`<div class="ph">Gợi ý · ${DEPT[dept]}</div>`+(mine.length?mine.map(p=>row(p,false)).join(""):`<div class="pe">${q?"Không có ai khớp trong "+DEPT[dept]:"Chưa có nhân sự "+DEPT[dept]+" trong Quản trị người dùng"}</div>`);
   if(PP.all||q){Object.keys(DEPT).filter(d=>d!==dept).forEach(d=>{const o=picPeople(d).filter(p=>ppMatch(p,q));if(o.length)h+=`<div class="ph sep">Phòng ban khác · ${DEPT[d]}</div>`+o.map(p=>row(p,true)).join("")})}
@@ -931,11 +969,17 @@ function ppPlace(){if(!PP.inp||!PP.el||PP.el.hidden)return;const r=PP.inp.getBou
   if(below<h&&above>below){el.style.top="";el.style.bottom=(window.innerHeight-r.top+4)+"px";el.style.maxHeight=Math.min(300,above)+"px"}else{el.style.bottom="";el.style.top=(r.bottom+4)+"px";el.style.maxHeight=Math.max(120,Math.min(300,below))+"px"}}
 function ppOpen(inp){PP.inp=inp;PP.hl=-1;PP.all=false;ppRender()}
 function ppHide(){if(PP.el)PP.el.hidden=true;if(PP.inp){PP.inp.setAttribute("aria-expanded","false");PP.inp.removeAttribute("aria-activedescendant")}PP.inp=null}
-function ppWarn(inp){const w=document.getElementById("pw-"+inp.dataset.k);if(w)w.textContent=picWarn(inp.value,inp.dataset.pic)}
-function ppPick(i){const p=PP.items[i];const inp=PP.inp;if(!p||!inp)return;inp.value=p.name;S.draft[inp.dataset.k]=p.name;ppWarn(inp);ppHide()}
+function picHidden(inp){return document.getElementById("f-"+inp.dataset.k+"Email")}
+function ppWarn(inp){const h=picHidden(inp);const w=document.getElementById("pm-"+inp.dataset.k);if(w)w.innerHTML=picMeta(inp.value,h?h.value:"",inp.dataset.pic,true)}
+function picLink(inp,p){const h=picHidden(inp);inp.value=p.name;if(h)h.value=p.email;S.draft[inp.dataset.k]=p.name;S.draft[inp.dataset.k+"Email"]=p.email;ppWarn(inp)}
+/* Rời ô mà chưa chọn: tự gắn nếu gõ đúng email hoặc tên chỉ khớp đúng một tài khoản */
+function picAuto(inp){const h=picHidden(inp);if(!h||h.value||!inp.value.trim())return;const q=vnorm(inp.value);
+  const all=Object.keys(DEPT).flatMap(d=>picPeople(d));const hit=all.filter(p=>vnorm(p.email)===q||vnorm(p.name)===q||vnorm(p.full)===q);
+  if(hit.length===1)picLink(inp,hit[0])}
+function ppPick(i){const p=PP.items[i];const inp=PP.inp;if(!p||!inp)return;picLink(inp,p);ppHide()}
 document.addEventListener("focusin",e=>{const t=e.target;if(t.matches&&t.matches("input[data-pic]:not(:disabled)"))ppOpen(t)});
-document.addEventListener("focusout",e=>{if(e.target===PP.inp){ppWarn(e.target);setTimeout(()=>{if(document.activeElement!==PP.inp)ppHide()},0)}});
-document.addEventListener("input",e=>{if(e.target.matches&&e.target.matches("input[data-pic]")){if(PP.inp!==e.target)PP.inp=e.target;PP.hl=-1;ppRender();const w=document.getElementById("pw-"+e.target.dataset.k);if(w)w.textContent=""}});
+document.addEventListener("focusout",e=>{const t=e.target;if(!(t.matches&&t.matches("input[data-pic]")))return;picAuto(t);ppWarn(t);if(t===PP.inp)setTimeout(()=>{if(document.activeElement!==PP.inp)ppHide()},0)});
+document.addEventListener("input",e=>{if(e.target.matches&&e.target.matches("input[data-pic]")){if(PP.inp!==e.target)PP.inp=e.target;PP.hl=-1;const h=picHidden(e.target);if(h)h.value="";S.draft[e.target.dataset.k+"Email"]="";ppRender();const w=document.getElementById("pm-"+e.target.dataset.k);if(w)w.innerHTML=""}});
 document.addEventListener("keydown",e=>{if(!PP.inp||e.target!==PP.inp||!PP.el||PP.el.hidden){if(e.key==="ArrowDown"&&e.target.matches&&e.target.matches("input[data-pic]:not(:disabled)")){ppOpen(e.target);e.preventDefault()}return}
   const n=PP.items.length;
   if(e.key==="ArrowDown"){PP.hl=n?(PP.hl+1)%n:-1;ppRender();document.getElementById("pi-"+PP.hl)?.scrollIntoView({block:"nearest"});e.preventDefault()}
@@ -944,6 +988,88 @@ document.addEventListener("keydown",e=>{if(!PP.inp||e.target!==PP.inp||!PP.el||P
   else if(e.key==="Escape"){ppHide();e.preventDefault();e.stopPropagation()}
   else if(e.key==="Tab")ppHide()},true);
 window.addEventListener("scroll",ppPlace,true);window.addEventListener("resize",ppPlace);
+
+/* ---------- nhập phiếu iForm (.docx) ---------- */
+// File Word được đọc ngay trên trình duyệt (JSZip + DOMParser), không gửi đi đâu.
+const JSZIP_URL="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js";
+const IF_LBL={"ho va ten":"reqName","vi tri cong viec":"_","cong ty":"_","khoi/phong ban":"_","ma nhan vien":"reqCode","email":"reqEmail",
+  "ma phieu xuat kho":"slip","ma san pham":"productCode","don vi chiu phi vc":"freightPayer","phi van chuyen":"freightFee",
+  "ten khach hang":"customer","thong tin lien lac khach hang":"contact","thi truong":"market","thong tin them":"moreInfo",
+  "dong san pham":"productLine","so luong":"qty","cong nghe san xuat":"tech","ung dung san pham":"application",
+  "mau sac":"color","mau chuan":"sample","khach hang co kinh nghiem san xuat nhua tai che":"recExp","thoi gian cung cap mau":"supplyTime",
+  "ty le su dung":"usage","ma nhua nguyen sinh khach hang dang su dung":"virgin","yeu cau ve cac chung nhan":"cert",
+  "ma nhua tai che khach hang dang su dung":"recCode","yeu cau ky thuat":"techReq","don vi gia cong tai viet nam":"processor",
+  "san luong du kien hang thang":"monthly","muc gia du kien khach hang chap nhan":"price","thoi gian can cung cap mau":"needDate",
+  "thoi gian tung hang":"launch","yeu cau khac":"otherReq","muc dich gui mau":"purpose"};
+const IF_GROUPS=[
+  ["Sản phẩm & kỹ thuật","box",[["productCode","Mã sản phẩm"],["color","Màu sắc"],["sample","Mẫu chuẩn"],["techReq","Yêu cầu kỹ thuật"],["cert","Chứng nhận"]]],
+  ["Khách hàng","building-factory-2",[["market","Thị trường"],["contact","Liên lạc KH"],["moreInfo","Thông tin thêm"],["processor","Đơn vị gia công"],["recExp","Đã dùng nhựa tái chế"],["virgin","Nhựa nguyên sinh đang dùng"],["recCode","Nhựa tái chế đang dùng"],["purpose","Mục đích trên iForm"]]],
+  ["Sản lượng & giá","chart-bar",[["qtyTxt","Số lượng mẫu"],["usage","Tỷ lệ sử dụng"],["monthly","Sản lượng / tháng"],["price","Mức giá KH chấp nhận"]]],
+  ["Thời gian & vận chuyển","truck",[["needDate","Cần mẫu"],["supplyTime","Thời gian cung cấp mẫu"],["launch","Tung hàng dự kiến"],["freight","Phí vận chuyển"],["slip","Phiếu xuất kho"],["otherReq","Yêu cầu khác"]]]];
+const ifLabelKey=t=>IF_LBL[vnorm(t).replace(/\([^)]*\)/g,"").replace(/[:：]/g,"").replace(/\s+/g," ").trim()];
+const ifDate=t=>{const m=String(t||"").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);return m?`${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`:""};
+const ifNum=t=>{let x=String(t||"").trim().replace(/\s/g,"");if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(x))x=x.replace(/\./g,"");x=x.replace(",",".");const n=parseFloat(x);return isFinite(n)?String(n):""};
+function loadScriptOnce(src){return new Promise((ok,bad)=>{if(window.JSZip)return ok();const el=document.createElement("script");el.src=src;el.onload=()=>ok();el.onerror=()=>bad(new Error("Không tải được thư viện đọc file Word. Kiểm tra kết nối mạng rồi thử lại."));document.head.appendChild(el)})}
+// Đọc chữ của một ô bảng: mỗi đoạn một dòng
+function ifCellText(tc){const ps=[...tc.getElementsByTagName("w:p")];return ps.map(p=>{let t="";
+  const walk=n=>{for(const c of n.childNodes){if(c.nodeName==="w:t")t+=c.textContent;else if(c.nodeName==="w:tab")t+=" ";else if(c.nodeName==="w:br")t+="\n";else if(c.nodeName!=="w:tbl")walk(c)}};walk(p);return t.trim()}).filter(Boolean).join("\n")}
+function parseIformXml(xml){const doc=new DOMParser().parseFromString(xml,"application/xml");if(doc.getElementsByTagName("parsererror").length)throw new Error("File Word bị lỗi, không đọc được.");
+  const rows=[];[...doc.getElementsByTagName("w:tr")].forEach(tr=>{const cells=[...tr.childNodes].filter(c=>c.nodeName==="w:tc").map(ifCellText);rows.push(cells)});
+  const all=rows.map(r=>r.join(" | ")).join("\n");
+  if(!/PHI[ẾE]U\s+Đ[ỀE]\s+XU[ẤA]T\s+G[ỬU]I\s+M[ẪA]U/i.test(all)&&!/iForm\s+s[ốo]/i.test(all))throw new Error("File này không giống phiếu đề xuất gửi mẫu xuất từ iForm.");
+  const v={};
+  const no=all.match(/Phi[ếe]u\s+iForm\s+s[ốo]\s*:?\s*(\d{5,})/i);if(no)v.no=no[1];
+  const dt=all.match(/Ng[àa]y\s*:\s*(\d{1,2}\/\d{1,2}\/\d{4})/i);if(dt)v.date=dt[1];
+  for(const cells of rows){const line=cells.join(" ");if(/^Th[ôo]ng tin ph[êe] duy[ệe]t/i.test(line.trim()))break;
+    cells.forEach(c=>{const m=c.match(/^Th[ôo]ng tin y[êe]u c[ầa]u chi ti[ếe]t\s*:\s*([\s\S]*)$/i);if(m)v.detail=m[1].replace(/\s+/g," ").trim()});
+    const ne=cells.filter(c=>c!=="");
+    for(let i=0;i<ne.length;i++){const key=ifLabelKey(ne[i]);if(!key)continue;const nx=ne[i+1];
+      if(nx!==undefined&&!ifLabelKey(nx)){if(key!=="_")v[key]=nx.replace(/\s*\n\s*/g," ").trim();i++}else if(key!=="_")v[key]=""}}
+  return v}
+function ifIndustry(line,tech){const l=vnorm(line).replace(/\s/g,""),t=vnorm(tech);const ep=/\bep\b|injection/.test(t),thoi=/\bthoi\b|blow/.test(t);
+  if(l.startsWith("rpp"))return ep?"rPP ép":"rPP";
+  if(l.startsWith("rhdpe"))return thoi?"rHDPE thổi":ep?"rHDPE ép":"";
+  if(l.startsWith("rpet"))return /soi|fiber|xo/.test(t)?"rPET xơ sợi":"";
+  return ""}
+function ifBuildDetail(v,fileName){const x={...v,qtyTxt:v.qty?`${v.qty} kg`:"",freight:[v.freightPayer,v.freightFee].filter(Boolean).join(" · ")};
+  return {no:v.no||"",date:v.date||"",requester:{name:v.reqName||"",email:v.reqEmail||"",code:v.reqCode||""},detail:v.detail||"",file:fileName||"",importedAt:new Date().toISOString(),
+    groups:IF_GROUPS.map(([t,ic,items])=>({t,ic,items:items.map(([k,l])=>[l,x[k]||""]).filter(([,val])=>String(val).trim())})).filter(g=>g.items.length)}}
+async function importIform(file){const zone=document.getElementById("ifmsg");const say=(t,bad)=>{if(zone){zone.textContent=t;zone.className="ifmsg"+(bad?" bad":"")}};
+  if(!file)return;if(!/\.docx$/i.test(file.name)){say("Chỉ nhận file Word .docx xuất từ iForm.",true);return}
+  if(file.size>15*1024*1024){say("File quá lớn (tối đa 15 MB).",true);return}
+  say("Đang đọc file…");
+  try{await loadScriptOnce(JSZIP_URL);const zip=await window.JSZip.loadAsync(file);const ent=zip.file("word/document.xml");if(!ent)throw new Error("Không tìm thấy nội dung trong file Word.");
+    const v=parseIformXml(await ent.async("string"));applyIform(v,file.name)}
+  catch(e){say(e.message||"Không đọc được file.",true)}}
+function applyIform(v,fileName){collect();const D=S.draft,filled=new Set();const set=(k,val)=>{if(val!==undefined&&String(val).trim()!==""){D[k]=String(val).trim();filled.add(k)}};
+  set("iform",v.no);set("reqDate",ifDate(v.date));set("customer",v.customer);set("application",v.application);
+  const ind=ifIndustry(v.productLine,v.tech);if(ind)set("industry",ind);
+  set("qty",ifNum(v.qty));
+  if(v.detail){const cur=String(D.requirement||"").trim();D.requirement=cur&&!cur.includes(v.detail)?v.detail+"\n"+cur:(cur||v.detail+"\n");filled.add("requirement")}
+  let emailMiss="";const m=memberByEmail(v.reqEmail);
+  if(m&&m.status!=="removed"){D.salePic=m.displayName;D.salePicEmail=m.email;filled.add("salePic")}else if(v.reqEmail)emailMiss=v.reqEmail;
+  D.purpose="";D.iformDetail=ifBuildDetail(v,fileName);
+  const dup=v.no?rows().find(r=>r.iform===v.no):null;
+  S.ifFilled=filled;S.ifDupAck=false;S.ifInfo={no:v.no||"",count:filled.size,purpose:v.purpose||"",emailMiss,requester:v.reqName||"",dup:dup?[dup.customer,dup.application].filter(Boolean).join(" – "):"",industryRaw:ind?"":[v.productLine,v.tech].filter(Boolean).join(" · ")};
+  renderDrawer();toast(`Đã nhập phiếu iForm ${v.no||""}`)}
+function ifCls(k){return S.openId==="new"&&S.ifFilled&&S.ifFilled.has(k)?"iffill":""}
+function ifZone(){const I=S.ifInfo;
+  if(!I)return `<div class="ifzone" id="ifzone"><div class="ifz-ic" aria-hidden="true">W</div><div class="ifz-t"><b>Nhập từ phiếu iForm</b><span>Kéo thả file Word (.docx) xuất từ iForm vào đây để tự điền bước 1</span><div class="ifmsg" id="ifmsg" role="status"></div></div><button class="btn sm" data-act="ifPick">Chọn file .docx</button><input type="file" id="iffile" accept=".docx" hidden></div>`;
+  return `<div class="ifok" role="status"><div><b>Đã nhập phiếu iForm ${esc(I.no||"(không rõ số)")}</b> – điền ${I.count} ô (nền xanh, nhãn “iForm”). Kiểm tra lại trước khi tạo hồ sơ.
+    ${I.requester?`<br><span class="small">Người lập phiếu: ${esc(I.requester)}</span>`:""}
+    ${I.emailMiss?`<br><span class="ifw">PIC Sale: email ${esc(I.emailMiss)} chưa có trong Quản trị người dùng – chọn PIC bằng tay.</span>`:""}
+    ${I.industryRaw?`<br><span class="ifw">Ngành: iForm ghi “${esc(I.industryRaw)}” – chọn ngành phù hợp.</span>`:""}
+    ${I.dup?`<br><span class="ifw">Phiếu này đã có hồ sơ “${esc(I.dup)}”.</span>`:""}
+    <div class="ifmsg" id="ifmsg" role="status"></div></div><button class="btn sm" data-act="ifPick">Chọn file khác</button><input type="file" id="iffile" accept=".docx" hidden></div>`}
+function iformBlock(d,open){if(!d||!d.groups)return "";const n=d.groups.reduce((a,g)=>a+g.items.length,0);
+  return `<details class="ifblk" ${open?"open":""}><summary><span>Chi tiết từ phiếu iForm${d.no?" "+esc(d.no):""}</span><span class="small"> · ${n} mục · chỉ đọc${d.date?" · ngày "+esc(d.date):""}</span></summary>
+  ${d.requester&&(d.requester.name||d.requester.email)?`<div class="ifreq">Người lập: ${esc(d.requester.name||"")}${d.requester.email?" · "+esc(d.requester.email):""}</div>`:""}
+  <div class="ifgrid">${d.groups.map(g=>`<div class="ifg"><div class="ifgt">${esc(g.t)}</div><dl>${g.items.map(([l,v])=>`<div><dt>${esc(l)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></div>`).join("")}</div></details>`}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest('[data-act="ifPick"]');if(b){e.preventDefault();e.stopPropagation();document.getElementById("iffile")?.click()}},true);
+document.addEventListener("change",e=>{if(e.target&&e.target.id==="iffile"){importIform(e.target.files&&e.target.files[0]);e.target.value=""}});
+document.addEventListener("dragover",e=>{const z=e.target.closest&&e.target.closest("#ifzone");if(z){e.preventDefault();z.classList.add("drag")}});
+document.addEventListener("dragleave",e=>{const z=e.target.closest&&e.target.closest("#ifzone");if(z)z.classList.remove("drag")});
+document.addEventListener("drop",e=>{const z=e.target.closest&&e.target.closest("#ifzone");if(!z)return;e.preventDefault();z.classList.remove("drag");importIform(e.dataTransfer.files&&e.dataTransfer.files[0])});
 
 /* ---------- khởi động ---------- */
 function render(){if(S.screen==="main"){if(!S.me||S.me.status!=="active"){S.screen="removed";closeDrawer();renderLogin();return}renderMain()}else renderLogin()}
