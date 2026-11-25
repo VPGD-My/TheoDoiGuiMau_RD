@@ -14,6 +14,10 @@ supabase/migrations/003_teams_notify_rollback.sql
 supabase/migrations/003b_teams_card_format.sql  Chỉ chạy nếu đã chạy bản 003 cũ
 supabase/migrations/004_teams_card_v2.sql     Card Teams mới (màu theo loại tin, nút mở thẳng hồ sơ)
 supabase/migrations/004_teams_card_v2_rollback.sql
+supabase/migrations/005_pic_email_iform.sql   PIC lấy email làm căn cứ + lưu chi tiết phiếu iForm
+supabase/migrations/005_pic_email_iform_rollback.sql
+supabase/migrations/006_dept_head_assign.sql  Trưởng phòng & phân công PIC
+supabase/migrations/006_dept_head_assign_rollback.sql
 .github/workflows/backup.yml            Backup hằng tuần (mã hóa, giữ 90 ngày)
 ```
 
@@ -100,3 +104,23 @@ Lưu ý: chỉ schema `public` được sao lưu (dữ liệu app). Cấu hình 
 
 - Project tạm dừng sau 7 ngày không có hoạt động; vào Dashboard bấm Restore để chạy lại. Khi cả công ty dùng hằng ngày, cân nhắc gói Pro.
 - Mỗi lần đọc, Supabase trả tối đa 1.000 dòng; app hiện đọc toàn bộ dự án một lần. Khi dữ liệu vượt mức này, cần thêm phân trang.
+
+## Nhập phiếu iForm (file Word) – từ bản 005
+
+- Kinh doanh bấm "Thêm mẫu mới", kéo thả hoặc chọn file .docx xuất từ iForm (Phiếu đề xuất gửi mẫu khách hàng).
+- File được đọc ngay trên trình duyệt, không gửi đi đâu. App tự điền: Iform, Ngày nhận yêu cầu, Đơn vị nhận mẫu, Ứng dụng, Ngành (ghép Dòng sản phẩm + Công nghệ), Yêu cầu đặc biệt (dòng đầu), PIC Sale (theo email người lập phiếu), Số lượng (bước 2).
+- Mục đích để trống cho sales tự chọn. Các mục còn lại lưu vào "Chi tiết từ phiếu iForm" (cột `iform_detail`), xem lại được trong hồ sơ.
+
+## PIC theo email – từ bản 005
+
+- Ô PIC Sale / R&D / Kế hoạch phải chọn từ danh sách tài khoản; database lưu email (`*_pic_email`), tên tự đồng bộ theo tên hiển thị.
+- Thông báo Teams gửi theo email PIC; hồ sơ chưa gắn email thì gửi như cũ.
+- Sau khi chạy 005, xem các hồ sơ còn PIC chưa gắn tài khoản bằng câu truy vấn ở cuối file migration.
+
+## Trưởng phòng & phân công PIC – từ bản 006
+
+- Owner bật cột "Trưởng phòng" trong Quản trị người dùng (Kinh doanh, R&D, Kế hoạch; mỗi phòng có thể nhiều người). Đổi phòng ban thì tự bỏ đánh dấu.
+- Hồ sơ chưa có PIC của một phòng: card Teams gửi trưởng phòng ("Cần phân công PIC …"); phòng chưa có trưởng phòng thì gửi cả phòng như cũ.
+- Trưởng phòng (hoặc Owner) mở hồ sơ, dùng khung "Chưa phân công PIC …" để chọn người; có thể "Đổi PIC" về sau.
+- Người được chọn làm PIC (qua phân công hoặc ô 3 / ô 7) nhận card "Bạn được phân công". Tự chọn chính mình thì không gửi.
+- Thứ tự chọn người nhận Teams của một phòng: email PIC → tên PIC (hồ sơ cũ) → trưởng phòng → cả phòng.
