@@ -480,6 +480,70 @@ body{background:transparent}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cm-mt{color:#8CB8F0}}
 .cm-tag{font-size:10px;font-weight:700;padding:0 6px;border-radius:5px;border:1px solid #9DBDE6;color:#1D5FB4;background:var(--surface)}
 .cm-rp{color:var(--accent);font-weight:600}
+
+/* ===== Dải PIC theo phòng ===== */
+.pstrip{display:grid;gap:8px;margin:4px 0 12px}
+.pcell{border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:1px;min-width:0;background:var(--glass-soft,var(--surface))}
+.pcell.cur{border-color:var(--green)}
+.pcell.miss{border-color:#E5C46B;background:#FFF7DD}
+:root[data-theme="dark"] .pcell.miss{background:#3A3115;border-color:#7A6522}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pcell.miss{background:#3A3115;border-color:#7A6522}}
+.pcell .pd{font-size:11px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:6px}
+.pcell .pn{font-size:14px;font-weight:700;overflow-wrap:anywhere}.pcell.miss .pn{font-weight:500;color:var(--warn,#8A5A00)}
+.pcell .pe{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pcell .pb{margin-top:5px}.pcell .pb .btn{padding:2px 10px;font-size:12px}
+.pcur{font-size:10px;font-weight:700;padding:0 6px;border-radius:5px;background:var(--green-tint);color:var(--accent);white-space:nowrap}
+.ifblk>summary{margin:0}
+@media (max-width:560px){.pstrip{grid-template-columns:1fr!important}}
+
+/* ===== Thống kê truy cập ===== */
+.memtabs{display:flex;gap:6px;margin:4px 0 14px}.memtabs button{border:1px solid var(--line);background:var(--glass-soft,var(--surface));border-radius:9px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--text)}
+.memtabs button.on{background:var(--green-dark,#0C6602);border-color:var(--green-dark,#0C6602);color:#fff;font-weight:700}
+.sthead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.stkpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.stkpi>div{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--glass-soft,var(--surface));display:flex;flex-direction:column}
+.stkpi span{font-size:12px;color:var(--muted)}.stkpi b{font-size:26px;line-height:1.2;color:var(--accent)}.stkpi i{font-style:normal;font-size:12px;color:var(--muted)}
+.stc{border:1px solid var(--line);border-radius:14px;padding:12px 16px;background:var(--glass-soft,var(--surface));margin-bottom:12px;min-width:0}
+.sth{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.sth h3{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}.sth h3 span{text-transform:none;letter-spacing:0;font-weight:500}
+.stseg{display:flex;gap:4px}.stseg button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 11px;font-size:12px;cursor:pointer;color:var(--text)}
+.stseg button.on{border-color:var(--green);color:var(--accent);font-weight:700;background:var(--green-tint)}
+.schart{width:100%;height:auto;display:block}.schart .sb{fill:#2E7D22}.schart .sg{stroke:var(--line);stroke-width:1}.schart .sl{fill:var(--muted);font-size:10px}
+:root[data-theme="dark"] .schart .sb{fill:#5FBF4A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .schart .sb{fill:#5FBF4A}}
+.stcap{font-size:12px;color:var(--muted);margin:4px 0 0}
+.st2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.hmwrap{overflow-x:auto}.hm{display:grid;grid-template-columns:28px repeat(24,minmax(16px,1fr));gap:3px;min-width:560px}
+.hmh{font-size:10px;color:var(--muted);text-align:left}.hmd{font-size:11px;color:var(--muted);align-self:center}
+.hmc{height:18px;border-radius:3px;background:var(--surface-alt)}
+.hmleg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}.hmleg i{width:70px;height:8px;border-radius:4px;background:linear-gradient(90deg,rgba(17,120,10,.18),rgba(17,120,10,1))}
+.stdp{padding:7px 0;border-bottom:1px solid var(--line-soft,var(--line))}.stdp:last-child{border-bottom:0}
+.stdl{display:flex;align-items:baseline;gap:8px}.stdl b{font-size:13px}.stdl span{flex:1;font-size:11px;color:var(--muted)}.stdl em{font-style:normal;font-weight:700}.stdl small{font-weight:500;color:var(--muted)}
+.stbar{height:6px;border-radius:3px;background:var(--surface-alt);margin-top:5px;overflow:hidden}.stbar i{display:block;height:100%;background:#2E7D22;border-radius:3px}
+.stold{font-size:10px;font-weight:700;padding:0 6px;border-radius:5px;background:#FFF2CC;color:#8A5A00;white-space:nowrap}
+@media (max-width:900px){.st2,.stkpi{grid-template-columns:1fr}}
+/* ===== Tên khách hàng xuống dòng (bảng tiến độ) ===== */
+.mx td.rn .l1{white-space:normal;overflow:visible;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.mx td.rn .l1 b{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.3}
+.mx td.rn .l2.small{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ===== Mã dự án & khách hàng ===== */
+.pcode{display:inline-block;font-family:ui-monospace,Consolas,monospace;font-size:11px;font-weight:700;padding:1px 6px;border-radius:5px;background:var(--surface-alt);color:var(--accent);margin-right:6px;vertical-align:1px;white-space:nowrap}
+.pcode.sm{font-size:10px;padding:0 5px;margin-right:2px}
+.dcode{margin-top:4px}
+.cmeta{display:flex;flex-direction:column;gap:2px}.cprev{font-size:12px;color:var(--muted)}.cprev b{color:var(--accent)}
+.custpop{position:fixed;z-index:40;background:var(--glass-strong,var(--surface));-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:4px 0;font-size:13px;max-height:320px;overflow-y:auto}
+.custpop[hidden]{display:none}.custpop .ci{display:flex;align-items:center;gap:6px;padding:7px 12px;cursor:pointer}.custpop .ci:hover,.custpop .ci.hl{background:var(--green-tint)}
+.custpop .cn{display:flex;flex-direction:column}.custpop .cn small{font-size:11px;color:var(--muted)}
+.custpop .ci.new{border-top:1px solid var(--line-soft,var(--line));color:var(--accent);font-weight:700}
+.custpop .cpw{font-size:12px;padding:6px 12px;color:var(--warn,#8A5A00);background:#FFF7DD}
+.lview{display:flex;gap:4px}.lview button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer;color:var(--text)}
+.lview button.on{background:var(--green-dark,#0C6602);border-color:var(--green-dark,#0C6602);color:#fff;font-weight:700}
+.ctbl .crow{cursor:pointer}.ctbl .cpj{cursor:pointer}.ctbl .cpj td{background:var(--glass-soft,var(--surface-alt));font-size:13px}
+.cs{display:inline-block;font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;margin-right:4px}
+.cs.a{background:#E3EEFB;color:#1D5FB4}.cs.d{background:var(--green-tint);color:var(--accent)}.cs.x{background:#FDE7E7;color:#B42318}
+.cadm td{background:var(--surface-alt)}.cadmr{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px}.cadmr label{display:flex;gap:6px;align-items:center;font-size:12px}
+.cadmr input,.cadmr select{padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--text)}
 </style>
 </head>
 <body>
@@ -609,7 +673,7 @@ function taskDur(r,n,i){const v=r._t[n];if(!v||!v.doneAt)return null;const st=v.
 function blockDur(r,i){const end=blockDoneAt(r,i);if(!end)return null;const b=B[i];const starts=b.t.map(n=>r._t[n]&&r._t[n].startedAt).filter(Boolean);const ra=readyAt(r,i);if(ra)starts.push(ra);if(!starts.length)return null;return new Date(end)-new Date(starts.sort()[0])}
 function stats(){const bs={},ts={};rows().forEach(r=>B.forEach((b,i)=>{const d=blockDur(r,i);if(d!=null&&d>=0)(bs[i]=bs[i]||[]).push(d);b.t.forEach(n=>{const x=taskDur(r,n,i);if(x!=null&&x>=0)(ts[n]=ts[n]||[]).push(x)})}));
   const avg=o=>{const a={};Object.keys(o).forEach(k=>a[k]=o[k].reduce((x,y)=>x+y,0)/o[k].length);return a};return {b:avg(bs),t:avg(ts),bn:Object.fromEntries(Object.entries(bs).map(([k,v])=>[k,v.length]))}}
-function vis(all){const q=S.q.trim().toLowerCase();return rows().filter(r=>(all||S.showClosed||r.status==="active")&&(!q||[r.customer,r.application,r.productCode,r.salePic,r.rdPic,r.planPic,r.industry,r.lot,nameOf(r.createdBy)].join(" ").toLowerCase().includes(q))).sort((a,b)=>(a.createdAt||"").localeCompare(b.createdAt||""))}
+function vis(all){const q=S.q.trim().toLowerCase();return rows().filter(r=>(all||S.showClosed||r.status==="active")&&(!q||[r.projectCode,r.customer,r.application,r.productCode,r.salePic,r.rdPic,r.planPic,r.industry,r.lot,nameOf(r.createdBy)].join(" ").toLowerCase().includes(q))).sort((a,b)=>(a.createdAt||"").localeCompare(b.createdAt||""))}
 
 /* ---------- login ---------- */
 function curTheme(){const t=document.documentElement.dataset.theme;if(t)return t;return window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
@@ -667,16 +731,16 @@ function workHTML(){
 function listTabHTML(){
   if(!S.loaded)return `<div class="list" style="margin-top:16px"><div class="empty">Đang tải danh sách mẫu…</div></div>`;
   const v=vis(true);const g=[["active","Đang thực hiện",""],["launched","Hoàn thành","grp-done"],["closed","Đã hủy","grp-cancel"]];
-  return `<div class="viewbar"><input type="search" id="q" value="${esc(S.q)}" placeholder="Tìm khách hàng, mã SP, PIC, người đăng ký…" aria-label="Tìm kiếm" style="padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);min-width:260px;flex:1"><span class="small">${v.length} hồ sơ</span></div>`+
-   g.map(([k,t,cls])=>{const list=v.filter(r=>r.status===k);return `<div class="sec ${cls}"><h2>${t}</h2><span class="small">${list.length} dự án</span></div>`+(list.length?`<div class="${cls}">${k==="active"?listHTML(list):k==="launched"?doneTable(list):cancelTable(list)}</div>`:`<p class="small">Không có dự án nào.</p>`)}).join("")}
+  return `<div class="viewbar"><input type="search" id="q" value="${esc(S.q)}" placeholder="Tìm mã dự án, khách hàng, mã SP, PIC…" aria-label="Tìm kiếm" style="padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);min-width:260px;flex:1"><div class="lview" role="group" aria-label="Kiểu xem">${[["proj","Theo hồ sơ"],["cust","Theo khách hàng"]].map(([k,l])=>`<button class="${(S.listView||"proj")===k?"on":""}" aria-pressed="${(S.listView||"proj")===k}" data-lview="${k}">${l}</button>`).join("")}</div><span class="small">${v.length} hồ sơ</span></div>`+(S.listView==="cust"?custViewHTML(v):"")+(S.listView==="cust"?"":
+   g.map(([k,t,cls])=>{const list=v.filter(r=>r.status===k);return `<div class="sec ${cls}"><h2>${t}</h2><span class="small">${list.length} dự án</span></div>`+(list.length?`<div class="${cls}">${k==="active"?listHTML(list):k==="launched"?doneTable(list):cancelTable(list)}</div>`:`<p class="small">Không có dự án nào.</p>`)}).join(""))}
 function lastDone(r){const ts=Object.values(r._t||{}).map(v=>v&&v.doneAt).filter(Boolean).concat(Object.values(r._g||{}).map(g=>g&&g.at).filter(Boolean));return ts.sort().pop()||r.updatedAt}
-function doneTable(v){return `<div class="scroll"><table class="tbl"><thead><tr><th>STT</th><th>Dự án</th><th>Ngày hoàn thành</th><th>Tổng thời gian</th><th>Ngày dự kiến tung SP</th><th>PIC</th></tr></thead><tbody>${v.map((r,i)=>{const end=lastDone(r);const st=readyAt(r,0)||r.createdAt;return `<tr class="item" data-open="${r.id}" style="cursor:pointer"><td>${i+1}</td><td><b>${esc(r.customer)}</b>${r.application?" – "+esc(r.application):""}<div class="small">${esc([r.industry,r.productCode].filter(Boolean).join(" · "))}</div></td><td>${fmtDT(end)}</td><td>${st&&end?dur(new Date(end)-new Date(st)):"–"}</td><td>${fmtD(r.launchDate)}</td><td class="small">KD: ${esc(r.salePic||"–")}<br>R&amp;D: ${esc(r.rdPic||"–")}</td></tr>`}).join("")}</tbody></table></div>`}
-function cancelTable(v){return `<div class="scroll"><table class="tbl"><thead><tr><th>STT</th><th>Dự án</th><th>Lý do hủy</th><th>Hủy tại bước</th><th>Tổng thời gian</th><th>Người hủy · thời gian</th><th>Người đăng ký</th></tr></thead><tbody>${v.map((r,i)=>{const c=curBlock(r);const b=B[Math.min(c,NB-1)];return `<tr class="item" data-open="${r.id}" style="cursor:pointer"><td>${i+1}</td><td><b>${esc(r.customer)}</b>${r.application?" – "+esc(r.application):""}</td><td style="color:var(--danger);font-weight:600">${esc(r.closeReason||"Chưa ghi lý do")}</td><td>Bước ${Math.min(c,NB-1)+1}: ${esc(b.n)}</td><td>${(()=>{const t0=readyAt(r,0)||r.createdAt;return t0&&r.closedAt?dur(new Date(r.closedAt)-new Date(t0)):"–"})()}</td><td class="small">${r.closedBy!==undefined?esc(nameOf(r.closedBy)):"–"}<br>${fmtDT(r.closedAt)}</td><td class="small">${esc(nameOf(r.createdBy))}</td></tr>`}).join("")}</tbody></table></div>`}
+function doneTable(v){return `<div class="scroll"><table class="tbl"><thead><tr><th>STT</th><th>Dự án</th><th>Ngày hoàn thành</th><th>Tổng thời gian</th><th>Ngày dự kiến tung SP</th><th>PIC</th></tr></thead><tbody>${v.map((r,i)=>{const end=lastDone(r);const st=readyAt(r,0)||r.createdAt;return `<tr class="item" data-open="${r.id}" style="cursor:pointer"><td>${i+1}</td><td>${pcode(r)}<b>${esc(r.customer)}</b>${r.application?" – "+esc(r.application):""}<div class="small">${esc([r.industry,r.productCode].filter(Boolean).join(" · "))}</div></td><td>${fmtDT(end)}</td><td>${st&&end?dur(new Date(end)-new Date(st)):"–"}</td><td>${fmtD(r.launchDate)}</td><td class="small">KD: ${esc(r.salePic||"–")}<br>R&amp;D: ${esc(r.rdPic||"–")}</td></tr>`}).join("")}</tbody></table></div>`}
+function cancelTable(v){return `<div class="scroll"><table class="tbl"><thead><tr><th>STT</th><th>Dự án</th><th>Lý do hủy</th><th>Hủy tại bước</th><th>Tổng thời gian</th><th>Người hủy · thời gian</th><th>Người đăng ký</th></tr></thead><tbody>${v.map((r,i)=>{const c=curBlock(r);const b=B[Math.min(c,NB-1)];return `<tr class="item" data-open="${r.id}" style="cursor:pointer"><td>${i+1}</td><td>${pcode(r)}<b>${esc(r.customer)}</b>${r.application?" – "+esc(r.application):""}</td><td style="color:var(--danger);font-weight:600">${esc(r.closeReason||"Chưa ghi lý do")}</td><td>Bước ${Math.min(c,NB-1)+1}: ${esc(b.n)}</td><td>${(()=>{const t0=readyAt(r,0)||r.createdAt;return t0&&r.closedAt?dur(new Date(r.closedAt)-new Date(t0)):"–"})()}</td><td class="small">${r.closedBy!==undefined?esc(nameOf(r.closedBy)):"–"}<br>${fmtDT(r.closedAt)}</td><td class="small">${esc(nameOf(r.createdBy))}</td></tr>`}).join("")}</tbody></table></div>`}
 function mini(r){const d=actDept();return `<div class="mini" aria-hidden="true">${B.map((b,i)=>{const s=bState(r,i);return `<i class="${s==="done"?"d":s==="cur"||s==="early"?"c":""} ${b.d===d?"m":""}"></i>`}).join("")}</div>`}
 function card(r,opts={}){const d=actDept();const c=curBlock(r);const b=B[Math.min(c,NB-1)];const mine=myOpen(r,d).filter(x=>x.i===c);const fl=flags(r);const cm=comments(r).filter(x=>x.to===d).length;
   const since=c<B.length&&r.status==="active"?readyAt(r,c):null;
   return `<button class="card ${b.d}" data-open="${r.id}" ${opts.block!=null?`data-block="${opts.block}"`:""}>
-   <div class="ttl">${esc(r.customer)}${r.application?" – "+esc(r.application):""}</div>
+   <div class="ttl">${pcode(r)}${esc(r.customer)}${r.application?" – "+esc(r.application):""}</div>
    <div class="meta">${r.status!=="active"?(r.status==="launched"?"Hoàn thành":"Đã hủy"+(r.closeReason?": "+esc(r.closeReason):"")):`Bước ${c+1}/${NB} · ${esc(b.n)} · ${pill(b.d)}`}</div>
    ${opts.tasks!==false?mine.slice(0,4).map(x=>`<div class="tk">${x.g?`<span class="tn">◇</span>Quyết định: ${GATE[x.g].q}`:`<span class="tn">${DN[x.n]}</span>${esc(TK[x.n].t)}`}</div>`).join("")+(mine.length>4?`<div class="small">+${mine.length-4} việc khác</div>`:""):""}
    <div>${fl.map(f=>`<span class="flag ${f[0]}">${esc(f[1])}</span>`).join("")}${(r.round||1)>1?`<span class="flag warn">Vòng ${r.round}</span>`:""}${cm?`<span class="flag ok">${cm} trao đổi gửi ${DEPT[d]}</span>`:""}</div>
@@ -705,9 +769,9 @@ function showNote(id,btn){const r=rows().find(x=>x.id===id);if(!r)return;let p=d
   const h=p.offsetHeight||260;p.style.top=(b.bottom+6+h>window.innerHeight?Math.max(8,b.top-6-h):b.bottom+6)+"px"}
 function hidePop(){const p=document.getElementById("pop");if(p)p.hidden=true}
 function matrixHTML(v){const d=actDept();
-  return `<p class="small" style="margin:0 0 6px">✓ xong · ● đến lượt · ô nổi bật: đến lượt ${DEPT[d]} · ✉ có ghi chú, bấm để xem. Trỏ chuột vào bước để xem tên bước.</p><div class="scroll" style="padding:8px"><table class="mx"><colgroup><col style="width:21%">${B.map(()=>"<col>").join("")}<col style="width:23%"></colgroup><thead><tr><th>Dự án</th>${B.map((b,i)=>`<th class="${b.d===d?"mine":""}" title="${esc(b.n)}"><span class="bn">${i+1}</span>${DEPT[b.d]}</th>`).join("")}<th>Trạng thái hiện tại</th></tr></thead><tbody>${v.map(r=>`<tr class="${(()=>{const c=curBlock(r);return c<NB&&B[c].d===d?"myturn":""})()}"><td class="rn" data-open="${r.id}"><div class="l1">${(()=>{const c=curBlock(r);return c<NB&&B[c].d===d?'<span class="turnpill">ĐẾN LƯỢT</span>':""})()}<b title="${esc(r.customer)}">${esc(r.customer)}</b></div><div class="l2 small" title="${esc(r.application||"")}">${esc(r.application||"")}</div><div class="l2">${flags(r).filter(f=>f[0]!=="bad").map(f=>`<span class="flag ${f[0]}">${esc(f[1])}</span>`).join("")||"&nbsp;"}</div></td>${B.map((b,i)=>{const s=bState(r,i);return `<td class="c ${s==="done"?"done":s==="cur"?"cur":s==="early"?"part":""} ${b.d===d?"mine":""}" data-open="${r.id}" data-block="${i}" title="${esc(b.n)}">${s==="done"?"✓":s==="cur"?"●":s==="early"?"◐":""}</td>`}).join("")}<td class="stt">${statusHTML(r)}</td></tr>`).join("")}</tbody></table></div>`}
+  return `<p class="small" style="margin:0 0 6px">✓ xong · ● đến lượt · ô nổi bật: đến lượt ${DEPT[d]} · ✉ có ghi chú, bấm để xem. Trỏ chuột vào bước để xem tên bước.</p><div class="scroll" style="padding:8px"><table class="mx"><colgroup><col style="width:21%">${B.map(()=>"<col>").join("")}<col style="width:23%"></colgroup><thead><tr><th>Dự án</th>${B.map((b,i)=>`<th class="${b.d===d?"mine":""}" title="${esc(b.n)}"><span class="bn">${i+1}</span>${DEPT[b.d]}</th>`).join("")}<th>Trạng thái hiện tại</th></tr></thead><tbody>${v.map(r=>`<tr class="${(()=>{const c=curBlock(r);return c<NB&&B[c].d===d?"myturn":""})()}"><td class="rn" data-open="${r.id}"><div class="l1">${(()=>{const c=curBlock(r);return c<NB&&B[c].d===d?'<span class="turnpill">ĐẾN LƯỢT</span>':""})()}<b title="${esc(r.customer)}">${esc(r.customer)}</b></div><div class="l2 small" title="${esc(r.application||"")}">${r.projectCode?`<span class="pcode sm">${esc(r.projectCode)}</span> `:""}${esc(r.application||"")}</div><div class="l2">${flags(r).filter(f=>f[0]!=="bad").map(f=>`<span class="flag ${f[0]}">${esc(f[1])}</span>`).join("")||"&nbsp;"}</div></td>${B.map((b,i)=>{const s=bState(r,i);return `<td class="c ${s==="done"?"done":s==="cur"?"cur":s==="early"?"part":""} ${b.d===d?"mine":""}" data-open="${r.id}" data-block="${i}" title="${esc(b.n)}">${s==="done"?"✓":s==="cur"?"●":s==="early"?"◐":""}</td>`}).join("")}<td class="stt">${statusHTML(r)}</td></tr>`).join("")}</tbody></table></div>`}
 function listHTML(v){const d=actDept();return `<div class="list"><div class="row head"><div>STT</div><div>Đơn vị nhận mẫu</div><div>Bước hiện tại</div><div>Việc của ${DEPT[d]}</div><div>Thời gian</div><div>Người đăng ký · PIC</div></div>${v.map((r,i)=>{const c=curBlock(r);const b=B[Math.min(c,NB-1)];const mine=r.status==="active"?myOpen(r,d).filter(x=>x.i===c):[];const ra=c<B.length?readyAt(r,c):null;
-  return `<div class="row item" tabindex="0" data-open="${r.id}"><div class="no">${i+1}</div><div class="cust"><b>${esc(r.customer)}${r.application?" – "+esc(r.application):""}</b>${flags(r).map(f=>`<span class="flag ${f[0]}">${esc(f[1])}</span>`).join("")}</div>
+  return `<div class="row item" tabindex="0" data-open="${r.id}"><div class="no">${i+1}</div><div class="cust">${pcode(r)}<b>${esc(r.customer)}${r.application?" – "+esc(r.application):""}</b>${flags(r).map(f=>`<span class="flag ${f[0]}">${esc(f[1])}</span>`).join("")}</div>
   <div>${r.status!=="active"?(r.status==="launched"?"Hoàn thành":"Đã hủy"+(r.closeReason?": "+esc(r.closeReason):"")):`<b>${c+1}.</b> ${esc(b.n)} ${pill(b.d)}`}<div class="bar"><i style="width:${progress(r)}%"></i></div></div>
   <div style="font-size:13px">${mine.length?mine.slice(0,3).map(x=>x.g?`<div><span class="tn">◇</span>${GATE[x.g].q}</div>`:`<div><span class="tn">${DN[x.n]}</span>${esc(TK[x.n].t)}</div>`).join(""):`<span class="small">Không có</span>`}</div>
   <div class="small">${ra&&r.status==="active"?"Chờ ở bước: "+dur(Date.now()-new Date(ra)):""}<br>Tổng: <b>${(()=>{const t0=readyAt(r,0)||r.createdAt;return t0?dur(Date.now()-new Date(t0)):"–"})()}</b></div><div class="small">Đăng ký: ${esc(nameOf(r.createdBy))}<br>KD: ${esc(r.salePic||"–")} · R&amp;D: ${esc(r.rdPic||"–")}</div></div>`}).join("")}</div>`}
@@ -724,7 +788,8 @@ function logHTML(){const q=S.logQ.trim().toLowerCase();const items=allLog().filt
 const ROLE={owner:"Owner",user:"Người dùng"};
 function deptSel(id,v){return `<select id="${id}" aria-label="Phòng ban">${Object.entries(DEPT).map(([k,l])=>`<option value="${k}" ${v===k?"selected":""}>${l}</option>`).join("")}</select>`}
 function roleSel(id,v){return `<select id="${id}" aria-label="Quyền">${Object.entries(ROLE).map(([k,l])=>`<option value="${k}" ${(v||"user")===k?"selected":""}>${l}</option>`).join("")}</select>`}
-function membersHTML(){if(!S.isAdmin)return `<p class="small" style="margin-top:16px">Chỉ người có quyền Owner mới quản trị người dùng.</p>`;
+function membersHTML(){return `<div class="memtabs" role="group" aria-label="Quản trị">${[["users","Người dùng"],["stats","Thống kê truy cập"]].map(([k,l])=>`<button class="${(S.memTab||"users")===k?"on":""}" aria-pressed="${(S.memTab||"users")===k}" data-memtab="${k}">${l}</button>`).join("")}</div>`+(S.memTab==="stats"?statsHTML():membersListHTML())}
+function membersListHTML(){if(!S.isAdmin)return `<p class="small" style="margin-top:16px">Chỉ người có quyền Owner mới quản trị người dùng.</p>`;
   const reqs=S.requests;const ms=Object.entries(S.members).filter(([,m])=>m.status==="active"||m.status==="invited").sort((a,b)=>(a[1].dept||"").localeCompare(b[1].dept||"")||(a[1].name||"").localeCompare(b[1].name||""));
   const cnt=Object.keys(DEPT).map(k=>`${DEPT[k]}: ${ms.filter(([,m])=>m.dept===k).length}`).join(" · ");
   return `<p class="small" style="margin:14px 0">Chỉ Owner được thêm nhân sự, cấp mã kích hoạt, đổi phòng ban và cấp quyền Owner. Mọi thay đổi đều ghi vào nhật ký.</p>
@@ -741,6 +806,7 @@ function fieldHTML(k,r,ed,req){const f=F[k];const v=val(r,k);const dis=ed?"":"di
   else if(f.t==="select")inp=`<select id="${id}" data-k="${k}" class="${ifCls(k)}" ${dis}><option value="">– Chọn –</option>${f.o.map(o=>`<option ${o===v?"selected":""}>${esc(o)}</option>`).join("")}</select>${k==="purpose"&&S.openId==="new"&&S.ifInfo?.purpose?`<div class="ifhint">iForm ghi “${esc(S.ifInfo.purpose)}” – chọn lại mục đích phù hợp</div>`:""}`;
   else if(PIC_DEPT[k]){const ek=k+"Email";const em=val(r,ek);const m=memberByEmail(em);const nm=m?m.displayName:v;
     inp=`<input id="${id}" data-k="${k}" data-pic="${PIC_DEPT[k]}" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="picpop" aria-describedby="pm-${k}" placeholder="Gõ tên hoặc email, chọn từ gợi ý" value="${esc(nm)}" class="${ifCls(k)}" ${dis}><input type="hidden" id="f-${ek}" data-k="${ek}" value="${esc(em)}" ${dis}><div class="picmeta" id="pm-${k}">${picMeta(nm,em,PIC_DEPT[k],ed)}</div>`}
+  else if(k==="customer"&&S.openId==="new")inp=`<input id="${id}" data-k="${k}" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="custpop" aria-describedby="cm-cust" placeholder="Gõ tên hoặc mã khách hàng…" value="${esc(v)}" class="${ifCls(k)}"><div class="picmeta cmeta" id="cm-cust">${custMeta()}</div>`;
   else inp=`<input id="${id}" data-k="${k}" type="${f.t}" ${f.t==="number"?'min="0" step="any" inputmode="decimal"':""} value="${esc(f.t==="number"?(parseFloat(String(v).replace(",","."))||""):v)}" class="${ifCls(k)}" ${f.dl?`list="${f.dl}"`:""} ${dis}>`;
   return `<div class="f ${f.full?"full":""}"><label for="${id}">${esc(f.l)}${req?" <em>*</em>":""}${ifCls(k)==="iffill"?'<span class="iftag">iForm</span>':""}</label>${inp}</div>`}
 function collect(){document.querySelectorAll(".drawer [data-k]").forEach(el=>{if(!el.disabled)S.draft[el.dataset.k]=el.value.trim()})}
@@ -786,11 +852,11 @@ function renderDrawer(){ppHide();const isNew=S.openId==="new";const r=isNew?null
     body+=`<h3 id="cm-h">Trao đổi</h3><ul class="cm">${cs.map(c=>{const me=(c.mentions||[]).includes(S.uid);const rp=c.replyTo?cs.find(x=>x.id===c.replyTo):null;return `<li class="${me?"cm-me":""}"><div class="h">${esc(nameOf(c.by))} ${pill(c.role)} → ${c.to?pill(c.to):"mọi phòng"}${c.task?` · ô ${DN[c.task]||c.task}`:""} · ${fmtDT(c.at)}${rp?` · <span class="cm-rp">↩ phản hồi ${esc(nameOf(rp.by))}</span>`:""}${me?' <span class="cm-tag">Nhắc bạn</span>':""}</div>${mentionText(c)}</li>`}).join("")||`<li class="small">Chưa có trao đổi nào. Dùng mục này để hỏi phòng khác thay vì gọi điện – mọi nội dung đều được lưu lại.</li>`}</ul>
     ${S.me&&S.canWrite!==false?`<div class="cmform"><div class="cm-wrap"><textarea id="cm-text" aria-label="Nội dung trao đổi" aria-describedby="cm-hint" placeholder="Nhập nội dung trao đổi… gõ @ để nhắc tên người cần xử lý"></textarea><div id="mnpop" class="mnpop" role="listbox" hidden></div></div><div class="small" id="cm-hint" style="flex:1 1 100%;margin-top:-4px">Người được nhắc tên (@) nhận thông báo qua Teams.</div><select id="cm-to" aria-label="Gửi tới"><option value="">Gửi mọi phòng</option>${Object.entries(DEPT).filter(([k])=>k!==d).map(([k,v])=>`<option value="${k}">Gửi ${v}</option>`).join("")}</select><select id="cm-task" aria-label="Liên quan ô"><option value="">Không gắn ô</option>${Object.keys(TK).map(Number).sort((a,b)=>DN[a]-DN[b]).map(n=>`<option value="${n}">Ô ${DN[n]}: ${esc(TK[n].t)}</option>`).join("")}</select><button class="btn sm primary" data-act="comment">Gửi</button></div><div class="err" id="cm-err"></div>`:""}`;
     const es=entries(r);if(es.length)body+=`<details><summary>Nhật ký hồ sơ (${es.length})</summary><ul class="hist">${[...es].reverse().map(h=>`<li><time>${fmtDT(h.at)}</time><div>${esc(h.text)}<br><span class="small">${esc(nameOf(h.by))} ${pill(h.role)}</span></div></li>`).join("")}</ul></details>`}
-  $("#drawerRoot").innerHTML=`<div class="scrim" data-act="closeD"></div><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle"><div class="dtop"><div class="grow"><h2 id="dTitle">${isNew?"Thêm mẫu mới":esc(r.customer)}</h2><div class="small">${isNew?"Kinh doanh mở dòng theo dõi":esc([r.application,r.industry,r.productCode].filter(Boolean).join(" · "))}</div></div><button class="x" data-act="closeD" aria-label="Đóng">×</button></div>${body}</aside>`;
+  $("#drawerRoot").innerHTML=`<div class="scrim" data-act="closeD"></div><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle"><div class="dtop"><div class="grow"><h2 id="dTitle">${isNew?"Thêm mẫu mới":esc(r.customer)}</h2>${!isNew&&r.projectCode?`<div class="dcode">${pcode(r)} <span class="small">${esc(custCnt(r.customerId))} của khách này</span></div>`:""}<div class="small">${isNew?"Kinh doanh mở dòng theo dõi":esc([r.application,r.industry,r.productCode].filter(Boolean).join(" · "))}</div></div><button class="x" data-act="closeD" aria-label="Đóng">×</button></div>${body}</aside>`;
   const dr=document.querySelector(".drawer");if(dr)dr.scrollTop=sy;
   if(S._scrollTo!=null){const el=document.getElementById("blk-"+S._scrollTo);if(el&&dr)dr.scrollTop=el.offsetTop-80;S._scrollTo=null}}
 function openDrawer(id,block){S.ifFilled=null;S.ifInfo=null;S.ifDupAck=false;S.closeMode=null;S.notify=null;S.openId=id;S.draft={};S.expanded={};S.openBlock=block!=null?+block:null;if(block!=null)S._scrollTo=+block;renderDrawer();setTimeout(()=>document.querySelector(".drawer .x")?.focus({preventScroll:true}),0)}
-function closeDrawer(){S.ifFilled=null;S.ifInfo=null;S.ifDupAck=false;S.closeMode=null;S.openId=null;S.draft={};$("#drawerRoot").innerHTML=""}
+function closeDrawer(){const cpd=document.getElementById("custpop");if(cpd)cpd.hidden=true;S.ifFilled=null;S.ifInfo=null;S.ifDupAck=false;S.closeMode=null;S.openId=null;S.draft={};$("#drawerRoot").innerHTML=""}
 function toast(t){const e=document.createElement("div");e.className="toast";e.setAttribute("role","status");e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2400)}
 
 /* ---------- Supabase: kết nối ---------- */
@@ -801,7 +867,7 @@ const OVR={qty_kg:"qty",production_line:"line"};
 const camel=k=>OVR[k]||k.replace(/_([a-z])/g,(_,c)=>c.toUpperCase());
 const SNAKE={};Object.keys(F).forEach(k=>{const s=Object.keys(OVR).find(x=>OVR[x]===k)||k.replace(/[A-Z]/g,c=>"_"+c.toLowerCase());SNAKE[k]=s});
 const FIELD_COLS=Object.values(SNAKE);
-const PCOLS=["id",...FIELD_COLS,"status","round","is_pending","pending_reason","cancel_reason","cancel_type","cancelled_at","cancelled_by","created_at","created_by","updated_at"].join(",");
+const PCOLS=["id",...FIELD_COLS,"customer_id","project_code","status","round","is_pending","pending_reason","cancel_reason","cancel_type","cancelled_at","cancelled_by","created_at","created_by","updated_at"].join(",");
 function errMsg(e){const m=(e&&(e.message||e.error_description))||"Có lỗi xảy ra";return m.replace(/^.*?ERROR:\s*/,"")}
 async function rpc(fn,args){const {data,error}=await sb.rpc(fn,args||{});if(error)throw error;return data}
 async function act(fn,args,okMsg){let d;try{d=await rpc(fn,args)}catch(e){toast(errMsg(e));return {ok:false,error:e}}if(okMsg)toast(okMsg);try{await loadAll()}catch(e){toast("Đã lưu nhưng chưa tải lại được dữ liệu: "+errMsg(e))}return {ok:true,data:d}}
@@ -817,21 +883,21 @@ function auditText(a){
     if(a.note==="Owner chuyển vai trò thao tác sang "+(nd.acting_dept_code||""))return a.note;return (a.note||"Cập nhật người dùng")+(d?": "+d:"")}
   return a.note||null}
 async function loadAll(){
-  const [ps,ts,gs,cs,ns,us,au]=await Promise.all([
+  const [ps,ts,gs,cs,ns,us,au,cu]=await Promise.all([
     sel("projects",PCOLS,q=>q.order("created_at")),
     sel("project_tasks","project_id,task_no,round,status,started_at,started_by,done_at,done_by"),
     sel("project_gates","project_id,gate,round,result,reason,decided_at,decided_by"),
     sel("project_comments","id,project_id,to_dept_code,task_no,body,author_dept,created_at,created_by,mention_user_ids,reply_to_comment_id"),
     sel("project_notices","id,project_id,to_dept_codes,body,author_dept,created_at,created_by"),
     sel("app_users","id,auth_user_id,email,display_name,full_name,dept_code,acting_dept_code,app_role,status,is_dept_head,created_at,created_by"),
-    sel("audit_log","id,table_name,record_id,project_id,action,note,old_data,new_data,changed_dept,created_at,created_by",q=>q.order("created_at",{ascending:false}).limit(1000))]);
+    sel("audit_log","id,table_name,record_id,project_id,action,note,old_data,new_data,changed_dept,created_at,created_by",q=>q.order("created_at",{ascending:false}).limit(1000)),sel("customers","id,code,name,project_seq",q=>q.order("code")).catch(()=>[])]);
   const mem={};us.forEach(u=>mem[sid(u.id)]={name:u.display_name,displayName:u.display_name,fullName:u.full_name,email:u.email,dept:u.dept_code,acting:u.acting_dept_code,appRole:u.app_role,status:u.status,isHead:!!u.is_dept_head,approvedBy:sid(u.created_by),approvedAt:u.created_at,authId:u.auth_user_id});
   S.members=mem;
   const meE=Object.entries(mem).find(([,m])=>m.authId===S.session?.user?.id);
   if(meE){S.uid=meE[0];S.me=meE[1];S.isAdmin=S.me.appRole==="owner";S.testRole=S.isAdmin?(S.me.acting||null):null}
-  S.audit=au;
+  S.audit=au;S.custs=(cu||[]).map(c=>({id:sid(c.id),code:c.code,name:c.name,seq:c.project_seq||0}));
   const by={};ps.forEach(p=>{const r={id:sid(p.id),tasks:{},gates:{},comments:{},notices:{},log:{}};
-    FIELD_COLS.forEach(c=>{const v=p[c];r[camel(c)]=v==null?"":(typeof v==="object"?v:String(v))});
+    FIELD_COLS.forEach(c=>{const v=p[c];r[camel(c)]=v==null?"":(typeof v==="object"?v:String(v))});r.customerId=sid(p.customer_id);r.projectCode=p.project_code||"";
     Object.assign(r,{status:p.status==="cancelled"?"closed":p.status,round:p.round,pending:p.is_pending,pendingReason:p.pending_reason||"",closeReason:p.cancel_reason||"",closeType:p.cancel_type,closedAt:p.cancelled_at,closedBy:sid(p.cancelled_by),createdAt:p.created_at,createdBy:sid(p.created_by),updatedAt:p.updated_at});
     by[r.id]=r});
   ts.forEach(t=>{const r=by[sid(t.project_id)];if(!r||t.round!==r.round)return;r.tasks[t.task_no]={startedAt:t.started_at,startedBy:sid(t.started_by),doneAt:t.status==="done"?t.done_at:null,doneBy:t.status==="done"?sid(t.done_by):null}});
@@ -889,7 +955,7 @@ async function createRow(){collect();const keys=B[0].t.flatMap(n=>TK[n].r);const
   if(miss.length){$("#dErr").textContent="Cần nhập: "+miss.map(lbl).join(", ");document.getElementById("f-"+miss[0])?.focus();return}
   const pe=picError(null,keys);if(pe){$("#dErr").textContent=pe;document.getElementById("f-salePic")?.focus();return}
   const dup=S.ifInfo&&S.ifInfo.dup;if(dup&&!S.ifDupAck){S.ifDupAck=true;$("#dErr").textContent=`Phiếu iForm ${S.ifInfo.no} đã có hồ sơ “${dup}”. Bấm “Tạo hồ sơ” lần nữa nếu vẫn muốn tạo hồ sơ mới.`;return}
-  try{await rpc("fn_create_project",{p_fields:snakeFields([...keys,"iform","iformDetail"])})}catch(e){const el=$("#dErr");if(el)el.textContent=errMsg(e);return}closeDrawer();toast("Đã tạo dự án");try{await loadAll()}catch(e){toast(errMsg(e))}}
+  try{const pf=snakeFields([...keys,"iform","iformDetail"]);const cc=S.draft.customerId||(custByNorm(S.draft.customer)||{}).id;if(cc)pf.customer_id=+cc;await rpc("fn_create_project",{p_fields:pf})}catch(e){const el=$("#dErr");if(el)el.textContent=errMsg(e);return}closeDrawer();toast("Đã tạo dự án");try{await loadAll()}catch(e){toast(errMsg(e))}}
 function findMember(name,dept){const n=(name||"").trim().toLowerCase();if(!n)return null;const e=Object.entries(S.members).find(([,m])=>m.status==="active"&&((m.displayName||"").trim().toLowerCase()===n||(m.fullName||"").trim().toLowerCase()===n)&&(!dept||m.dept===dept));return e?e[0]:null}
 function memberIdByEmail(e){const x=String(e||"").trim().toLowerCase();if(!x)return null;const f=Object.entries(S.members).find(([,m])=>(m.email||"").toLowerCase()===x&&m.status!=="removed");return f?f[0]:null}
 function openNotify(r,auto){const list=[["RD",r.rdPic||"",r.rdPicEmail],["KD",r.salePic||"",r.salePicEmail]].map(([d,name,em])=>{const id=memberIdByEmail(em)||findMember(name,d);return {d,name,id,email:id?(S.members[id].email||""):""}});
@@ -951,7 +1017,7 @@ async function doActivate(){const em=($("#ac-email")?.value||"").trim().toLowerC
   }catch(e){el.textContent=errMsg(e)}finally{busy("[data-act=activate]",false)}}
 async function afterLogin(){
   try{const st=await rpc("fn_claim_membership");
-    if(st==="active"){S.screen="main";S.status="";await loadAll();subscribe();render();return}
+    if(st==="active"){S.screen="main";S.status="";await loadAll();subscribe();render();rpc("fn_log_access").catch(()=>{});return}
     if(st==="removed"){S.screen="removed";render();return}
     S.screen="nomember";render()}
   catch(e){S.screen="error";S.err=errMsg(e);render()}}
@@ -1096,7 +1162,7 @@ async function importIform(file){const zone=document.getElementById("ifmsg");con
     const v=parseIformXml(await ent.async("string"));applyIform(v,file.name)}
   catch(e){say(e.message||"Không đọc được file.",true)}}
 function applyIform(v,fileName){collect();const D=S.draft,filled=new Set();const set=(k,val)=>{if(val!==undefined&&String(val).trim()!==""){D[k]=String(val).trim();filled.add(k)}};
-  set("iform",v.no);set("reqDate",ifDate(v.date));set("customer",v.customer);set("application",v.application);
+  set("iform",v.no);set("reqDate",ifDate(v.date));set("customer",v.customer);{const cm=custByNorm(v.customer);D.customerId=cm?cm.id:"";if(cm)D.customer=cm.name}set("application",v.application);
   const ind=ifIndustry(v.productLine,v.tech);if(ind)set("industry",ind);
   set("qty",ifNum(v.qty));
   if(v.detail){const cur=String(D.requirement||"").trim();D.requirement=cur&&!cur.includes(v.detail)?v.detail+"\n"+cur:(cur||v.detail+"\n");filled.add("requirement")}
@@ -1129,14 +1195,23 @@ document.addEventListener("drop",e=>{const z=e.target.closest&&e.target.closest(
 const PIC_KEY={KD:"salePic",RD:"rdPic",KH:"planPic"};
 function myHead(d){const m=S.members[S.uid];return !!(m&&m.isHead&&m.dept===d)}
 function canAssign(d){return S.isAdmin||myHead(d)}
-function assignHTML(r){if(!r||r.status!=="active")return "";const d=actDept();if(!canAssign(d))return "";
-  const k=PIC_KEY[d],em=r[k+"Email"]||"",mb=memberByEmail(em),open=S.asgOpen===d||!mb,ak="asg"+d;
-  if(!open)return `<div class="asgline"><span>PIC ${esc(DEPT[d])}: <b>${esc(mb.displayName)}</b> <span class="small">${esc(mb.email)}</span></span><button class="btn sm" data-act="asgToggle" data-d="${d}">Đổi PIC</button></div>`;
-  return `<div class="asgbox"><div class="asgt">${mb?"Đổi PIC "+esc(DEPT[d]):"Chưa phân công PIC "+esc(DEPT[d])}</div>
+function assignBox(r,d){const k=PIC_KEY[d],em=r[k+"Email"]||"",mb=memberByEmail(em),ak="asg"+d;
+  return `<div class="asgbox"><div class="asgt">${mb?"Đổi PIC "+esc(DEPT[d]):"Phân công PIC "+esc(DEPT[d])}</div>
     <div class="asgr"><div style="flex:1;min-width:0"><input id="f-${ak}" data-k="${ak}" data-pic="${d}" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="picpop" aria-label="Chọn PIC ${esc(DEPT[d])}" placeholder="Gõ tên hoặc email nhân viên ${esc(DEPT[d])}" value="${esc(S.draft[ak]!==undefined?S.draft[ak]:"")}"><input type="hidden" id="f-${ak}Email" data-k="${ak}Email" value="${esc(S.draft[ak+"Email"]||"")}"><div class="picmeta" id="pm-${ak}"></div></div>
-    <button class="btn primary sm" data-act="assignPic" data-d="${d}">Phân công</button>${mb?`<button class="btn sm" data-act="asgToggle" data-d="${d}">Hủy</button>`:""}</div>
+    <button class="btn primary sm" data-act="assignPic" data-d="${d}">Phân công</button><button class="btn sm" data-act="asgToggle" data-d="${d}">Hủy</button></div>
     <div class="small">Người được chọn nhận card Teams “Bạn được phân công”. ${d==="RD"?"Có thể phân công trước khi làm ô 3; ":d==="KH"?"Có thể phân công trước khi làm ô 7; ":""}nhân viên trong phòng vẫn tự chọn PIC ở ô công việc như cũ.</div>
     <div class="err" id="asg-err"></div></div>`}
+/* Dải PIC: mỗi phòng đã tới lượt một ô; phòng chưa tới thì chưa hiện */
+function assignHTML(r){if(!r)return "";const cb=curBlock(r),active=r.status==="active";
+  const last=r.status==="launched"?NB-1:Math.min(cb,NB-1);const reached=new Set(B.slice(0,last+1).map(b=>b.d));
+  const cur=active&&cb<NB?B[cb].d:null;const ds=["KD","RD","KH"].filter(d=>reached.has(d));if(!ds.length)return "";
+  const cells=ds.map(d=>{const k=PIC_KEY[d],em=r[k+"Email"]||"",mb=memberByEmail(em),nm=mb?mb.displayName:(r[k]||"");
+    const can=active&&(S.isAdmin||myHead(d));const btn=can?`<button class="btn sm" data-act="asgToggle" data-d="${d}">${nm?"Đổi PIC":"Phân công"}</button>`:"";
+    const tag=d===cur?'<span class="pcur">Đang đến lượt</span>':"";
+    if(!nm)return `<div class="pcell miss"><div class="pd"><span>PIC ${esc(DEPT[d])}</span>${tag}</div><div class="pn">Chưa phân công</div>${btn?`<div class="pb">${btn}</div>`:""}</div>`;
+    return `<div class="pcell ${d===cur?"cur":""}"><div class="pd"><span>PIC ${esc(DEPT[d])}</span>${tag}</div><div class="pn">${esc(nm)}</div><div class="pe">${mb?esc(mb.email):"Chưa gắn tài khoản"}</div>${btn?`<div class="pb">${btn}</div>`:""}</div>`}).join("");
+  const open=S.asgOpen&&ds.includes(S.asgOpen)&&active&&(S.isAdmin||myHead(S.asgOpen));
+  return `<div class="pstrip" style="grid-template-columns:repeat(${ds.length},minmax(0,1fr))">${cells}</div>${open?assignBox(r,S.asgOpen):""}`}
 async function assignPic(r,d){collect();const ak="asg"+d,em=String(S.draft[ak+"Email"]||"").trim(),el=$("#asg-err");
   if(!em){if(el)el.textContent="Chọn một người trong danh sách gợi ý.";document.getElementById("f-"+ak)?.focus();return}
   const res=await act("fn_assign_pic",{p_project_id:+r.id,p_dept:d,p_email:em},"Đã phân công PIC "+DEPT[d]);
@@ -1160,18 +1235,20 @@ const GUIDE={
   ["Đổi PIC & lưu ý",`<ul><li>Hồ sơ đã có PIC: khung thu lại thành dòng “PIC …: tên” → bấm <b>Đổi PIC</b>, chọn người mới → Phân công.</li><li>Chỉ phân công được người <b>cùng phòng</b> với bạn.</li><li>Nhân viên vẫn tự chọn PIC ở ô 3 (R&D) / ô 7 (Kế hoạch) như bình thường; nếu họ chọn người khác, người đó cũng nhận card “Bạn được phân công”.</li><li>Tự chọn chính mình thì không có card (vì bạn đã biết việc).</li></ul>`]],
  owner:[
   ["Quản trị người dùng",`<ul><li><b>Thêm người dùng</b>: nhập email, tên hiển thị, họ tên, phòng ban, quyền → app tạo <b>mã kích hoạt</b>; gửi mã cho người đó để họ đặt mật khẩu.</li><li><b>Duyệt / từ chối đăng ký</b>: người tự đăng ký hiện ở đầu tab, chọn phòng và quyền rồi duyệt.</li><li><b>Sửa</b> tên, họ tên, email, phòng ban, quyền → bấm <b>Lưu</b> trên dòng đó. Nên điền đủ họ tên để tìm PIC dễ hơn.</li><li><b>Cấp mã mới</b> khi nhân sự quên mật khẩu hoặc mã cũ hết hạn. <b>Gỡ quyền</b> khi nhân sự nghỉ (dữ liệu cũ vẫn giữ).</li><li><b>Trưởng phòng</b>: bật công tắc ở cột Trưởng phòng. Mỗi phòng có thể nhiều người; đổi phòng ban thì tự bỏ đánh dấu.</li></ul>`],
+  ["Thống kê truy cập",`<ul><li>Quản trị người dùng → tab con <b>Thống kê truy cập</b> (chỉ Owner thấy).</li><li>Mỗi lần mở app là một lượt; mở lại trong 30 phút không tính thêm. Số liệu bắt đầu từ ngày cập nhật bản có thống kê.</li><li>Có: số người vào hôm nay / 7 / 30 ngày, lượt theo ngày–tuần–tháng–năm, giờ cao điểm theo thứ, theo giờ, theo thứ, theo ngày trong tháng, theo phòng ban và từng người.</li><li>Lọc <b>Lâu không vào</b> để thấy ai quá 14 ngày chưa mở app (kể cả tài khoản chưa kích hoạt).</li></ul>`],
+  ["Danh bạ khách hàng",`<ul><li>Danh sách tổng hợp → <b>Theo khách hàng</b> → bấm một khách để mở.</li><li><b>Đổi tên</b> khách: mã KH và mã dự án giữ nguyên.</li><li><b>Gộp</b> hai khách bị trùng: chọn khách giữ lại; các dự án chuyển sang và được đánh mã tiếp theo của khách đó.</li></ul>`],
   ["Thao tác với vai trò",`<ul><li>Ở sidebar, mục <b>Thao tác với vai trò</b>: chọn Kinh doanh / R&D / Kế hoạch để làm thay phòng đó hoặc kiểm thử.</li><li>Tab Công việc, quyền nhập ô và khung phân công đổi theo vai trò đang chọn.</li><li>Nhật ký ghi rõ vai trò bạn đã dùng cho từng thao tác.</li></ul>`],
   ["Hủy, mở lại dự án & phân công mọi phòng",`<ul><li>Trong hồ sơ, Owner có nút <b>Hủy dự án</b> (bắt buộc ghi lý do) và <b>Mở lại hồ sơ</b> đã hủy. Hủy gửi card đỏ; mở lại báo lại bước đang dở.</li><li>Owner phân công / đổi PIC được cho phòng đang chọn ở “Thao tác với vai trò”.</li></ul>`],
   ["Cấu hình thông báo Teams",`<ul><li>Trong Supabase → Table Editor → bảng <code>app_settings</code>:<ul><li><code>teams_enabled</code>: <code>true</code> / <code>false</code> để bật / tắt toàn bộ thông báo.</li><li><code>teams_webhook_url</code>: link Workflow Power Automate nhận card.</li><li><code>app_url</code>: link app, dùng cho nút “Mở hồ sơ”.</li></ul></li><li>Kiểm tra tin đã gửi: bảng <code>notify_log</code>; kết quả trả về: <code>net._http_response</code>.</li></ul>`]],
  user:[
   ["Bắt đầu: đăng nhập & kích hoạt tài khoản",`<ol><li>Lần đầu: Owner thêm bạn và gửi <b>mã kích hoạt</b>. Ở màn đăng nhập bấm <b>“Kích hoạt tài khoản / quên mật khẩu”</b>, nhập email, mã và đặt mật khẩu.</li><li>Những lần sau: đăng nhập bằng email công ty + mật khẩu.</li><li>Quên mật khẩu: nhờ Owner <b>cấp mã mới</b>, rồi kích hoạt lại như lần đầu.</li><li>Đăng nhập mà app báo chưa có quyền: điền form đăng ký (tên, phòng ban) và chờ Owner duyệt.</li></ol>`],
-  ["Màn hình & các tab",`<ul><li><b>Công việc</b>: hồ sơ đang đến lượt phòng bạn; số cạnh tên tab là số hồ sơ đang chờ.</li><li><b>Danh sách tổng hợp</b>: tìm kiếm, tra cứu mọi hồ sơ.</li><li><b>Quy trình & thống kê</b>: 9 bước và số liệu thời gian xử lý.</li><li><b>Nhật ký</b>: lịch sử ai làm gì, lúc nào.</li><li>Góc dưới sidebar: đổi giao diện sáng / tối (☀ / ☾) và đăng xuất.</li></ul>`],
+  ["Màn hình & các tab",`<ul><li><b>Công việc</b>: hồ sơ đang đến lượt phòng bạn; số cạnh tên tab là số hồ sơ đang chờ.</li><li><b>Danh sách tổng hợp</b>: tìm kiếm (cả theo mã dự án), tra cứu mọi hồ sơ; chế độ <b>Theo khách hàng</b> xem mỗi khách có bao nhiêu dự án.</li><li><b>Quy trình & thống kê</b>: 9 bước và số liệu thời gian xử lý.</li><li><b>Nhật ký</b>: lịch sử ai làm gì, lúc nào.</li><li>Góc dưới sidebar: đổi giao diện sáng / tối (☀ / ☾) và đăng xuất.</li></ul>`],
   ["Quy trình 9 bước",()=>`<p>Mỗi bước thuộc một phòng. Bước xong thì phòng kế tiếp nhận thông báo.</p>${GSTEPS()}<p class="small">“Không khả thi” ở bước 4 sẽ hủy dự án; “Không đạt” ở bước 9 đưa dự án sang vòng mới, làm lại từ ô 2.</p>`],
   ["Làm một ô công việc",`<ol><li>Mở hồ sơ (từ tab Công việc, Danh sách hoặc nút “Mở hồ sơ” trên Teams). Bước đang đến lượt được mở sẵn.</li><li>Điền các ô có dấu <b>*</b> (bắt buộc).</li><li><b>Lưu nháp</b> để giữ dữ liệu chưa chắc chắn; <b>Xác nhận xong ô</b> khi ô đã hoàn tất.</li><li>Lỡ xác nhận nhầm: bấm <b>Bỏ xác nhận để sửa</b> ở ô đó (dự án lùi về bước đó và phòng đó nhận lại thông báo).</li></ol>`],
   ["Chọn PIC theo tài khoản",`<ul><li>Ô PIC Sale / R&D / Kế hoạch: gõ tên hoặc email, <b>chọn từ gợi ý</b>. Dòng <b>✓ email</b> bên dưới nghĩa là đã gắn đúng người.</li><li>Gõ tay một tên không có trong danh sách thì không lưu được.</li><li>“chưa đăng nhập” cạnh tên: tài khoản chưa kích hoạt nhưng vẫn nhận được Teams.</li><li>Thông báo Teams gửi theo email PIC đã chọn.</li></ul>`],
   ["Thông báo Teams",`<div class="gtbl"><table><thead><tr><th>Dải màu</th><th>Ý nghĩa</th></tr></thead><tbody><tr><td><span class="gdot b"></span>Lam</td><td>Đến lượt phòng bạn · Cần phân công PIC (trưởng phòng)</td></tr><tr><td><span class="gdot y"></span>Vàng</td><td>Thông báo: Kế hoạch đã chốt ngày có mẫu, LOT, line</td></tr><tr><td><span class="gdot r"></span>Đỏ</td><td>Dự án đã hủy</td></tr><tr><td><span class="gdot g"></span>Xanh lá</td><td>Dự án hoàn thành · Bạn được phân công</td></tr><tr><td><span class="gdot k"></span>💬 Xám</td><td>Trao đổi: bạn được nhắc tên hoặc có phản hồi (dòng nội dung tô nền xám)</td></tr></tbody></table></div><p>Bấm <b>Mở hồ sơ</b> trên card: app mở thẳng hồ sơ (đăng nhập trước nếu cần).</p>`],
   ["Trao đổi & ghi chú trong hồ sơ",`<ul><li>Mục <b>Trao đổi</b> ở cuối hồ sơ: nhập nội dung, chọn gửi phòng nào và ô liên quan. Dùng thay cho gọi điện – mọi nội dung đều được lưu.</li><li><b>Nhắc tên</b>: gõ <b>@</b> rồi chọn người từ gợi ý (tag được nhiều người). Người được nhắc nhận card Teams 💬; tin nhắc tên bạn được tô xanh và có nhãn “Nhắc bạn”.</li><li><b>Trả lời</b>: viết tin mới và @ lại người đã nhắc bạn – họ nhận card “Bạn có 01 phản hồi”, tin của bạn hiện “↩ phản hồi …”.</li><li>Ghi chú riêng của phòng (Iform của Kinh doanh, ghi chú R&D, ghi chú Kế hoạch): điền rồi bấm <b>Lưu</b>.</li></ul>`],
-  ["Kinh doanh: thêm mẫu mới & nhập iForm",`<ol><li>Bấm <b>+ Thêm mẫu mới</b> ở sidebar.</li><li>Có phiếu iForm: xuất phiếu ra file Word (.docx), <b>kéo thả</b> vào khung “Nhập từ phiếu iForm” (hoặc bấm Chọn file).</li><li>Kiểm tra các ô <b>nền xanh, nhãn iForm</b>; chọn lại <b>Mục đích</b>; ghi thêm vào <b>Yêu cầu đặc biệt</b> nếu cần. Chi tiết phiếu được lưu trong khối “Chi tiết từ phiếu iForm”.</li><li>Bấm <b>Tạo hồ sơ – xác nhận bước 1</b>. R&D nhận thông báo.</li></ol><p class="small">Các việc khác của Kinh doanh: ô 5 gửi tài liệu tiền khả thi; ô 12–14 gửi mẫu, theo dõi, thu phản hồi; bước 9 quyết định Đạt / Không đạt, chốt thương mại và chuẩn bị tung SP.</p>`],
+  ["Kinh doanh: thêm mẫu mới & nhập iForm",`<ol><li>Bấm <b>+ Thêm mẫu mới</b> ở sidebar.</li><li>Có phiếu iForm: xuất phiếu ra file Word (.docx), <b>kéo thả</b> vào khung “Nhập từ phiếu iForm” (hoặc bấm Chọn file).</li><li>Kiểm tra các ô <b>nền xanh, nhãn iForm</b>; chọn lại <b>Mục đích</b>; ghi thêm vào <b>Yêu cầu đặc biệt</b> nếu cần. Chi tiết phiếu được lưu trong khối “Chi tiết từ phiếu iForm”.</li><li>Bấm <b>Tạo hồ sơ – xác nhận bước 1</b>. R&D nhận thông báo.</li></ol><p><b>Khách hàng & mã dự án</b>: ô Đơn vị nhận mẫu gợi ý từ danh bạ khách hàng (gõ tên hoặc mã KH). Chọn khách có sẵn thì dự án được đánh số tiếp theo, ví dụ <b>KH0007.03</b> là dự án thứ 3 của khách KH0007; không có thì chọn “+ Tạo khách hàng mới”. Nếu app báo “Có thể trùng”, kiểm tra lại để tránh tạo trùng khách.</p><p class="small">Các việc khác của Kinh doanh: ô 5 gửi tài liệu tiền khả thi; ô 12–14 gửi mẫu, theo dõi, thu phản hồi; bước 9 quyết định Đạt / Không đạt, chốt thương mại và chuẩn bị tung SP.</p>`],
   ["R&D",`<ul><li><b>Ô 3</b>: chốt spec, mã SP và chọn <b>PIC R&D</b> (nếu trưởng phòng chưa phân công). <b>Ô 4</b>: lập đánh giá tiền khả thi.</li><li><b>Bước 4</b>: quyết định Khả thi / Không khả thi (không khả thi phải ghi lý do, dự án bị hủy); ô 6 gửi yêu cầu trial.</li><li><b>Ô 9–11</b>: giám sát lấy mẫu, kiểm nghiệm – release TDS, bàn giao mẫu cho Kinh doanh. <b>Ô 15–16</b>: phân tích phản hồi, đề xuất spec cuối.</li></ul>`],
   ["Kế hoạch",`<ul><li><b>Ô 7</b>: chọn <b>PIC Kế hoạch</b>, line, ngày trial, ngày dự kiến có mẫu, LOT. Xác nhận xong, R&D và Kinh doanh tự nhận card thông báo (dải vàng).</li><li><b>Ô 8</b>: follow chạy trial, ghi ngày chạy thực tế.</li><li>Trial bị hoãn: bấm <b>Báo pending</b> kèm lý do; khi chạy lại bấm Bỏ pending.</li></ul>`],
   ["Câu hỏi thường gặp",`<ul><li><b>Không thấy hồ sơ trong tab Công việc?</b> Hồ sơ chưa đến lượt phòng bạn – tìm ở Danh sách tổng hợp.</li><li><b>Không nhận được Teams?</b> Kiểm tra hồ sơ đã chọn PIC đúng tài khoản (có ✓ email); nếu vẫn không có, báo Owner kiểm tra cấu hình.</li><li><b>App hiện thông báo lạ sau khi cập nhật?</b> Bấm Ctrl+F5 hoặc mở bằng cửa sổ ẩn danh.</li></ul>`]]};
@@ -1214,6 +1291,120 @@ document.addEventListener("keydown",e=>{if(e.target.id!=="cm-text")return;const 
   else if(e.key==="ArrowUp"){MN.hl=(MN.hl-1+MN.items.length)%MN.items.length;mnUpdate();e.preventDefault()}
   else if(e.key==="Enter"||e.key==="Tab"){mnPick(MN.hl);e.preventDefault();e.stopPropagation()}
   else if(e.key==="Escape"){mnClose();e.preventDefault();e.stopPropagation()}},true);
+
+/* ---------- thống kê truy cập (Owner) ---------- */
+const WD=["T2","T3","T4","T5","T6","T7","CN"],WDF=["Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy","Chủ nhật"];
+const wdi=d=>(d.getDay()+6)%7;
+const dkey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const sod=d=>{const x=new Date(d);x.setHours(0,0,0,0);return x};
+async function loadAccess(){S.accLoading=true;S.accErr="";try{S.acc=await rpc("fn_access_stats",{p_days:400});S.accAt=new Date()}catch(e){S.accErr=errMsg(e)}S.accLoading=false;if(S.tab==="members"&&S.memTab==="stats")renderTab()}
+function niceMax(m){if(m<=5)return 5;const p=Math.pow(10,Math.floor(Math.log10(m)));const f=m/p;return (f<=2?2:f<=5?5:10)*p}
+function barSVG(labels,vals,o={}){const W=o.w||480,H=o.h||160,pl=26,pb=20,pt=8,n=vals.length,mx=niceMax(Math.max(1,...vals));const cw=(W-pl-4)/n,bw=Math.max(2,cw*(o.bw||.62));
+  const y=v=>pt+(H-pt-pb)*(1-v/mx);const ev=o.every||Math.ceil(n/12);
+  let g=[0,mx/2,mx].map(t=>`<line x1="${pl}" x2="${W}" y1="${y(t)}" y2="${y(t)}" class="sg"/><text x="${pl-5}" y="${y(t)+3}" class="sl" text-anchor="end">${Math.round(t*10)/10}</text>`).join("");
+  g+=vals.map((v,i)=>{const x=pl+i*cw+(cw-bw)/2;const h=(H-pt-pb)*(v/mx);return `${v>0?`<rect x="${x.toFixed(1)}" y="${(y(v)).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="2" class="sb"><title>${esc(labels[i])}: ${Math.round(v*10)/10}</title></rect>`:""}${i%ev===0?`<text x="${(pl+i*cw+cw/2).toFixed(1)}" y="${H-5}" class="sl" text-anchor="middle">${esc(labels[i])}</text>`:""}`}).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" class="schart" role="img" aria-label="${esc(o.aria||"Biểu đồ")}">${g}</svg>`}
+function accData(){const A=S.acc;if(!A)return null;const now=new Date(),today=sod(now);
+  const V=(A.visits||[]).map(([u,t,dp])=>{const d=new Date(t*1000);return {u:String(u),d,dp:dp||S.members[String(u)]?.dept||""}});
+  const first=A.first?sod(new Date(A.first)):today;const since=sod(new Date(A.since));const start=first>since?first:since;
+  const inDays=n=>{const c=new Date(today);c.setDate(c.getDate()-n+1);return V.filter(v=>v.d>=c)};
+  const uniq=a=>new Set(a.map(v=>v.u)).size;
+  const people=Object.entries(S.members).filter(([,m])=>m.status==="active"||m.status==="invited");
+  const last={};Object.entries(A.last||{}).forEach(([u,t])=>last[String(u)]=new Date(t*1000));
+  const old=([id,m])=>!last[id]||(now-last[id])>14*864e5;
+  return {V,now,today,start,inDays,uniq,people,last,old}}
+function timeSeries(D,mode){const {V,today}=D;const L=[],K=[];const c=new Map();
+  if(mode==="d"){for(let i=29;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);K.push(dkey(d));L.push(`${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`)}V.forEach(v=>{const k=dkey(v.d);c.set(k,(c.get(k)||0)+1)})}
+  else if(mode==="w"){const m0=new Date(today);m0.setDate(m0.getDate()-wdi(m0));for(let i=11;i>=0;i--){const d=new Date(m0);d.setDate(d.getDate()-7*i);K.push(dkey(d));L.push(`${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`)}
+    V.forEach(v=>{const d=sod(v.d);d.setDate(d.getDate()-wdi(d));const k=dkey(d);c.set(k,(c.get(k)||0)+1)})}
+  else if(mode==="m"){for(let i=11;i>=0;i--){const d=new Date(today.getFullYear(),today.getMonth()-i,1);K.push(d.getFullYear()+"-"+d.getMonth());L.push(`${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getFullYear()).slice(2)}`)}V.forEach(v=>{const k=v.d.getFullYear()+"-"+v.d.getMonth();c.set(k,(c.get(k)||0)+1)})}
+  else{const y0=V.length?V[0].d.getFullYear():today.getFullYear();for(let y=y0;y<=today.getFullYear();y++){K.push(String(y));L.push(String(y))}V.forEach(v=>{const k=String(v.d.getFullYear());c.set(k,(c.get(k)||0)+1)})}
+  return {L,vals:K.map(k=>c.get(k)||0),every:mode==="d"?3:1}}
+function statsHTML(){if(!S.acc&&!S.accLoading&&!S.accErr){loadAccess()}
+  const head=`<div class="sthead"><span class="small">${S.acc?`Dữ liệu từ ${fmtD(S.acc.first||new Date().toISOString())} · cập nhật ${S.accAt?S.accAt.toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"}):""}`:""}</span><button class="btn sm" data-act="accReload">Làm mới</button></div>`;
+  if(S.accErr)return head+`<p class="err">${esc(S.accErr)}</p>`;
+  if(!S.acc)return head+`<p class="small">Đang tải thống kê…</p>`;
+  const D=accData();const {V,now,inDays,uniq,people,last,old}=D;
+  if(!V.length)return head+`<div class="stc"><p class="small">Chưa có lượt truy cập nào. App bắt đầu ghi từ khi cập nhật bản này – quay lại sau vài ngày để xem biểu đồ.</p></div>`;
+  const t1=inDays(1),t7=inDays(7),t30=inDays(30);const oldList=people.filter(old);
+  const kpi=`<div class="stkpi"><div><span>Hôm nay</span><b>${uniq(t1)}</b><i>${t1.length} lượt</i></div><div><span>7 ngày qua</span><b>${uniq(t7)}</b><i>${t7.length} lượt</i></div><div><span>30 ngày qua</span><b>${uniq(t30)}</b><i>${t30.length} lượt</i></div><div><span>Lâu không vào (&gt;14 ngày)</span><b>${oldList.length}</b><i>trên ${people.length} tài khoản</i></div></div>`;
+  const mode=S.accMode||"d";const ts=timeSeries(D,mode);
+  const tsCard=`<div class="stc"><div class="sth"><h3>Lượt truy cập theo thời gian</h3><div class="stseg">${[["d","Ngày"],["w","Tuần"],["m","Tháng"],["y","Năm"]].map(([k,l])=>`<button class="${k===mode?"on":""}" data-accmode="${k}">${l}</button>`).join("")}</div></div>${barSVG(ts.L,ts.vals,{w:1100,h:210,every:ts.every,bw:.55,aria:"Lượt truy cập theo thời gian"})}</div>`;
+  const hm=Array.from({length:7},()=>Array(24).fill(0));V.forEach(v=>hm[wdi(v.d)][v.d.getHours()]++);const hmx=Math.max(1,...hm.flat());
+  const cell=v=>v?`style="background:rgba(17,120,10,${(.18+.82*v/hmx).toFixed(2)})"`:"";
+  const heat=`<div class="stc"><div class="sth"><h3>Giờ cao điểm theo thứ <span>(tổng lượt truy cập)</span></h3><div class="hmleg">Ít<i></i>Nhiều</div></div><div class="hmwrap"><div class="hm"><div></div>${Array.from({length:24},(_,h)=>`<div class="hmh">${h%3===0?h+"h":""}</div>`).join("")}${hm.map((r,i)=>`<div class="hmd">${WD[i]}</div>${r.map((v,h)=>`<div class="hmc" ${cell(v)} title="${WDF[i]} ${h}:00 · ${v} lượt"></div>`).join("")}`).join("")}</div></div></div>`;
+  const hr=Array(24).fill(0);V.forEach(v=>hr[v.d.getHours()]++);const pk=hr.indexOf(Math.max(...hr));const wk=hr.slice(7,20);const lo=7+wk.indexOf(Math.min(...wk));
+  const hourCard=`<div class="stc"><div class="sth"><h3>Theo giờ trong ngày</h3></div>${barSVG(hr.map((_,i)=>i+"h"),hr,{h:150,every:3,aria:"Lượt truy cập theo giờ"})}<p class="stcap">Cao điểm ${pk}:00 · thấp điểm (7h–19h) ${lo}:00</p></div>`;
+  const cntW=Array(7).fill(0),cntD=Array(32).fill(0);for(let d=new Date(D.start);d<=D.today;d.setDate(d.getDate()+1)){cntW[wdi(d)]++;cntD[d.getDate()]++}
+  const wdT=Array(7).fill(0),dmT=Array(32).fill(0);V.forEach(v=>{if(v.d>=D.start){wdT[wdi(v.d)]++;dmT[v.d.getDate()]++}});
+  const wdA=wdT.map((t,i)=>cntW[i]?t/cntW[i]:0),dmA=dmT.slice(1).map((t,i)=>cntD[i+1]?t/cntD[i+1]:0);
+  const wMax=wdA.indexOf(Math.max(...wdA)),wMin=wdA.indexOf(Math.min(...wdA)),dMax=dmA.indexOf(Math.max(...dmA))+1,dMin=dmA.indexOf(Math.min(...dmA))+1;
+  const wdCard=`<div class="stc"><div class="sth"><h3>Theo thứ trong tuần <span>(trung bình / ngày)</span></h3></div>${barSVG(WD,wdA,{h:150,every:1,bw:.5,aria:"Trung bình lượt theo thứ"})}<p class="stcap">Đông nhất ${WDF[wMax]} · vắng nhất ${WDF[wMin]}</p></div>`;
+  const dmCard=`<div class="stc"><div class="sth"><h3>Theo ngày trong tháng <span>(trung bình)</span></h3></div>${barSVG(dmA.map((_,i)=>String(i+1)),dmA,{h:150,every:4,aria:"Trung bình lượt theo ngày trong tháng"})}<p class="stcap">Cao nhất ngày ${dMax} · thấp nhất ngày ${dMin}</p></div>`;
+  const tot30=t30.length||1;
+  const deptCard=`<div class="stc"><div class="sth"><h3>Theo phòng ban <span>(30 ngày)</span></h3></div>${Object.entries(DEPT).map(([k,n])=>{const a=t30.filter(v=>v.dp===k);const h=Array(24).fill(0),w=Array(7).fill(0);a.forEach(v=>{h[v.d.getHours()]++;w[wdi(v.d)]++});
+    const mem=people.filter(([,m])=>m.dept===k);const seen=mem.filter(([id])=>a.some(v=>v.u===id)).length;const pc=Math.round(a.length/tot30*1000)/10;
+    return `<div class="stdp"><div class="stdl"><b>${esc(n)}</b><span>${a.length?`cao điểm ${h.indexOf(Math.max(...h))}:00 · nhiều nhất ${WDF[w.indexOf(Math.max(...w))]} · `:""}${seen}/${mem.length} người đã vào</span><em>${a.length} <small>(${a.length?pc:0}%)</small></em></div><div class="stbar"><i style="width:${a.length?Math.max(2,pc):0}%"></i></div></div>`}).join("")}</div>`;
+  const f=S.accFilter||"all";const rel=d=>{if(!d)return "Chưa vào lần nào";const n=Math.floor((sod(now)-sod(d))/864e5);return n===0?"Hôm nay "+d.toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"}):n===1?"Hôm qua":n+" ngày trước"};
+  const rowsP=people.filter(p=>f==="all"||old(p)).sort((a,b)=>(last[b[0]]||0)-(last[a[0]]||0)).map(([id,m])=>{const a=t30.filter(v=>v.u===id);const days=new Set(a.map(v=>dkey(v.d))).size;
+    return `<tr><td>${esc(m.displayName||m.name||"")}${m.status==="invited"?' <span class="small">(chưa kích hoạt)</span>':""}</td><td>${pill(m.dept)}</td><td>${rel(last[id])} ${old([id,m])?'<span class="stold">Lâu không vào</span>':""}</td><td>${days}</td><td>${a.length}</td></tr>`}).join("");
+  const userCard=`<div class="stc"><div class="sth"><h3>Từng người</h3><div class="stseg">${[["all","Tất cả"],["old","Lâu không vào"]].map(([k,l])=>`<button class="${k===f?"on":""}" data-accf="${k}">${l}</button>`).join("")}</div></div><div class="scroll"><table class="tbl"><thead><tr><th>Tên</th><th>Phòng</th><th>Lần cuối</th><th>Số ngày có vào (30 ngày)</th><th>Lượt (30 ngày)</th></tr></thead><tbody>${rowsP||`<tr><td colspan="5" class="small">Không có ai.</td></tr>`}</tbody></table></div></div>`;
+  return head+kpi+tsCard+heat+`<div class="st2">${hourCard}${wdCard}</div><div class="st2">${dmCard}${deptCard}</div>`+userCard}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-accmode],[data-accf],[data-act=accReload],[data-memtab]");if(!b)return;e.stopPropagation();
+  if(b.dataset.memtab){S.memTab=b.dataset.memtab;renderTab();return}
+  if(b.dataset.accmode){S.accMode=b.dataset.accmode;renderTab();return}
+  if(b.dataset.accf){S.accFilter=b.dataset.accf;renderTab();return}
+  S.acc=null;S.accErr="";loadAccess();renderTab()},true);
+
+/* ---------- danh bạ khách hàng & mã dự án ---------- */
+const cnorm=t=>vnorm(t).replace(/[^a-z0-9]/g,"");
+const pcode=r=>r&&r.projectCode?`<span class="pcode">${esc(r.projectCode)}</span>`:"";
+function custStats(id){const rs=rows().filter(r=>r.customerId===id);return {all:rs,a:rs.filter(r=>r.status==="active").length,d:rs.filter(r=>r.status==="launched").length,x:rs.filter(r=>r.status==="closed").length}}
+const custCnt=id=>{const s=custStats(id);return `${s.all.length} dự án${s.a?` · ${s.a} đang chạy`:""}`};
+function custByNorm(t){const k=cnorm(t);return k?(S.custs||[]).find(c=>cnorm(c.name)===k)||null:null}
+function custSimilar(t){const k=cnorm(t);if(k.length<4)return [];return (S.custs||[]).filter(c=>{const n=cnorm(c.name);return n!==k&&(n.includes(k)||k.includes(n)||n.slice(0,5)===k.slice(0,5))}).slice(0,3)}
+function custMeta(){const id=S.draft.customerId,txt=String(S.draft.customer||"").trim();const c=id?(S.custs||[]).find(x=>x.id===id):custByNorm(txt);
+  if(c)return `<span class="pmok">${esc(c.code)} · ${esc(custCnt(c.id))}</span><span class="cprev">Mã dự án sẽ là <b>${esc(c.code)}.${String((c.seq||0)+1).padStart(2,"0")}</b></span>`;
+  if(!txt)return "";const sim=custSimilar(txt);
+  return `<span class="pmmut">Khách hàng mới – được cấp mã KH khi tạo hồ sơ</span>${sim.length?`<span class="pmwarn">Có thể trùng: ${sim.map(x=>esc(x.name)+" ("+esc(x.code)+")").join(", ")}</span>`:""}`}
+const CP={items:[],hl:0,inp:null};
+function cpEl(){let d=document.getElementById("custpop");if(!d){d=document.createElement("div");d.id="custpop";d.className="custpop";d.setAttribute("role","listbox");d.hidden=true;document.body.appendChild(d);
+  d.addEventListener("mousedown",e=>{e.preventDefault();const o=e.target.closest("[data-ci]");if(o)cpPick(+o.dataset.ci)})}return d}
+function cpRender(){const inp=CP.inp;if(!inp)return;const q=cnorm(inp.value);const d=cpEl();
+  const list=(S.custs||[]).filter(c=>!q||cnorm(c.name).includes(q)||c.code.toLowerCase().includes(q)).slice(0,8);
+  const sim=list.length?[]:custSimilar(inp.value);const txt=inp.value.trim();
+  CP.items=[...list,...sim];if(txt&&!custByNorm(txt))CP.items.push({nw:true,name:txt});CP.hl=Math.min(CP.hl,Math.max(0,CP.items.length-1));
+  if(!CP.items.length){d.hidden=true;return}
+  d.innerHTML=(sim.length?`<div class="cpw">Có thể trùng với khách đã có:</div>`:"")+CP.items.map((c,i)=>c.nw?`<div class="ci new ${i===CP.hl?"hl":""}" data-ci="${i}" role="option">+ Tạo khách hàng mới “${esc(c.name)}”</div>`:`<div class="ci ${i===CP.hl?"hl":""}" data-ci="${i}" role="option"><span class="pcode">${esc(c.code)}</span><span class="cn">${esc(c.name)}<small>${esc(custCnt(c.id))}</small></span></div>`).join("");
+  const r=inp.getBoundingClientRect();d.style.left=r.left+"px";d.style.top=(r.bottom+4)+"px";d.style.width=Math.max(r.width,300)+"px";d.hidden=false}
+function cpUpdMeta(){const m=document.getElementById("cm-cust");if(m)m.innerHTML=custMeta()}
+function cpPick(i){const c=CP.items[i],inp=CP.inp;if(!c||!inp)return;if(c.nw){S.draft.customerId="";S.draft.customer=c.name}else{S.draft.customerId=c.id;S.draft.customer=c.name;inp.value=c.name}
+  cpEl().hidden=true;cpUpdMeta()}
+document.addEventListener("focusin",e=>{if(e.target.id==="f-customer"&&S.openId==="new"){CP.inp=e.target;CP.hl=0;cpRender()}});
+document.addEventListener("input",e=>{if(e.target.id==="f-customer"&&S.openId==="new"){CP.inp=e.target;S.draft.customer=e.target.value;S.draft.customerId="";CP.hl=0;cpRender();cpUpdMeta()}});
+document.addEventListener("focusout",e=>{if(e.target.id==="f-customer"){setTimeout(()=>{if(document.activeElement!==e.target)cpEl().hidden=true},0);
+  if(S.openId==="new"&&!S.draft.customerId){const c=custByNorm(e.target.value);if(c)S.draft.customerId=c.id}cpUpdMeta()}});
+document.addEventListener("keydown",e=>{if(e.target.id!=="f-customer")return;const d=cpEl();if(d.hidden)return;const n=CP.items.length;
+  if(e.key==="ArrowDown"){CP.hl=(CP.hl+1)%n;cpRender();e.preventDefault()}else if(e.key==="ArrowUp"){CP.hl=(CP.hl-1+n)%n;cpRender();e.preventDefault()}
+  else if(e.key==="Enter"){cpPick(CP.hl);e.preventDefault();e.stopPropagation()}else if(e.key==="Escape"){d.hidden=true;e.preventDefault();e.stopPropagation()}},true);
+window.addEventListener("scroll",()=>{if(CP.inp&&!cpEl().hidden)cpRender()},true);
+/* Danh sách theo khách hàng */
+function custViewHTML(v){const ids=new Set(v.map(r=>r.customerId).filter(Boolean));const q=S.q.trim();
+  const cs=(S.custs||[]).filter(c=>ids.has(c.id)||(q&&(cnorm(c.name).includes(cnorm(q))||c.code.toLowerCase().includes(q.toLowerCase()))));
+  const last=id=>{const t=rows().filter(r=>r.customerId===id).map(r=>r.createdAt).sort().pop();return t?fmtD(t):"–"};
+  const sorted=[...cs].sort((a,b)=>String(rows().filter(r=>r.customerId===b.id).map(r=>r.createdAt).sort().pop()||"").localeCompare(String(rows().filter(r=>r.customerId===a.id).map(r=>r.createdAt).sort().pop()||"")));
+  return `<div class="scroll"><table class="tbl ctbl"><thead><tr><th>Mã KH</th><th>Khách hàng</th><th>Dự án</th><th>Mở gần nhất</th></tr></thead><tbody>${sorted.map(c=>{const s=custStats(c.id);const op=S.custOpen===c.id;
+    return `<tr class="item crow" data-cust="${c.id}" aria-expanded="${op}"><td><span class="pcode">${esc(c.code)}</span></td><td><b>${esc(c.name)}</b></td><td>${s.a?`<span class="cs a">${s.a} đang chạy</span>`:""}${s.d?`<span class="cs d">${s.d} xong</span>`:""}${s.x?`<span class="cs x">${s.x} hủy</span>`:""}${!s.all.length?'<span class="small">Chưa có dự án</span>':""}</td><td>${last(c.id)}</td></tr>`+
+    (op?s.all.sort((a,b)=>(a.projectCode||"").localeCompare(b.projectCode||"")).map(r=>`<tr class="item cpj" data-open="${r.id}"><td>${pcode(r)}</td><td>${esc(r.application||"–")}</td><td>${r.status==="active"?`Bước ${Math.min(curBlock(r)+1,NB)}/${NB}`:r.status==="launched"?"Hoàn thành":"Đã hủy"}</td><td>${fmtD(r.createdAt)}</td></tr>`).join("")+
+      (S.isAdmin?`<tr class="cadm"><td colspan="4"><div class="cadmr"><label>Đổi tên <input id="cren-${c.id}" value="${esc(c.name)}"></label><button class="btn sm" data-cren="${c.id}">Lưu tên</button><label>Gộp vào <select id="cmg-${c.id}"><option value="">– chọn khách giữ lại –</option>${(S.custs||[]).filter(x=>x.id!==c.id).map(x=>`<option value="${x.id}">${esc(x.code)} · ${esc(x.name)}</option>`).join("")}</select></label><button class="btn sm danger" data-cmg="${c.id}">Gộp</button></div><div class="small">Gộp: các dự án của ${esc(c.code)} chuyển sang khách được chọn và được đánh mã tiếp theo của khách đó; ${esc(c.code)} bị xóa khỏi danh bạ.</div></td></tr>`:""):"")}).join("")||`<tr><td colspan="4" class="small">Không có khách hàng nào.</td></tr>`}</tbody></table></div>`}
+document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.closest("[data-cust],[data-cren],[data-cmg],[data-lview]");if(!t)return;
+  if(t.dataset.lview){S.listView=t.dataset.lview;renderTab();return}
+  if(t.dataset.cust){if(e.target.closest("[data-open]")&&!e.target.closest(".crow"))return;S.custOpen=S.custOpen===t.dataset.cust?null:t.dataset.cust;renderTab();return}
+  e.stopPropagation();if(!S.isAdmin)return;
+  if(t.dataset.cren){const id=t.dataset.cren;await act("fn_rename_customer",{p_customer_id:+id,p_name:$("#cren-"+id).value},"Đã đổi tên khách hàng");return}
+  if(t.dataset.cmg){const id=t.dataset.cmg,k=$("#cmg-"+id).value;if(!k){toast("Chọn khách hàng giữ lại");return}const a=(S.custs||[]).find(x=>x.id===id),b=(S.custs||[]).find(x=>x.id===k);
+    if(!confirm(`Gộp ${a.code} “${a.name}” vào ${b.code} “${b.name}”? Các dự án sẽ được đánh lại mã theo ${b.code}.`))return;
+    const res=await act("fn_merge_customers",{p_keep:+k,p_drop:+id},"Đã gộp khách hàng");if(res.ok)S.custOpen=k;renderTab()}},true);
 
 /* ---------- khởi động ---------- */
 function render(){if(S.screen==="main"){if(!S.me||S.me.status!=="active"){S.screen="removed";closeDrawer();renderLogin();return}renderMain()}else renderLogin()}
