@@ -444,6 +444,42 @@ body{background:transparent}
 .headsw span::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
 .headsw input:checked+span{background:var(--green-dark,#0C6602)}.headsw input:checked+span::after{left:19px}
 .headsw input:focus-visible+span{outline:2px solid var(--green);outline-offset:2px}
+
+/* ===== Tab Hướng dẫn ===== */
+.guide{max-width:980px;padding:4px 0 24px}
+.gtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.gtop h2{margin:0;flex:1;font-size:22px}
+.gme{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--green-tint);color:var(--accent)}
+.gchips{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 6px}
+.gchips button{border:1px solid var(--line);background:var(--glass-soft,var(--surface));color:var(--text);border-radius:999px;padding:5px 14px;font-size:13px;cursor:pointer}
+.gchips button.on{background:var(--green-dark,#0C6602);border-color:var(--green-dark,#0C6602);color:#fff;font-weight:700}
+.gquick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 16px}
+.gquick>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--glass-soft,var(--surface));display:flex;flex-direction:column;gap:2px}
+.gquick b{color:var(--accent)}.gquick span{font-size:13px;color:var(--muted)}
+.gh{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:16px 0 8px}
+.gsec{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--glass-soft,var(--surface));overflow:hidden}
+.gsec>summary{cursor:pointer;padding:11px 14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.gsec>summary::-webkit-details-marker{display:none}.gsec>summary::before{content:"›";display:inline-block;transition:transform .15s;color:var(--muted);font-size:18px;line-height:1}
+.gsec[open]>summary::before{transform:rotate(90deg)}.gsec>summary span:first-of-type{flex:1}
+.gtag{font-size:11px;font-weight:600;padding:1px 8px;border-radius:6px;background:var(--surface-alt);color:var(--muted)}.gtag.x{background:var(--green-tint);color:var(--accent)}
+.gbody{padding:0 16px 12px 34px;line-height:1.6;font-size:14px}.gbody ol,.gbody ul{margin:4px 0;padding-left:20px}.gbody p{margin:6px 0}
+.gbody code{font-size:12px;background:var(--surface-alt);padding:1px 5px;border-radius:5px}
+.gtbl{overflow-x:auto;margin:6px 0}.gtbl table{border-collapse:collapse;width:100%;font-size:13px}.gtbl th,.gtbl td{border-bottom:1px solid var(--line-soft,var(--line));padding:6px 8px;text-align:left;vertical-align:top}.gtbl th{color:var(--muted);font-weight:600}
+.gdot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}.gdot.b{background:#3B82F6}.gdot.y{background:#EAB308}.gdot.r{background:#DC2626}.gdot.g{background:#16A34A}.gdot.k{background:#9CA3AF}
+@media (max-width:760px){.gquick{grid-template-columns:1fr}}
+@media print{.side,.envbar,#drawerRoot,.gchips,.gtop .btn,.toast{display:none!important}.app,.main{display:block!important}body{background:#fff!important}.gsec{break-inside:avoid;background:#fff}.guide{max-width:none}}
+
+/* ===== Tag @ trong trao đổi ===== */
+.cm-wrap{position:relative;flex:1 1 100%;display:flex}.cm-wrap textarea{flex:1}
+.mnpop{position:absolute;left:8px;top:calc(100% + 2px);z-index:30;min-width:260px;max-width:90%;background:var(--glass-strong,var(--surface));-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:4px 0;font-size:13px}
+.mnpop[hidden]{display:none}.mnpop .mi{display:flex;flex-direction:column;padding:6px 12px;cursor:pointer}.mnpop .mi span{font-size:11px;color:var(--muted)}
+.mnpop .mi:hover,.mnpop .mi.hl{background:var(--green-tint)}
+.cm li.cm-me{background:#E3EEFB;border-radius:8px;padding:9px 10px;border-top-color:transparent}
+:root[data-theme="dark"] .cm li.cm-me{background:#1E2F45}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cm li.cm-me{background:#1E2F45}}
+.cm-mt{color:#1D5FB4;font-weight:600}:root[data-theme="dark"] .cm-mt{color:#8CB8F0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cm-mt{color:#8CB8F0}}
+.cm-tag{font-size:10px;font-weight:700;padding:0 6px;border-radius:5px;border:1px solid #9DBDE6;color:#1D5FB4;background:var(--surface)}
+.cm-rp{color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -611,7 +647,7 @@ function renderLogin(){let h="";
 /* ---------- main shell ---------- */
 function renderMain(){
   const d=actDept();const due=rows().filter(r=>r.status==="active"&&curBlock(r)<NB&&B[curBlock(r)].d===d).length;
-  const tabs=[["work","Công việc"],["list","Danh sách tổng hợp"],["flow","Quy trình & thống kê"],["log","Nhật ký"]];if(S.isAdmin)tabs.push(["members","Quản trị người dùng"+(S.requests.length?` (${S.requests.length})`:"")]);
+  const tabs=[["work","Công việc"],["list","Danh sách tổng hợp"],["flow","Quy trình & thống kê"],["log","Nhật ký"]];if(S.isAdmin)tabs.push(["members","Quản trị người dùng"+(S.requests.length?` (${S.requests.length})`:"")]);tabs.push(["guide","Hướng dẫn"]);
   const env=S.isAdmin?`<div class="envbar"><span>Thao tác với vai trò:</span><div class="seg" role="group" aria-label="Vai trò">${Object.entries(DEPT).map(([k,v])=>`<button aria-pressed="${actDept()===k}" data-trole="${k}">${v}${k===S.me.dept?" (của bạn)":""}</button>`).join("")}</div><span class="small">Quản trị dùng để test từng phòng ban trên dữ liệu hiện tại; log ghi rõ vai trò đã dùng.</span></div>`:"";
   const roles=S.isAdmin?`<div class="sgroup"><div class="slabel">Thao tác với vai trò</div><div class="rolecol" role="group" aria-label="Vai trò">${Object.entries(DEPT).map(([k,v])=>`<button aria-pressed="${actDept()===k}" data-trole="${k}">${v}${k===S.me.dept?" (của bạn)":""}</button>`).join("")}</div></div>`:"";
   $("#root").innerHTML=`<div class="app"><aside class="side"><div class="logo"><img class="lg-light" alt="Duy Tân Recycling" src="${LOGO}"><img class="lg-dark" alt="Duy Tân Recycling" src="${LOGO_W}"></div><div class="stitle">Theo dõi gửi mẫu</div>
@@ -621,7 +657,7 @@ function renderMain(){
   <main class="main"><div id="status">${S.status||""}${S.canWrite===false?`<div class="banner">Bạn đang có quyền xem; không thể cập nhật dữ liệu.</div>`:""}${S.demo?`<div class="banner">Chế độ xem trước: dữ liệu chỉ giữ trong phiên này.</div>`:""}</div><div id="tabBody"></div></main></div>`;
   renderTab()}
 function renderTab(){const b=$("#tabBody");if(!b)return;b.classList.toggle("workmode",S.tab==="work");document.querySelector(".main")?.classList.toggle("workmode",S.tab==="work");
-  b.innerHTML=S.tab==="work"?workHTML():S.tab==="list"?listTabHTML():S.tab==="flow"?flowHTML():S.tab==="log"?logHTML():membersHTML();
+  b.innerHTML=S.tab==="work"?workHTML():S.tab==="list"?listTabHTML():S.tab==="flow"?flowHTML():S.tab==="log"?logHTML():S.tab==="guide"?guideHTML():membersHTML();
   ["q","logQ"].forEach(id=>{const el=document.getElementById(id);if(el&&S._f===id){el.focus();el.setSelectionRange(el.value.length,el.value.length)}});S._f=null}
 function workHTML(){
   if(!S.loaded)return `<div class="list" style="margin-top:16px"><div class="empty">Đang tải danh sách mẫu…</div></div>`;
@@ -747,8 +783,8 @@ function renderDrawer(){ppHide();const isNew=S.openId==="new";const r=isNew?null
     <ol class="tl">${B.map((b,i)=>blockHTML(r,i)).join("")}</ol>`;
     const ex=EXTRA[d]||[];if(ex.length&&canAct(d)&&active)body+=`<h3>Thông tin thêm ${pill(d)}</h3><div class="fields">${ex.map(k=>fieldHTML(k,r,true,false)).join("")}</div><div class="acts"><button class="btn sm" data-act="saveExtra">Lưu</button></div>`;
     const cs=comments(r);
-    body+=`<h3>Trao đổi</h3><ul class="cm">${cs.map(c=>`<li><div class="h">${esc(nameOf(c.by))} ${pill(c.role)} → ${c.to?pill(c.to):"mọi phòng"}${c.task?` · ô ${DN[c.task]||c.task}`:""} · ${fmtDT(c.at)}</div>${esc(c.text)}</li>`).join("")||`<li class="small">Chưa có trao đổi nào. Dùng mục này để hỏi phòng khác thay vì gọi điện – mọi nội dung đều được lưu lại.</li>`}</ul>
-    ${S.me&&S.canWrite!==false?`<div class="cmform"><textarea id="cm-text" aria-label="Nội dung trao đổi" placeholder="Nhập nội dung trao đổi…"></textarea><select id="cm-to" aria-label="Gửi tới"><option value="">Gửi mọi phòng</option>${Object.entries(DEPT).filter(([k])=>k!==d).map(([k,v])=>`<option value="${k}">Gửi ${v}</option>`).join("")}</select><select id="cm-task" aria-label="Liên quan ô"><option value="">Không gắn ô</option>${Object.keys(TK).map(Number).sort((a,b)=>DN[a]-DN[b]).map(n=>`<option value="${n}">Ô ${DN[n]}: ${esc(TK[n].t)}</option>`).join("")}</select><button class="btn sm primary" data-act="comment">Gửi</button></div><div class="err" id="cm-err"></div>`:""}`;
+    body+=`<h3 id="cm-h">Trao đổi</h3><ul class="cm">${cs.map(c=>{const me=(c.mentions||[]).includes(S.uid);const rp=c.replyTo?cs.find(x=>x.id===c.replyTo):null;return `<li class="${me?"cm-me":""}"><div class="h">${esc(nameOf(c.by))} ${pill(c.role)} → ${c.to?pill(c.to):"mọi phòng"}${c.task?` · ô ${DN[c.task]||c.task}`:""} · ${fmtDT(c.at)}${rp?` · <span class="cm-rp">↩ phản hồi ${esc(nameOf(rp.by))}</span>`:""}${me?' <span class="cm-tag">Nhắc bạn</span>':""}</div>${mentionText(c)}</li>`}).join("")||`<li class="small">Chưa có trao đổi nào. Dùng mục này để hỏi phòng khác thay vì gọi điện – mọi nội dung đều được lưu lại.</li>`}</ul>
+    ${S.me&&S.canWrite!==false?`<div class="cmform"><div class="cm-wrap"><textarea id="cm-text" aria-label="Nội dung trao đổi" aria-describedby="cm-hint" placeholder="Nhập nội dung trao đổi… gõ @ để nhắc tên người cần xử lý"></textarea><div id="mnpop" class="mnpop" role="listbox" hidden></div></div><div class="small" id="cm-hint" style="flex:1 1 100%;margin-top:-4px">Người được nhắc tên (@) nhận thông báo qua Teams.</div><select id="cm-to" aria-label="Gửi tới"><option value="">Gửi mọi phòng</option>${Object.entries(DEPT).filter(([k])=>k!==d).map(([k,v])=>`<option value="${k}">Gửi ${v}</option>`).join("")}</select><select id="cm-task" aria-label="Liên quan ô"><option value="">Không gắn ô</option>${Object.keys(TK).map(Number).sort((a,b)=>DN[a]-DN[b]).map(n=>`<option value="${n}">Ô ${DN[n]}: ${esc(TK[n].t)}</option>`).join("")}</select><button class="btn sm primary" data-act="comment">Gửi</button></div><div class="err" id="cm-err"></div>`:""}`;
     const es=entries(r);if(es.length)body+=`<details><summary>Nhật ký hồ sơ (${es.length})</summary><ul class="hist">${[...es].reverse().map(h=>`<li><time>${fmtDT(h.at)}</time><div>${esc(h.text)}<br><span class="small">${esc(nameOf(h.by))} ${pill(h.role)}</span></div></li>`).join("")}</ul></details>`}
   $("#drawerRoot").innerHTML=`<div class="scrim" data-act="closeD"></div><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle"><div class="dtop"><div class="grow"><h2 id="dTitle">${isNew?"Thêm mẫu mới":esc(r.customer)}</h2><div class="small">${isNew?"Kinh doanh mở dòng theo dõi":esc([r.application,r.industry,r.productCode].filter(Boolean).join(" · "))}</div></div><button class="x" data-act="closeD" aria-label="Đóng">×</button></div>${body}</aside>`;
   const dr=document.querySelector(".drawer");if(dr)dr.scrollTop=sy;
@@ -785,7 +821,7 @@ async function loadAll(){
     sel("projects",PCOLS,q=>q.order("created_at")),
     sel("project_tasks","project_id,task_no,round,status,started_at,started_by,done_at,done_by"),
     sel("project_gates","project_id,gate,round,result,reason,decided_at,decided_by"),
-    sel("project_comments","id,project_id,to_dept_code,task_no,body,author_dept,created_at,created_by"),
+    sel("project_comments","id,project_id,to_dept_code,task_no,body,author_dept,created_at,created_by,mention_user_ids,reply_to_comment_id"),
     sel("project_notices","id,project_id,to_dept_codes,body,author_dept,created_at,created_by"),
     sel("app_users","id,auth_user_id,email,display_name,full_name,dept_code,acting_dept_code,app_role,status,is_dept_head,created_at,created_by"),
     sel("audit_log","id,table_name,record_id,project_id,action,note,old_data,new_data,changed_dept,created_at,created_by",q=>q.order("created_at",{ascending:false}).limit(1000))]);
@@ -800,7 +836,7 @@ async function loadAll(){
     by[r.id]=r});
   ts.forEach(t=>{const r=by[sid(t.project_id)];if(!r||t.round!==r.round)return;r.tasks[t.task_no]={startedAt:t.started_at,startedBy:sid(t.started_by),doneAt:t.status==="done"?t.done_at:null,doneBy:t.status==="done"?sid(t.done_by):null}});
   gs.forEach(g=>{const r=by[sid(g.project_id)];if(!r||g.round!==r.round)return;r.gates[g.gate]={result:g.result,at:g.decided_at,by:sid(g.decided_by),reason:g.reason}});
-  cs.forEach(c=>{const r=by[sid(c.project_id)];if(r)r.comments["c"+c.id]={at:c.created_at,by:sid(c.created_by),role:c.author_dept,to:c.to_dept_code,task:c.task_no,text:c.body}});
+  cs.forEach(c=>{const r=by[sid(c.project_id)];if(r)r.comments["c"+c.id]={id:sid(c.id),at:c.created_at,by:sid(c.created_by),role:c.author_dept,to:c.to_dept_code,task:c.task_no,text:c.body,mentions:(c.mention_user_ids||[]).map(sid),replyTo:sid(c.reply_to_comment_id)}});
   ns.forEach(n=>{const r=by[sid(n.project_id)];if(r)r.notices["n"+n.id]={at:n.created_at,by:sid(n.created_by),role:n.author_dept,to:n.to_dept_codes,text:n.body}});
   au.forEach(a=>{const r=a.project_id!=null&&by[sid(a.project_id)];const tx=auditText(a);if(r&&tx)r.log["a"+a.id]={at:a.created_at,by:sid(a.created_by),role:a.changed_dept,text:tx}});
   S.rowsReal=Object.values(by).map(norm);
@@ -810,9 +846,9 @@ async function loadAll(){
     renderMain();if(S.openId&&S.openId!=="new"&&!busy)renderDrawer();openFromHash()}
 }
 /* Link từ Teams: …/#p-<id> mở thẳng hồ sơ */
-function openFromHash(){const m=(location.hash||"").match(/^#p-(\d+)$/);if(!m||S.screen!=="main"||!S.loaded)return;
+function openFromHash(){const m=(location.hash||"").match(/^#p-(\d+)(-c)?$/);if(!m||S.screen!=="main"||!S.loaded)return;
   try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
-  if(rows().some(r=>r.id===m[1])){S.tab="work";renderMain();openDrawer(m[1])}else toast("Không tìm thấy hồ sơ này hoặc bạn không có quyền xem")}
+  if(rows().some(r=>r.id===m[1])){S.tab="work";renderMain();openDrawer(m[1]);if(m[2])setTimeout(()=>{document.getElementById("cm-h")?.scrollIntoView({block:"start"});document.getElementById("cm-text")?.focus()},150)}else toast("Không tìm thấy hồ sơ này hoặc bạn không có quyền xem")}
 window.addEventListener("hashchange",openFromHash);
 function allLog(){const out=[];const pn={};rows().forEach(r=>{pn[r.id]=r.customer;comments(r).forEach(c=>out.push({...c,text:`Trao đổi${c.to?" gửi "+DEPT[c.to]:""}: ${c.text}`,cust:r.customer,id:r.id}))});
   (S.audit||[]).forEach(a=>{const tx=auditText(a);if(!tx)return;const pid=a.project_id!=null?sid(a.project_id):null;
@@ -841,7 +877,8 @@ async function pendingToggle(r){collect();const reason=(val(r,"pendingReason")||
 async function saveExtra(r){collect();const f=snakeFields(EXTRA[actDept()]||[]);if(!Object.keys(f).length){toast("Không có thay đổi để lưu");return}
   const res=await act("fn_save_extra",{p_project_id:+r.id,p_fields:f},"Đã lưu");if(res.ok)(EXTRA[actDept()]||[]).forEach(k=>delete S.draft[k])}
 async function addComment(r){const t=$("#cm-text").value.trim();if(!t){$("#cm-err").textContent="Nhập nội dung trao đổi.";$("#cm-text").focus();return}collect();
-  const tn=$("#cm-task").value;await act("fn_add_comment",{p_project_id:+r.id,p_body:t,p_to_dept:$("#cm-to").value||null,p_task_no:tn?+tn:null},"Đã gửi trao đổi")}
+  const tn=$("#cm-task").value;const ids=mentionIds(t);
+  await act("fn_add_comment",{p_project_id:+r.id,p_body:t,p_to_dept:$("#cm-to").value||null,p_task_no:tn?+tn:null,p_mentions:ids.map(Number)},ids.length?`Đã gửi trao đổi, đã báo Teams cho ${ids.length} người`:"Đã gửi trao đổi")}
 async function adminAct(r,a){if(!S.isAdmin)return;
   if(a==="adminClose"){collect();S.closeMode="admin";renderDrawer();setTimeout(()=>{const t=$("#close-reason");if(t){t.focus();t.scrollIntoView({block:"center"})}},0);return}
   if(a==="reopen")await act("fn_reopen_project",{p_project_id:+r.id},"Đã mở lại dự án")}
@@ -1107,6 +1144,76 @@ async function assignPic(r,d){collect();const ak="asg"+d,em=String(S.draft[ak+"E
 document.addEventListener("change",async e=>{const c=e.target.closest&&e.target.closest("input[data-head]");if(!c)return;if(!S.isAdmin){c.checked=!c.checked;return}
   const m=S.members[c.dataset.head];const res=await act("fn_set_dept_head",{p_user_id:+c.dataset.head,p_value:c.checked},(c.checked?"Đã đánh dấu trưởng phòng: ":"Đã bỏ trưởng phòng: ")+(m?.displayName||""));
   if(!res.ok)c.checked=!c.checked});
+
+/* ---------- tab Hướng dẫn ---------- */
+const GROLE={user:"Người dùng",head:"Trưởng phòng",owner:"Owner"};
+function myRole(){return S.isAdmin?"owner":(S.members[S.uid]&&S.members[S.uid].isHead)?"head":"user"}
+const GQUICK={
+ user:[["Việc của tôi","Tab Công việc: hồ sơ đang đến lượt phòng bạn"],["Chọn PIC","Gõ tên / email, chọn từ gợi ý"],["Card Teams","Bấm “Mở hồ sơ” để vào thẳng hồ sơ"]],
+ head:[["Phân công PIC","Khung “Chưa phân công PIC” ở đầu hồ sơ"],["Card cần phân công","Chỉ trưởng phòng nhận khi hồ sơ chưa có PIC"],["Đổi PIC","Dòng “PIC …” → Đổi PIC"]],
+ owner:[["Quản trị người dùng","Thêm, duyệt, cấp mã, bật trưởng phòng"],["Thao tác với vai trò","Làm thay / kiểm thử phòng khác"],["Cấu hình Teams","Bảng app_settings trong Supabase"]]};
+const GSTEPS=()=>`<div class="gtbl"><table><thead><tr><th>Bước</th><th>Phòng</th><th>Nội dung</th><th>Ô</th></tr></thead><tbody>${B.map((b,i)=>`<tr><td>${i+1}</td><td>${pill(b.d)}</td><td>${esc(b.n)}${b.g?` <span class="small">· quyết định ${esc(GATE[b.g].q.toLowerCase())}</span>`:""}</td><td>${b.t.map(n=>DN[n]).join(", ")}</td></tr>`).join("")}</tbody></table></div>`;
+const GUIDE={
+ head:[
+  ["Nhận card “Cần phân công PIC”",`<ul><li>Khi dự án đến lượt phòng bạn mà hồ sơ <b>chưa có PIC</b> của phòng, card Teams (dải lam) chỉ gửi cho trưởng phòng thay vì cả phòng.</li><li>Phòng có nhiều trưởng phòng thì tất cả cùng nhận; một người phân công là đủ.</li><li>Bấm <b>“Mở hồ sơ để phân công”</b> trên card để vào thẳng hồ sơ.</li></ul>`],
+  ["Phân công PIC",`<ol><li>Mở hồ sơ. Khung xanh <b>“Chưa phân công PIC …”</b> nằm ở đầu hồ sơ (chỉ trưởng phòng và Owner thấy).</li><li>Gõ tên hoặc email nhân viên trong phòng, chọn từ gợi ý (có dòng ✓ email).</li><li>Bấm <b>Phân công</b>. Người được chọn nhận card Teams “Bạn được phân công” (dải xanh lá) kèm việc cần làm.</li></ol><p class="small">Có thể phân công trước khi tới lượt phòng (ví dụ R&D phân công trước ô 3, Kế hoạch trước ô 7).</p>`],
+  ["Đổi PIC & lưu ý",`<ul><li>Hồ sơ đã có PIC: khung thu lại thành dòng “PIC …: tên” → bấm <b>Đổi PIC</b>, chọn người mới → Phân công.</li><li>Chỉ phân công được người <b>cùng phòng</b> với bạn.</li><li>Nhân viên vẫn tự chọn PIC ở ô 3 (R&D) / ô 7 (Kế hoạch) như bình thường; nếu họ chọn người khác, người đó cũng nhận card “Bạn được phân công”.</li><li>Tự chọn chính mình thì không có card (vì bạn đã biết việc).</li></ul>`]],
+ owner:[
+  ["Quản trị người dùng",`<ul><li><b>Thêm người dùng</b>: nhập email, tên hiển thị, họ tên, phòng ban, quyền → app tạo <b>mã kích hoạt</b>; gửi mã cho người đó để họ đặt mật khẩu.</li><li><b>Duyệt / từ chối đăng ký</b>: người tự đăng ký hiện ở đầu tab, chọn phòng và quyền rồi duyệt.</li><li><b>Sửa</b> tên, họ tên, email, phòng ban, quyền → bấm <b>Lưu</b> trên dòng đó. Nên điền đủ họ tên để tìm PIC dễ hơn.</li><li><b>Cấp mã mới</b> khi nhân sự quên mật khẩu hoặc mã cũ hết hạn. <b>Gỡ quyền</b> khi nhân sự nghỉ (dữ liệu cũ vẫn giữ).</li><li><b>Trưởng phòng</b>: bật công tắc ở cột Trưởng phòng. Mỗi phòng có thể nhiều người; đổi phòng ban thì tự bỏ đánh dấu.</li></ul>`],
+  ["Thao tác với vai trò",`<ul><li>Ở sidebar, mục <b>Thao tác với vai trò</b>: chọn Kinh doanh / R&D / Kế hoạch để làm thay phòng đó hoặc kiểm thử.</li><li>Tab Công việc, quyền nhập ô và khung phân công đổi theo vai trò đang chọn.</li><li>Nhật ký ghi rõ vai trò bạn đã dùng cho từng thao tác.</li></ul>`],
+  ["Hủy, mở lại dự án & phân công mọi phòng",`<ul><li>Trong hồ sơ, Owner có nút <b>Hủy dự án</b> (bắt buộc ghi lý do) và <b>Mở lại hồ sơ</b> đã hủy. Hủy gửi card đỏ; mở lại báo lại bước đang dở.</li><li>Owner phân công / đổi PIC được cho phòng đang chọn ở “Thao tác với vai trò”.</li></ul>`],
+  ["Cấu hình thông báo Teams",`<ul><li>Trong Supabase → Table Editor → bảng <code>app_settings</code>:<ul><li><code>teams_enabled</code>: <code>true</code> / <code>false</code> để bật / tắt toàn bộ thông báo.</li><li><code>teams_webhook_url</code>: link Workflow Power Automate nhận card.</li><li><code>app_url</code>: link app, dùng cho nút “Mở hồ sơ”.</li></ul></li><li>Kiểm tra tin đã gửi: bảng <code>notify_log</code>; kết quả trả về: <code>net._http_response</code>.</li></ul>`]],
+ user:[
+  ["Bắt đầu: đăng nhập & kích hoạt tài khoản",`<ol><li>Lần đầu: Owner thêm bạn và gửi <b>mã kích hoạt</b>. Ở màn đăng nhập bấm <b>“Kích hoạt tài khoản / quên mật khẩu”</b>, nhập email, mã và đặt mật khẩu.</li><li>Những lần sau: đăng nhập bằng email công ty + mật khẩu.</li><li>Quên mật khẩu: nhờ Owner <b>cấp mã mới</b>, rồi kích hoạt lại như lần đầu.</li><li>Đăng nhập mà app báo chưa có quyền: điền form đăng ký (tên, phòng ban) và chờ Owner duyệt.</li></ol>`],
+  ["Màn hình & các tab",`<ul><li><b>Công việc</b>: hồ sơ đang đến lượt phòng bạn; số cạnh tên tab là số hồ sơ đang chờ.</li><li><b>Danh sách tổng hợp</b>: tìm kiếm, tra cứu mọi hồ sơ.</li><li><b>Quy trình & thống kê</b>: 9 bước và số liệu thời gian xử lý.</li><li><b>Nhật ký</b>: lịch sử ai làm gì, lúc nào.</li><li>Góc dưới sidebar: đổi giao diện sáng / tối (☀ / ☾) và đăng xuất.</li></ul>`],
+  ["Quy trình 9 bước",()=>`<p>Mỗi bước thuộc một phòng. Bước xong thì phòng kế tiếp nhận thông báo.</p>${GSTEPS()}<p class="small">“Không khả thi” ở bước 4 sẽ hủy dự án; “Không đạt” ở bước 9 đưa dự án sang vòng mới, làm lại từ ô 2.</p>`],
+  ["Làm một ô công việc",`<ol><li>Mở hồ sơ (từ tab Công việc, Danh sách hoặc nút “Mở hồ sơ” trên Teams). Bước đang đến lượt được mở sẵn.</li><li>Điền các ô có dấu <b>*</b> (bắt buộc).</li><li><b>Lưu nháp</b> để giữ dữ liệu chưa chắc chắn; <b>Xác nhận xong ô</b> khi ô đã hoàn tất.</li><li>Lỡ xác nhận nhầm: bấm <b>Bỏ xác nhận để sửa</b> ở ô đó (dự án lùi về bước đó và phòng đó nhận lại thông báo).</li></ol>`],
+  ["Chọn PIC theo tài khoản",`<ul><li>Ô PIC Sale / R&D / Kế hoạch: gõ tên hoặc email, <b>chọn từ gợi ý</b>. Dòng <b>✓ email</b> bên dưới nghĩa là đã gắn đúng người.</li><li>Gõ tay một tên không có trong danh sách thì không lưu được.</li><li>“chưa đăng nhập” cạnh tên: tài khoản chưa kích hoạt nhưng vẫn nhận được Teams.</li><li>Thông báo Teams gửi theo email PIC đã chọn.</li></ul>`],
+  ["Thông báo Teams",`<div class="gtbl"><table><thead><tr><th>Dải màu</th><th>Ý nghĩa</th></tr></thead><tbody><tr><td><span class="gdot b"></span>Lam</td><td>Đến lượt phòng bạn · Cần phân công PIC (trưởng phòng)</td></tr><tr><td><span class="gdot y"></span>Vàng</td><td>Thông báo: Kế hoạch đã chốt ngày có mẫu, LOT, line</td></tr><tr><td><span class="gdot r"></span>Đỏ</td><td>Dự án đã hủy</td></tr><tr><td><span class="gdot g"></span>Xanh lá</td><td>Dự án hoàn thành · Bạn được phân công</td></tr><tr><td><span class="gdot k"></span>💬 Xám</td><td>Trao đổi: bạn được nhắc tên hoặc có phản hồi (dòng nội dung tô nền xám)</td></tr></tbody></table></div><p>Bấm <b>Mở hồ sơ</b> trên card: app mở thẳng hồ sơ (đăng nhập trước nếu cần).</p>`],
+  ["Trao đổi & ghi chú trong hồ sơ",`<ul><li>Mục <b>Trao đổi</b> ở cuối hồ sơ: nhập nội dung, chọn gửi phòng nào và ô liên quan. Dùng thay cho gọi điện – mọi nội dung đều được lưu.</li><li><b>Nhắc tên</b>: gõ <b>@</b> rồi chọn người từ gợi ý (tag được nhiều người). Người được nhắc nhận card Teams 💬; tin nhắc tên bạn được tô xanh và có nhãn “Nhắc bạn”.</li><li><b>Trả lời</b>: viết tin mới và @ lại người đã nhắc bạn – họ nhận card “Bạn có 01 phản hồi”, tin của bạn hiện “↩ phản hồi …”.</li><li>Ghi chú riêng của phòng (Iform của Kinh doanh, ghi chú R&D, ghi chú Kế hoạch): điền rồi bấm <b>Lưu</b>.</li></ul>`],
+  ["Kinh doanh: thêm mẫu mới & nhập iForm",`<ol><li>Bấm <b>+ Thêm mẫu mới</b> ở sidebar.</li><li>Có phiếu iForm: xuất phiếu ra file Word (.docx), <b>kéo thả</b> vào khung “Nhập từ phiếu iForm” (hoặc bấm Chọn file).</li><li>Kiểm tra các ô <b>nền xanh, nhãn iForm</b>; chọn lại <b>Mục đích</b>; ghi thêm vào <b>Yêu cầu đặc biệt</b> nếu cần. Chi tiết phiếu được lưu trong khối “Chi tiết từ phiếu iForm”.</li><li>Bấm <b>Tạo hồ sơ – xác nhận bước 1</b>. R&D nhận thông báo.</li></ol><p class="small">Các việc khác của Kinh doanh: ô 5 gửi tài liệu tiền khả thi; ô 12–14 gửi mẫu, theo dõi, thu phản hồi; bước 9 quyết định Đạt / Không đạt, chốt thương mại và chuẩn bị tung SP.</p>`],
+  ["R&D",`<ul><li><b>Ô 3</b>: chốt spec, mã SP và chọn <b>PIC R&D</b> (nếu trưởng phòng chưa phân công). <b>Ô 4</b>: lập đánh giá tiền khả thi.</li><li><b>Bước 4</b>: quyết định Khả thi / Không khả thi (không khả thi phải ghi lý do, dự án bị hủy); ô 6 gửi yêu cầu trial.</li><li><b>Ô 9–11</b>: giám sát lấy mẫu, kiểm nghiệm – release TDS, bàn giao mẫu cho Kinh doanh. <b>Ô 15–16</b>: phân tích phản hồi, đề xuất spec cuối.</li></ul>`],
+  ["Kế hoạch",`<ul><li><b>Ô 7</b>: chọn <b>PIC Kế hoạch</b>, line, ngày trial, ngày dự kiến có mẫu, LOT. Xác nhận xong, R&D và Kinh doanh tự nhận card thông báo (dải vàng).</li><li><b>Ô 8</b>: follow chạy trial, ghi ngày chạy thực tế.</li><li>Trial bị hoãn: bấm <b>Báo pending</b> kèm lý do; khi chạy lại bấm Bỏ pending.</li></ul>`],
+  ["Câu hỏi thường gặp",`<ul><li><b>Không thấy hồ sơ trong tab Công việc?</b> Hồ sơ chưa đến lượt phòng bạn – tìm ở Danh sách tổng hợp.</li><li><b>Không nhận được Teams?</b> Kiểm tra hồ sơ đã chọn PIC đúng tài khoản (có ✓ email); nếu vẫn không có, báo Owner kiểm tra cấu hình.</li><li><b>App hiện thông báo lạ sau khi cập nhật?</b> Bấm Ctrl+F5 hoặc mở bằng cửa sổ ẩn danh.</li></ul>`]]};
+function gSec(t,body,tag,open){const h=typeof body==="function"?body():body;return `<details class="gsec" ${open?"open":""}><summary><span>${esc(t)}</span>${tag?`<span class="gtag ${tag==="Chung"?"":"x"}">${esc(tag)}</span>`:""}</summary><div class="gbody">${h}</div></details>`}
+function guideHTML(){const mine=myRole();const role=S.guideRole||mine;
+  const mineLbl=mine==="owner"?"Owner":mine==="head"?"Trưởng phòng "+(DEPT[S.me?.dept]||""):"Người dùng · "+(DEPT[S.me?.dept]||"");
+  const extra=role==="owner"?[...GUIDE.head.map(x=>[...x,"Trưởng phòng"]),...GUIDE.owner.map(x=>[...x,"Owner"])]:role==="head"?GUIDE.head.map(x=>[...x,"Trưởng phòng"]):[];
+  return `<div class="guide"><div class="gtop"><h2>Hướng dẫn sử dụng</h2><span class="gme">Vị trí của bạn: ${esc(mineLbl)}</span><button class="btn sm" data-act="gPrint">In / lưu PDF</button></div>
+  <div class="gchips" role="group" aria-label="Xem hướng dẫn theo vị trí">${Object.entries(GROLE).map(([k,l])=>`<button class="${k===role?"on":""}" aria-pressed="${k===role}" data-grole="${k}">${l}${k===mine?" (bạn)":""}</button>`).join("")}</div>
+  <p class="small">${role==="user"?"Hướng dẫn chung cho mọi người dùng.":`Phần dành riêng cho ${role==="head"?"trưởng phòng":"Owner"} ở trên, hướng dẫn chung ở dưới.`}</p>
+  <div class="gquick">${GQUICK[role].map(([b,t])=>`<div><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join("")}</div>
+  ${extra.length?`<h3 class="gh">Dành cho ${role==="owner"?"Owner (gồm cả quyền trưởng phòng)":"trưởng phòng"}</h3>${extra.map((x,i)=>gSec(x[0],x[1],x[2],i===0)).join("")}<h3 class="gh">Hướng dẫn chung</h3>`:""}
+  ${GUIDE.user.map((x,i)=>gSec(x[0],x[1],"Chung",!extra.length&&i===0)).join("")}</div>`}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-grole],[data-act=gPrint]");if(!b)return;e.stopPropagation();
+  if(b.dataset.grole){S.guideRole=b.dataset.grole;renderTab();return}
+  const ds=[...document.querySelectorAll(".guide details")];const was=ds.map(d=>d.open);ds.forEach(d=>d.open=true);
+  const back=()=>{ds.forEach((d,i)=>d.open=was[i]);window.removeEventListener("afterprint",back)};window.addEventListener("afterprint",back);window.print()},true);
+
+/* ---------- tag @ trong trao đổi ---------- */
+function mentionPeople(){return Object.entries(S.members).filter(([,m])=>m.email&&(m.status==="active"||m.status==="invited")).map(([id,m])=>({id,name:m.displayName||m.fullName||m.email,full:m.fullName||"",email:m.email,dept:m.dept}))
+  .sort((a,b)=>b.name.length-a.name.length)}
+function mentionIds(t){const out=[];mentionPeople().forEach(p=>{if(t.includes("@"+p.name)&&!out.includes(p.id))out.push(p.id)});return out}
+function mentionText(c){let h=esc(c.text);const names=(c.mentions||[]).map(id=>S.members[id]?.displayName).filter(Boolean).sort((a,b)=>b.length-a.length);
+  names.forEach(n=>{const e=esc("@"+n);h=h.split(e).join(`<span class="cm-mt">${e}</span>`)});return h}
+const MN={items:[],hl:0,start:-1};
+function mnClose(){const p=document.getElementById("mnpop");if(p)p.hidden=true;MN.start=-1}
+function mnUpdate(){const ta=document.getElementById("cm-text"),pop=document.getElementById("mnpop");if(!ta||!pop)return;
+  const before=ta.value.slice(0,ta.selectionStart);const m=before.match(/(^|\s)@([^\s@]{0,30})$/);if(!m){mnClose();return}
+  MN.start=ta.selectionStart-m[2].length-1;const q=vnorm(m[2]);
+  MN.items=mentionPeople().filter(p=>!q||vnorm(p.name).includes(q)||vnorm(p.full).includes(q)||vnorm(p.email).includes(q)).sort((a,b)=>a.name.localeCompare(b.name,"vi")).slice(0,8);
+  if(!MN.items.length){mnClose();return}MN.hl=Math.min(MN.hl,MN.items.length-1);
+  pop.innerHTML=MN.items.map((p,i)=>`<div class="mi ${i===MN.hl?"hl":""}" role="option" aria-selected="${i===MN.hl}" data-mi="${i}"><b>${esc(p.name)}</b><span>${esc(DEPT[p.dept]||"")} · ${esc(p.email)}</span></div>`).join("");pop.hidden=false}
+function mnPick(i){const ta=document.getElementById("cm-text"),p=MN.items[i];if(!ta||!p||MN.start<0)return;
+  const v=ta.value,end=ta.selectionStart;const ins="@"+p.name+" ";ta.value=v.slice(0,MN.start)+ins+v.slice(end);const pos=MN.start+ins.length;ta.focus();ta.setSelectionRange(pos,pos);mnClose()}
+document.addEventListener("input",e=>{if(e.target.id==="cm-text"){MN.hl=0;mnUpdate()}});
+document.addEventListener("click",e=>{if(e.target.id==="cm-text")mnUpdate();else if(!(e.target.closest&&e.target.closest("#mnpop")))mnClose()});
+document.addEventListener("mousedown",e=>{const o=e.target.closest&&e.target.closest("#mnpop [data-mi]");if(o){e.preventDefault();mnPick(+o.dataset.mi)}});
+document.addEventListener("keydown",e=>{if(e.target.id!=="cm-text")return;const pop=document.getElementById("mnpop");if(!pop||pop.hidden)return;
+  if(e.key==="ArrowDown"){MN.hl=(MN.hl+1)%MN.items.length;mnUpdate();e.preventDefault()}
+  else if(e.key==="ArrowUp"){MN.hl=(MN.hl-1+MN.items.length)%MN.items.length;mnUpdate();e.preventDefault()}
+  else if(e.key==="Enter"||e.key==="Tab"){mnPick(MN.hl);e.preventDefault();e.stopPropagation()}
+  else if(e.key==="Escape"){mnClose();e.preventDefault();e.stopPropagation()}},true);
 
 /* ---------- khởi động ---------- */
 function render(){if(S.screen==="main"){if(!S.me||S.me.status!=="active"){S.screen="removed";closeDrawer();renderLogin();return}renderMain()}else renderLogin()}
