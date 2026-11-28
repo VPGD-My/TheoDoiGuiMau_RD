@@ -546,7 +546,7 @@ body{background:transparent}
 .cs.a{background:#E3EEFB;color:#1D5FB4}.cs.d{background:var(--green-tint);color:var(--accent)}.cs.x{background:#FDE7E7;color:#B42318}
 .cadm td{background:var(--surface-alt)}.cadmr{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px}.cadmr label{display:flex;gap:6px;align-items:center;font-size:12px}
 .cadmr input,.cadmr select{padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--text)}
-.stitle .stsub{display:block;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-top:1px}
+.stitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stitle .stsub{font-weight:500;color:var(--accent)}
 
 /* ===== Cần phân công ===== */
 .bellchip{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:1px 8px;border-radius:999px;background:#E08A00;color:#fff;white-space:nowrap;letter-spacing:.02em}
@@ -561,6 +561,22 @@ body{background:transparent}
 .mfrow th{padding:4px 6px!important;background:var(--surface-alt)}
 .mfrow .mfi{width:100%;min-width:0;box-sizing:border-box;padding:4px 7px;font-size:12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--text);font-weight:400}
 tr.mrow[hidden]{display:none}
+
+/* ===== Đợt chỉnh giao diện: đáy khung, tiêu đề cột, thanh cuộn, lịch kiểu GitHub ===== */
+.main.workmode{padding-bottom:0}
+.mx thead th:first-child,.mx thead th:last-child{vertical-align:middle;font-size:13px;font-weight:700;color:var(--text);text-align:center}
+*{scrollbar-width:thin;scrollbar-color:transparent transparent}
+*:hover{scrollbar-color:rgba(12,102,2,.45) transparent}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:transparent;border-radius:4px}*:hover::-webkit-scrollbar-thumb{background:rgba(12,102,2,.45)}
+::-webkit-scrollbar-button{display:none;width:0;height:0}::-webkit-scrollbar-corner{background:transparent}
+:root[data-theme="dark"] *:hover{scrollbar-color:rgba(140,220,120,.45) transparent}:root[data-theme="dark"] *:hover::-webkit-scrollbar-thumb{background:rgba(140,220,120,.45)}
+.ghcal{display:grid;grid-template-columns:24px repeat(53,minmax(0,1fr));grid-template-rows:14px repeat(7,auto);gap:3px;width:100%}
+.ghm{grid-row:1;font-size:10px;color:var(--muted);white-space:nowrap;overflow:visible}
+.ghd{grid-column:1;font-size:10px;color:var(--muted);align-self:center;line-height:1}
+.ghc{aspect-ratio:1/1;border-radius:3px;background:var(--surface-alt);outline:1px solid rgba(0,0,0,.04);outline-offset:-1px;min-width:0}
+.ghc.l1{background:#B7E4A8}.ghc.l2{background:#6CC458}.ghc.l3{background:#2E9A1F}.ghc.l4{background:#0C6602}
+.ghleg{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:11px;color:var(--muted);margin-top:8px}.ghleg .ghc{width:11px;height:11px;display:inline-block}
 </style>
 </head>
 <body>
@@ -731,7 +747,7 @@ function renderMain(){
   const tabs=[["work","Công việc"],["list","Danh sách tổng hợp"],["flow","Quy trình & thống kê"],["log","Nhật ký"]];if(S.isAdmin)tabs.push(["members","Quản trị người dùng"+(S.requests.length?` (${S.requests.length})`:"")]);tabs.push(["guide","Hướng dẫn"]);
   const env=S.isAdmin?`<div class="envbar"><span>Thao tác với vai trò:</span><div class="seg" role="group" aria-label="Vai trò">${Object.entries(DEPT).map(([k,v])=>`<button aria-pressed="${actDept()===k}" data-trole="${k}">${v}${k===S.me.dept?" (của bạn)":""}</button>`).join("")}</div><span class="small">Quản trị dùng để test từng phòng ban trên dữ liệu hiện tại; log ghi rõ vai trò đã dùng.</span></div>`:"";
   const roles=S.isAdmin?`<div class="sgroup"><div class="slabel">Thao tác với vai trò</div><div class="rolecol" role="group" aria-label="Vai trò">${Object.entries(DEPT).map(([k,v])=>`<button aria-pressed="${actDept()===k}" data-trole="${k}">${v}${k===S.me.dept?" (của bạn)":""}</button>`).join("")}</div></div>`:"";
-  $("#root").innerHTML=`<div class="app"><aside class="side"><div class="logo"><img class="lg-light" alt="Duy Tân Recycling" src="${LOGO}"><img class="lg-dark" alt="Duy Tân Recycling" src="${LOGO_W}"></div><div class="stitle">Quản lý dự án<span class="stsub">Gửi mẫu</span></div>
+  $("#root").innerHTML=`<div class="app"><aside class="side"><div class="logo"><img class="lg-light" alt="Duy Tân Recycling" src="${LOGO}"><img class="lg-dark" alt="Duy Tân Recycling" src="${LOGO_W}"></div><div class="stitle">Quản lý dự án <span class="stsub">– Gửi mẫu</span></div>
   <nav class="nav" role="tablist" aria-label="Menu">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${S.tab===k}" data-tab="${k}">${l}${k==="work"&&due?` <span class="cnt">${due}</span>`:""}</button>`).join("")}</nav>
   ${canAct("KD")?`<button class="btn newbtn" data-act="new"><span class="plus" aria-hidden="true">+</span>Thêm mẫu mới</button>`:""}${roles}<div class="grow"></div>
   <div class="sfoot"><div class="who">${S.profile?.avatarUrl&&!S.demo?`<img alt="" src="${esc(S.profile.avatarUrl)}">`:`<span class="av">${esc(initials(S.me.name))}</span>`}<div class="whotxt"><b title="${esc(S.me.name)}">${esc(S.me.name)}</b><span class="whodept">${esc(DEPT[S.me.dept]||"")}</span></div></div><div class="sright">${S.isAdmin?'<span class="ownerpill">Owner</span>':""}<div class="sbtns"><button class="themebtn ic" data-act="theme" aria-label="Đổi giao diện sáng/tối" title="${themeIcon().slice(2)}">${themeSym()}</button><button class="iconbtn" data-act="logout" aria-label="Đăng xuất" title="Đăng xuất"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"/><path d="M9 12h12l-3-3m0 6 3-3"/></svg></button></div></div></div></aside>
@@ -1255,7 +1271,7 @@ const GUIDE={
   ["Đổi PIC & lưu ý",`<ul><li>Ô đã có PIC hiện tên và email – bấm <b>Đổi PIC</b> ngay trên ô đó để chọn người khác.</li><li>Chỉ phân công được người <b>cùng phòng</b> với bạn.</li><li>Nhân viên vẫn tự chọn PIC ở ô 3 (R&D) / ô 7 (Kế hoạch) như bình thường; nếu họ chọn người khác, người đó cũng nhận card “Bạn được phân công”.</li><li>Tự chọn chính mình thì không có card (vì bạn đã biết việc).</li></ul>`]],
  owner:[
   ["Quản trị người dùng",`<ul><li><b>Thêm người dùng</b>: nhập email, tên hiển thị, họ tên, phòng ban, quyền → app tạo <b>mã kích hoạt</b>; gửi mã cho người đó để họ đặt mật khẩu.</li><li><b>Duyệt / từ chối đăng ký</b>: người tự đăng ký hiện ở đầu tab, chọn phòng và quyền rồi duyệt.</li><li><b>Sửa</b> tên, họ tên, email, phòng ban, quyền → bấm <b>Lưu</b> trên dòng đó. Nên điền đủ họ tên để tìm PIC dễ hơn.</li><li><b>Cấp mã mới</b> khi nhân sự quên mật khẩu hoặc mã cũ hết hạn. <b>Gỡ quyền</b> khi nhân sự nghỉ (dữ liệu cũ vẫn giữ).</li><li><b>Trưởng phòng</b>: bật công tắc ở cột Trưởng phòng. Mỗi phòng có thể nhiều người; đổi phòng ban thì tự bỏ đánh dấu.</li></ul>`],
-  ["Thống kê truy cập",`<ul><li>Quản trị người dùng → tab con <b>Thống kê truy cập</b> (chỉ Owner thấy).</li><li>Mỗi lần mở app là một lượt; mở lại trong 30 phút không tính thêm. Số liệu bắt đầu từ ngày cập nhật bản có thống kê.</li><li>Có: số người vào hôm nay / 7 / 30 ngày, lượt theo ngày–tuần–tháng–năm, giờ cao điểm theo thứ, theo giờ, theo thứ, theo ngày trong tháng, theo phòng ban và từng người.</li><li>Lọc <b>Lâu không vào</b> để thấy ai quá 14 ngày chưa mở app (kể cả tài khoản chưa kích hoạt).</li></ul>`],
+  ["Thống kê truy cập",`<ul><li>Quản trị người dùng → tab con <b>Thống kê truy cập</b> (chỉ Owner thấy).</li><li>Mỗi lần mở app là một lượt; mở lại trong 30 phút không tính thêm. Số liệu bắt đầu từ ngày cập nhật bản có thống kê.</li><li>Có: số người vào hôm nay / 7 / 30 ngày, lượt theo ngày–tuần–tháng–năm, lịch truy cập 12 tháng (kiểu GitHub), theo giờ, theo thứ, theo ngày trong tháng, theo phòng ban và từng người.</li><li>Lọc <b>Lâu không vào</b> để thấy ai quá 14 ngày chưa mở app (kể cả tài khoản chưa kích hoạt).</li></ul>`],
   ["Danh bạ khách hàng",`<ul><li>Danh sách tổng hợp → <b>Theo khách hàng</b> → bấm một khách để mở.</li><li><b>Đổi tên</b> khách: mã KH và mã dự án giữ nguyên.</li><li><b>Gộp</b> hai khách bị trùng: chọn khách giữ lại; các dự án chuyển sang và được đánh mã tiếp theo của khách đó.</li></ul>`],
   ["Thao tác với vai trò",`<ul><li>Ở sidebar, mục <b>Thao tác với vai trò</b>: chọn Kinh doanh / R&D / Kế hoạch để làm thay phòng đó hoặc kiểm thử.</li><li>Tab Công việc, quyền nhập ô và khung phân công đổi theo vai trò đang chọn.</li><li>Nhật ký ghi rõ vai trò bạn đã dùng cho từng thao tác.</li></ul>`],
   ["Hủy, mở lại dự án & phân công mọi phòng",`<ul><li>Trong hồ sơ, Owner có nút <b>Hủy dự án</b> (bắt buộc ghi lý do) và <b>Mở lại hồ sơ</b> đã hủy. Hủy gửi card đỏ; mở lại báo lại bước đang dở.</li><li>Owner phân công / đổi PIC được cho phòng đang chọn ở “Thao tác với vai trò”.</li></ul>`],
@@ -1350,9 +1366,14 @@ function statsHTML(){if(!S.acc&&!S.accLoading&&!S.accErr){loadAccess()}
   const kpi=`<div class="stkpi"><div><span>Hôm nay</span><b>${uniq(t1)}</b><i>${t1.length} lượt</i></div><div><span>7 ngày qua</span><b>${uniq(t7)}</b><i>${t7.length} lượt</i></div><div><span>30 ngày qua</span><b>${uniq(t30)}</b><i>${t30.length} lượt</i></div><div><span>Lâu không vào (&gt;14 ngày)</span><b>${oldList.length}</b><i>trên ${people.length} tài khoản</i></div></div>`;
   const mode=S.accMode||"d";const ts=timeSeries(D,mode);
   const tsCard=`<div class="stc"><div class="sth"><h3>Lượt truy cập theo thời gian</h3><div class="stseg">${[["d","Ngày"],["w","Tuần"],["m","Tháng"],["y","Năm"]].map(([k,l])=>`<button class="${k===mode?"on":""}" data-accmode="${k}">${l}</button>`).join("")}</div></div>${barSVG(ts.L,ts.vals,{w:1100,h:210,every:ts.every,bw:.55,aria:"Lượt truy cập theo thời gian"})}</div>`;
-  const hm=Array.from({length:7},()=>Array(24).fill(0));V.forEach(v=>hm[wdi(v.d)][v.d.getHours()]++);const hmx=Math.max(1,...hm.flat());
-  const cell=v=>v?`style="background:rgba(17,120,10,${(.18+.82*v/hmx).toFixed(2)})"`:"";
-  const heat=`<div class="stc"><div class="sth"><h3>Giờ cao điểm theo thứ <span>(tổng lượt truy cập)</span></h3><div class="hmleg">Ít<i></i>Nhiều</div></div><div class="hmwrap"><div class="hm"><div></div>${Array.from({length:24},(_,h)=>`<div class="hmh">${h%3===0?h+"h":""}</div>`).join("")}${hm.map((r,i)=>`<div class="hmd">${WD[i]}</div>${r.map((v,h)=>`<div class="hmc" ${cell(v)} title="${WDF[i]} ${h}:00 · ${v} lượt"></div>`).join("")}`).join("")}</div></div></div>`;
+  const calStart=(()=>{const d=new Date(D.today);d.setDate(d.getDate()-364);d.setDate(d.getDate()-wdi(d));return d})();
+  const dayC=new Map(),dayU=new Map();V.forEach(v=>{const k=dkey(v.d);dayC.set(k,(dayC.get(k)||0)+1);if(!dayU.has(k))dayU.set(k,new Set());dayU.get(k).add(v.u)});
+  const calMax=Math.max(1,...dayC.values());const lvl=c=>!c?0:c<=calMax*.25?1:c<=calMax*.5?2:c<=calMax*.75?3:4;
+  let calTot=0,cells="",mons="",lastM=-1;
+  for(let w=0;w<53;w++){const d0=new Date(calStart);d0.setDate(d0.getDate()+w*7);const m=d0.getMonth();if(m!==lastM&&d0.getDate()<=7){mons+=`<div class="ghm" style="grid-column:${w+2}">Th${m+1}</div>`;lastM=m}
+    for(let r=0;r<7;r++){const d=new Date(d0);d.setDate(d.getDate()+r);if(d>D.today)continue;const k=dkey(d),c=dayC.get(k)||0,u=dayU.get(k)?dayU.get(k).size:0;calTot+=c;
+      cells+=`<div class="ghc l${lvl(c)}" style="grid-column:${w+2};grid-row:${r+2}" title="${WDF[r]} ${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()} · ${c} lượt${c?` · ${u} người`:""}"></div>`}}
+  const heat=`<div class="stc"><div class="sth"><h3>${calTot} lượt truy cập <span>trong 12 tháng qua</span></h3></div><div class="ghcal">${mons}${["T2","","T4","","T6","",""].map((t,i)=>`<div class="ghd" style="grid-row:${i+2}">${t}</div>`).join("")}${cells}</div><div class="ghleg">Ít<span class="ghc l0"></span><span class="ghc l1"></span><span class="ghc l2"></span><span class="ghc l3"></span><span class="ghc l4"></span>Nhiều</div></div>`;
   const hr=Array(24).fill(0);V.forEach(v=>hr[v.d.getHours()]++);const pk=hr.indexOf(Math.max(...hr));const wk=hr.slice(7,20);const lo=7+wk.indexOf(Math.min(...wk));
   const hourCard=`<div class="stc"><div class="sth"><h3>Theo giờ trong ngày</h3></div>${barSVG(hr.map((_,i)=>i+"h"),hr,{h:150,every:3,aria:"Lượt truy cập theo giờ"})}<p class="stcap">Cao điểm ${pk}:00 · thấp điểm (7h–19h) ${lo}:00</p></div>`;
   const cntW=Array(7).fill(0),cntD=Array(32).fill(0);for(let d=new Date(D.start);d<=D.today;d.setDate(d.getDate()+1)){cntW[wdi(d)]++;cntD[d.getDate()]++}
